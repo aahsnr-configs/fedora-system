@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Installing Wayland-utils"
+cd && git clone https://gitlab.freedesktop.org/wayland/wayland-utils.git
+cd wayland-utils
+meson build/ --prefix=...
+ninja -C build/ install
+cd 
+

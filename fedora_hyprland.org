@@ -1,0 +1,7 @@
+#+title: Fedora Hyprland
+
+* Variables
+
+#+begin_src bash
+
+#+end_src

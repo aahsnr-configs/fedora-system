@@ -1,0 +1,7 @@
+#!/bin/bash
+flatpak install flathub io.github.zen_browser.zen -y
+flatpak install flathub com.ticktick.TickTick -y
+flatpak install flathub com.bitwarden.desktop -y
+flatpak install flathub org.onlyoffice.desktopeditors -y
+flatpak install flathub com.spotify.Client -y
+flatpak install flathub com.notesnook.Notesnook -y
