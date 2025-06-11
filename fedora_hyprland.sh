@@ -52,7 +52,9 @@ sudo dnf install -y \
   rust \
   util-linux-user \
   fzf 
-#
+
+sudo dnf install fd-find poppler-utils ripgrep ffmpegthumbnailer mediainfo ImageMagick tar unzip
+
 # sudo plymouth-set-default-theme spinner -R
 #
 # echo "@SHELL"
