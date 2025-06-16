@@ -1,0 +1,7 @@
+#!/bin/sh
+echo "@EMACS"
+cd && wget https://gnu.mirror.constant.com/emacs/emacs-30.1.tar.xz
+tar -xvf emacs-30.1.tar.xz && cd emacs-30.1 && ./autogen.sh
+./configure --disable-build-details --with-pgtk --with-native-compilation=aot --with-mailutils --with-imagemagick --with-tree-sitter --with-modules --with-threads --with-sqlite3 --with-cairo --with-harfbuzz --with-libsystemd
+make -j22
+sudo make install && cd && sudo rm -rf emacs-*
