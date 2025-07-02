@@ -1,8 +1,0 @@
-#!/bin/bash
-echo "Installing System Packages"
-sleep 5
-sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda xorg-x11-drv-nvidia-power vulkan xorg-x11-drv-nvidia-cuda-libs nvidia-vaapi-driver libva-utils vdpauinfo kernel-devel kernel-headers gcc make dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig xorg-x11-server-Xwayland libxcb egl-wayland
-sudo dnf mark user akmod-nvidia
-sudo systemctl enable nvidia-{suspend,resume,hibernate}
-sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
-sudo akmods --kernels $(uname -r) --rebuild

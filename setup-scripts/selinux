@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Setting Up Selinux"
+sleep 3
+sudo dnf install setroubleshoot copr-selinux

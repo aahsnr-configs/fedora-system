@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Setting Up Git"
 sleep 3
-sudo dnf install git-core git-credential-libsecret gnome-keyring subversion git-delta
+sudo dnf install git-core git-credential-libsecret gnome-keyring subversion git-delta highlight lazygit 
 git config --global user.name "aahsnr"
 git config --global user.email "ahsanur041@proton.me"
 git config --global credential.helper /usr/libexec/git-core/git-credential-libsecret

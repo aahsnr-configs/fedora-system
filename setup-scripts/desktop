@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Installing Desktop Packages"
+sleep 3
+sudo dnf install quickshell-git ImageMagick hyprpolkitagent file-roller transmission-qt zen-browser thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin tumbler kitty zathura zathura-pdf-poppler kvantum papirus-icon-theme qt5ct qt6ct gnome-themes-extra gtk-murrine-engine sassc   

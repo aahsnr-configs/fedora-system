@@ -1,6 +1,8 @@
 - [ ] Include features from both bazzite, aurora, and secureblue
 - [ ] Setup fedora build system
 - [ ] Integrate with app2unit
+- [ ] Integrate with Caelestia dot files
+- [ ] Remove fedora repo for flatpak
 - [ ] Packages to update:
   - [ ] atuin
   - [ ] hyprpolkitagent

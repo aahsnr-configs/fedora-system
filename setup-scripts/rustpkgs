@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Installing Rust pkgs"
+sleep 3
+
+cargo install --git https://github.com/donovanglover/hyprnome
+cargo install emacs-lsp-booster
