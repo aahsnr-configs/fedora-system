@@ -1,4 +1,0 @@
-#!/bin/bash
-echo "Setting Up Caelestia"
-sleep 3
-sudo dnf install glib2-devel libqalculate-devel qt6-qtdeclarative-devel pipewire-devel aubio-devel

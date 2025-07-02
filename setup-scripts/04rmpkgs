@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Removing Unnecessary Packages"
+sudo dnf remove texmaker xsel xorg-x11-drv-ati xorg-x11-drv-intel xorg-x11-drv-nouveau xorg-x11-drv-vmware xorg-x11-drv-wacom inkscape qemu-device-display-virtio-gpu qemu-device-display-virtio-vga qemu-kvm-core qemu-user-static lynx octave intel-gpu-firmware os-prober 
