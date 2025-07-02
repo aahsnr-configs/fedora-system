@@ -1,6 +1,10 @@
 #!/bin/bash
 echo "Installing Rust pkgs"
 sleep 3
-
-cargo install --git https://github.com/donovanglover/hyprnome
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install emacs-lsp-booster
+cargo install hyprlux
+cargo install --git https://github.com/latex-lsp/texlab
+cd && curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh
+sudo install -Dm755 tectonic "/usr/local/bin/tectonic"
+sudo rm -rf tectonic

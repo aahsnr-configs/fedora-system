@@ -1,7 +1,0 @@
-#!/bin/bash
-cd && git clone --recursive https://github.com/Aylur/ags.git
-cd ags
-npm install
-meson setup build
-sudo meson install -C build
-cd && sudo rm -rf ags

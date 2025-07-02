@@ -3,6 +3,7 @@
 - [ ] Integrate with app2unit
 - [ ] Integrate with Caelestia dot files
 - [ ] Remove fedora repo for flatpak
+- [ ] Move rustpkgs near the beginning
 - [ ] Packages to update:
   - [ ] atuin
   - [ ] hyprpolkitagent
@@ -18,6 +19,10 @@
   - [ ] hyprpicker
   - [ ] jq
 - [ ] Install From Source
+  - [ ] app2unit
+- [ ] Cargo Packages
   - [ ] hyprlux
   - [ ] emacs-lsp-booster
-  - [ ] app2unit
+  - [ ] texlab
+  - [ ] tectonic
+

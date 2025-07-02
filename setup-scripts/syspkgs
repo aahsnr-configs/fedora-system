@@ -1,12 +1,10 @@
 #!/bin/bash
 echo "Installing System Packages"
 sleep 3
-sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda xorg-x11-drv-nvidia-power vulkan xorg-x11-drv-nvidia-cuda-libs nvidia-vaapi-driver libva-utils vdpauinfo kernel-core kernel-devel kernel-headers kernel kernel-devel-matched kernel-modules kernel-modules-core kernel-modules-extra gcc make dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig xorg-x11-server-Xwayland libxcb egl-wayland dnf-automatic copr-selinux dnf-plugins-core fedora-workstation-repositories qt5-qtwayland qt6-qtwayland xisxwayland setroubleshoot chrony cronie curl pkgconf system-config-language plymouth-theme-spinner PackageKit-command-not-found p7zip powertop alsa-utils pipewire pipewire-alsa pipewire-gstreamer pipewire-pulseaudio pipewire-utils pulseaudio-utils wireplumber
-
-sudo dnf install -y  flatpak gtkmm3.0-devel  xcur2png  nodejs npm pipx pixman atuin util-linux-user fzf fd-find poppler-utils ripgrep ffmpegthumbnailer mediainfo tar unzip autojump-zsh starship zoxide zsh aide arpwatch fail2ban fdupes lsd lynis  psacct rng-tools sysstat wget neovim python3-neovim tree-sitter-cli wl-clipboard   shfmt cliphist nwg-clipman greetd pam-devel grim hyprcursor hypridle hyprland hyprland-devel hyprland-contrib hyprlang hyprnome hyprpaper hyprpicker hyprwayland-scanner pyprland slurp xdg-desktop-portal-gtk xdg-desktop-portal-hyprland xorg-x11-server-Xwayland xorg-x11-server-Xwayland-devel wf-recorder asusctl power-profiles-daemon supergfxctl asusctl-rog-gui gtk4 gtk4-layer-shell gjs NetworkManager bluez --allowerasing
-
+sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda xorg-x11-drv-nvidia-power vulkan xorg-x11-drv-nvidia-cuda-libs nvidia-vaapi-driver libva-utils vdpauinfo kernel-core kernel-devel kernel-headers kernel kernel-devel-matched kernel-modules kernel-modules-core kernel-modules-extra gcc make dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig xorg-x11-server-Xwayland libxcb egl-wayland dnf-automatic copr-selinux dnf-plugins-core fedora-workstation-repositories qt5-qtwayland qt6-qtwayland fdupes xisxwayland setroubleshoot chrony cronie curl pkgconf system-config-language plymouth-theme-spinner PackageKit-command-not-found p7zip powertop alsa-utils pipewire pipewire-alsa pipewire-gstreamer pipewire-pulseaudio pipewire-utils pulseaudio-utils wireplumber xcur2png mediainfo tar unzip wget pipx 
 
 sudo dnf mark user akmod-nvidia
 sudo systemctl enable nvidia-{suspend,resume,hibernate}
 sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
 sudo akmods --kernels $(uname -r) --rebuild
+sudo systemctl mask nvidia-fallback.service

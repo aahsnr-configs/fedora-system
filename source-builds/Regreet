@@ -1,6 +1,0 @@
-#!/bin/bash
-cd && git clone https://github.com/rharish101/ReGreet.git && cd ReGreet
-cargo build --all-features --release
-cd target/release
-sudo install -Dm755 regreet "/usr/local/bin/regreet"
-cd && sudo rm -rf Regreet

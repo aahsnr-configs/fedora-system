@@ -1,4 +1,0 @@
-#!/bin/sh
-cd && git clone https://github.com/nwg-piotr/nwg-hello.git && cd nwg-hello
-sudo ./install.sh
-cd && sudo rm -rf nwg-hello
