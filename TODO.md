@@ -1,0 +1,21 @@
+- [ ] Include features from both bazzite, aurora, and secureblue
+- [ ] Setup fedora build system
+- [ ] Integrate with app2unit
+- [ ] Packages to update:
+  - [ ] atuin
+  - [ ] hyprpolkitagent
+  - [ ] hypridle
+  - [ ] hyprlock [major version bump]
+  - [ ] hyprpaper
+  - [ ] nwg-drawer
+  - [ ] starship
+  - [ ] tealdeer
+  - [ ] Zathura
+  - [ ] Zathura-PDF-Poppler
+  - [ ] Texlab
+  - [ ] hyprpicker
+  - [ ] jq
+- [ ] Install From Source
+  - [ ] hyprlux
+  - [ ] emacs-lsp-booster
+  - [ ] app2unit
