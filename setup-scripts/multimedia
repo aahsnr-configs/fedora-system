@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Installing Media-Related pkgs"
+sleep 3
+sudo dnf install alsa-utils pipewire pipewire-alsa pipewire-gstreamer pipewire-pulseaudio pipewire-utils pulseaudio-utils pipewire-pulseaudio wireplumber mediainfo ffmpeg  mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld mesa-va-drivers-freeworld.i686 mesa-vdpau-drivers-freeworld.i686 libva-nvidia-driver.{i686,x86_64}
+
