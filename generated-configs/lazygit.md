@@ -1,37 +1,70 @@
-# Advanced Lazygit Configuration for Gentoo with Vim Keybindings, Catppuccin Mocha Theme, and Neovim Integration
+# Lazygit with Catppuccin Mocha theme, astronvim integrationa and fedora optimization
+``````sh
+# Lazygit Configuration for Fedora 42 with AstroNvim Integration
+# Location: ~/.config/lazygit/config.yml
 
-Here's an optimized `lazygit` configuration tailored for Gentoo Linux with your requested features:
-
-## ~/.config/lazygit/config.yml
-
-```yaml
 gui:
-  # TokyoNight Night theme
+  # Catppuccin Mocha Theme (maintained from original)
   theme:
     lightTheme: false
     activeBorderColor:
-      - '#7aa2f7'
+      - '#cba6f7'  # Catppuccin Mocha Mauve
       - bold
     inactiveBorderColor:
-      - '#3b4261'
+      - '#6c7086'  # Catppuccin Mocha Surface2
     optionsTextColor:
-      - '#7dcfff'
+      - '#89b4fa'  # Catppuccin Mocha Blue
     selectedLineBgColor:
-      - '#292e42'
+      - '#313244'  # Catppuccin Mocha Surface0
     selectedRangeBgColor:
-      - '#292e42'
+      - '#313244'  # Catppuccin Mocha Surface0
     cherryPickedCommitBgColor:
-      - '#292e42'
+      - '#313244'  # Catppuccin Mocha Surface0
     cherryPickedCommitFgColor:
-      - '#9ece6a'
+      - '#a6e3a1'  # Catppuccin Mocha Green
     unstagedChangesColor:
-      - '#f7768e'
+      - '#f38ba8'  # Catppuccin Mocha Red
     defaultFgColor:
-      - '#a9b1d6'
+      - '#cdd6f4'  # Catppuccin Mocha Text
     searchingActiveBorderColor:
-      - '#ff9e64'
+      - '#fab387'  # Catppuccin Mocha Peach
+    cherryPickedCommitBgColor:
+      - '#313244'  # Catppuccin Mocha Surface0
+    cherryPickedCommitFgColor:
+      - '#a6e3a1'  # Catppuccin Mocha Green
+    unstagedChangesColor:
+      - '#f38ba8'  # Catppuccin Mocha Red
+    defaultFgColor:
+      - '#cdd6f4'  # Catppuccin Mocha Text
 
-  # Vim-like keybindings
+  # Enhanced display settings for better AstroNvim integration
+  scrollHeight: 2
+  scrollPastBottom: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true
+  showListFooter: true
+  showRandomTip: true
+  showBranchCommitHash: true
+  showBottomLine: true
+  showPanelJumps: true
+  showCommandLog: true
+  showIcons: true
+  nerdFontsVersion: "3"
+  commitLength:
+    show: true
+  splitDiff: 'auto'
+  skipRewordInEditorWarning: false
+  border: 'rounded'
+  animateExpansion: true
+  portraitMode: 'auto'
+  filterMode: 'substring'
+  spinner:
+    frames: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+    rate: 50
+
+  # Vim-like keybindings optimized for AstroNvim users
   keybinding:
     universal:
       quit: 'q'
@@ -49,19 +82,45 @@ gui:
       scrollRight: 'L'
       gotoTop: 'gg'
       gotoBottom: 'G'
-      startSearch: '/'
-      optionMenu: '?'
-      optionMenu-alt1: ''
+      toggleRangeSelect: 'v'
+      rangeSelectDown: '<s-j>'
+      rangeSelectUp: '<s-k>'
+      prevBlock: '<left>'
+      nextBlock: '<right>'
+      prevBlock-alt: 'h'
+      nextBlock-alt: 'l'
+      nextTab: ']'
+      prevTab: '['
+      nextScreenMode: '+'
+      prevScreenMode: '_'
+      undo: 'z'
+      redo: '<c-z>'
+      filteringMenu: '<c-s>'
+      diffingMenu: 'W'
+      diffingMenu-alt: '<c-e>'
+      copyToClipboard: '<c-o>'
+      openRecentRepos: '<c-r>'
+      submitEditorText: '<enter>'
+      extrasMenu: '@'
+      toggleWhitespaceInDiffView: '<c-w>'
+      increaseContextInDiffView: '}'
+      decreaseContextInDiffView: '{'
+      increaseRenameSimilarityThreshold: ')'
+      decreaseRenameSimilarityThreshold: '('
+      openDiffTool: '<c-t>'
 
     status:
       checkForUpdate: 'u'
       recentRepos: '<enter>'
+      allBranchesLogGraph: 'a'
 
     files:
       commitChanges: 'c'
       commitChangesWithoutHook: 'C'
       amendLastCommit: 'A'
       commitChangesWithEditor: '<c-o>'
+      findBaseCommitForFixup: '<c-f>'
+      confirmDiscard: 'x'
       ignoreFile: 'i'
       refreshFiles: 'r'
       stashAllChanges: 's'
@@ -70,23 +129,36 @@ gui:
       viewResetOptions: 'D'
       fetch: 'f'
       toggleTreeView: '`'
+      openMergeTool: 'M'
+      openStatusFilter: '<c-b>'
 
     branches:
       createPullRequest: 'o'
       viewPullRequestOptions: 'O'
+      copyPullRequestURL: '<c-y>'
       checkoutBranch: '<space>'
       checkoutBranch-alt: 'c'
       forceCheckoutBranch: 'F'
       rebaseBranch: 'r'
+      renameBranch: 'R'
       mergeIntoCurrentBranch: 'm'
       viewBranchOptions: 'M'
       fastForward: 'f'
+      createTag: 'T'
       push: 'P'
       pull: 'p'
-      renameBranch: 'R'
+      setUpstream: 'u'
+      fetchRemote: 'f'
+      sortOrder: 's'
+      gitFlowOptions: 'i'
       createResetToBranchMenu: 'g'
+      viewResetOptions: 'R'
       deleteBranch: 'd'
+      mergeBranch: 'm'
       copyToClipboard: 'y'
+
+    worktrees:
+      viewWorktreeOptions: 'w'
 
     commits:
       squashDown: 's'
@@ -99,143 +171,382 @@ gui:
       moveDownCommit: '<c-j>'
       moveUpCommit: '<c-k>'
       amendToCommit: 'A'
+      amendAttributeMenu: 'a'
       pickCommit: 'p'
       revertCommit: 't'
       cherryPickCopy: 'c'
-      cherryPickCopyRange: 'C'
       pasteCommits: 'v'
+      markCommitAsBaseForRebase: 'B'
       tagCommit: 'T'
       checkoutCommit: '<space>'
       resetCherryPick: '<c-r>'
       copyCommitAttributeToClipboard: 'y'
+      openLogMenu: '<c-l>'
+      openInBrowser: 'o'
+      viewBisectOptions: 'b'
+      startInteractiveRebase: 'i'
+
+    amendAttribute:
+      resetAuthor: 'a'
+      setAuthor: 'A'
+      addCoAuthor: 'c'
 
     stash:
       popStash: 'g'
+      renameStash: 'r'
       applyStash: 'a'
-      viewStashOptions: '<space>'
+      viewStashOptions: '<enter>'
       dropStash: 'd'
 
     commitFiles:
       checkoutCommitFile: 'c'
 
     main:
-      toggleDragSelect: 'v'
-      toggleDragSelect-alt: 'V'
       toggleSelectHunk: 'a'
       pickBothHunks: 'b'
       editSelectHunk: 'e'
       openFile: 'o'
-      openFile-alt: '<space>'
-      openMergeTool: 'M'
-      openDiffTool: 'd'
-      refresh: 'r'
+      openFileInEditor: '<c-o>'
+      openDiffTool: '<c-t>'
+      refreshStagingPanel: 'r'
       stageSelection: 's'
-      unstageSelection: 'u'
+      resetSelection: 'r'
       togglePanel: '<tab>'
-      prevConflict: '<'
-      nextConflict: '>'
-      selectPrevConflict: '['
-      selectNextConflict: ']'
-      undo: 'U'
-      redo: '<c-r>'
+      prevConflict: '['
+      nextConflict: ']'
+      selectPrevConflict: '<'
+      selectNextConflict: '>'
+      selectPrevHunk: 'K'
+      selectNextHunk: 'J'
+      undo: 'z'
+      redo: '<c-z>'
+      toggleDragSelect: 'v'
+      toggleDragSelect-alt: 'V'
+      toggleSelectHunk: 'a'
+      copyToClipboard: '<c-o>'
 
     submodules:
       init: 'i'
       update: 'u'
       bulkMenu: 'b'
       delete: 'd'
+      enter: '<enter>'
 
     commitMessage:
       confirm: '<enter>'
       switchToEditor: '<c-o>'
 
 git:
+  # Git configuration optimized for Fedora 42
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    pager: delta --dark --paging=never --line-numbers --side-by-side
+    useConfig: false
+    externalDiffCommand: ''
 
+  # Fedora 42 specific settings
+  commit:
+    signOff: false
+    autoWrapCommitMessage: true
+    autoWrapWidth: 72
+
+  merging:
+    manualCommit: false
+    args: ''
+    tool: 'nvimdiff'
+    conflictStyle: 'zdiff3'
+
+  log:
+    order: 'topo-order'
+    showGraph: 'when-maximised'
+    showWholeGraph: false
+
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  fetchAll: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium'
+  overrideGpg: false
+  disableForcePushing: false
+  parseEmoji: false
+  truncateCopiedCommitHashesTo: 12
+
+# OS-specific settings for Fedora 42
 os:
-  editCommand: nvim
+  # Use nvim (AstroNvim) as the default editor
+  editCommand: 'nvim'
   editCommandTemplate: '{{editor}} "{{filename}}"'
-  openCommand: xdg-open
+  editPreset: 'nvim'
+  
+  # Fedora 42 specific open command
+  openCommand: 'xdg-open'
+  openLinkCommand: 'xdg-open {{link}}'
+  
+  # Copy commands for Fedora 42
+  copyToClipboardCmd: 'wl-copy'  # For Wayland
+  readFromClipboardCmd: 'wl-paste'  # For Wayland
+  
+  # Alternative for X11 sessions
+  # copyToClipboardCmd: 'xclip -selection clipboard'
+  # readFromClipboardCmd: 'xclip -selection clipboard -o'
 
+# Update and notification settings
+update:
+  method: 'prompt'
+  days: 14
+
+# Refresh settings
+refresher:
+  refreshInterval: 10
+  fetchInterval: 60
+
+# Confirmation settings
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+
+# Startup settings
+disableStartupPopups: true
+notARepository: 'prompt'
+
+# Custom commands for enhanced AstroNvim integration
 customCommands:
+  # Quick commit amendments
   - key: 'e'
     command: 'git commit --amend --no-edit'
     context: 'commits'
     description: 'Amend commit without editing message'
-  - key: 'E'
-    command: 'nvim -c "Gedit {{commitHash}}:"'
-    context: 'commits'
-    description: 'Edit commit in Neovim'
+    stream: true
+  
+  # Open files in AstroNvim
   - key: 'n'
     command: 'nvim {{filename}}'
     context: 'files'
-    description: 'Open file in Neovim'
+    description: 'Open file in AstroNvim'
+    subprocess: true
+  
+  # Advanced AstroNvim integration
   - key: 'N'
-    command: 'nvim +"Gedit {{branchName}}:"'
+    command: 'nvim -c "lua require(\"telescope.builtin\").git_files()"'
+    context: 'global'
+    description: 'Open AstroNvim with Telescope git files'
+    subprocess: true
+  
+  # View file history in AstroNvim
+  - key: 'H'
+    command: 'nvim -c "lua require(\"telescope.builtin\").git_bcommits()"'
+    context: 'files'
+    description: 'View file history with Telescope'
+    subprocess: true
+  
+  # Interactive rebase with AstroNvim
+  - key: 'I'
+    command: 'git rebase -i {{.CheckedOutBranch.Name}}~{{.SelectedLocalCommit.Sha}}'
+    context: 'commits'
+    description: 'Interactive rebase from selected commit'
+    subprocess: true
+  
+  # Create new branch with AstroNvim telescope
+  - key: 'B'
+    command: 'nvim -c "lua require(\"telescope.builtin\").git_branches()"'
     context: 'branches'
-    description: 'Open branch in Neovim fugitive'
+    description: 'Browse branches with Telescope'
+    subprocess: true
+  
+  # Search commits with AstroNvim
+  - key: '/'
+    command: 'nvim -c "lua require(\"telescope.builtin\").git_commits()"'
+    context: 'commits'
+    description: 'Search commits with Telescope'
+    subprocess: true
+  
+  # View diff in AstroNvim
+  - key: 'D'
+    command: 'nvim -c "Gvdiffsplit" {{filename}}'
+    context: 'files'
+    description: 'View diff in AstroNvim with fugitive'
+    subprocess: true
+  
+  # Quick push with force-with-lease
+  - key: 'P'
+    command: 'git push --force-with-lease'
+    context: 'global'
+    description: 'Force push with lease (safer)'
+    stream: true
+  
+  # Stash with message
+  - key: 'S'
+    command: 'git stash push -m "{{.Form.Message}}"'
+    context: 'files'
+    description: 'Stash with custom message'
+    prompts:
+      - type: 'input'
+        key: 'Message'
+        title: 'Stash Message'
+        initialValue: 'WIP: '
+    stream: true
 
-notARepository: skip
-disableStartupPopups: true
-```
+# AstroNvim specific services configuration
+services:
+  # Enable GitHub integration if available
+  github: 'github.com'
+  gitlab: 'gitlab.com'
 
-## Installation and Setup on Gentoo
+# Fedora 42 performance optimizations
+performance:
+  useAsyncGit: true
+  reportRuntimeErrors: true
+``````
 
-1. First, ensure you have Lazygit installed on Gentoo:
+# AstroNvim Lazygit Integration for Fedora 42
 
-```bash
-sudo emerge -a dev-vcs/lazygit
-```
+## Installation on Fedora 42
 
-2. Install the required dependencies:
+``
 
-```bash
-sudo emerge -a app-editors/neovim dev-vcs/git app-shells/delta
-```
+## AstroNvim Integration
 
-3. Create the config directory if it doesn't exist:
+### Launching Lazygit from AstroNvim
 
-```bash
-mkdir -p ~/.config/lazygit
-```
+AstroNvim includes built-in lazygit support with keybindings. You can launch lazygit from within AstroNvim using:
 
-4. Save the above configuration to `~/.config/lazygit/config.yml`
+**Default AstroNvim Keybindings:**
+- `<leader>tl` - Open lazygit in toggleterm
+- `<leader>gg` - Alternative lazygit keybinding
 
-5. For optimal Neovim integration, ensure you have these plugins in your Neovim configuration:
+**Manual Launch:**
+- `:LazyGit` - Command to open lazygit
+- `:ToggleTerm` - Open terminal and run `lazygit`
+
+### Enhanced AstroNvim Integration Setup
+
+Create a custom AstroNvim configuration file to enhance lazygit integration:
+
+**File: `~/.config/nvim/lua/user/plugins/lazygit.lua`**
 
 ```lua
--- In your init.lua or equivalent
-return require('packer').startup(function(use)
-  use 'tpope/vim-fugitive'  -- Git integration
-  use 'lewis6991/gitsigns.nvim'  -- Git signs in gutter
-  use 'catppuccin/nvim'  -- Catppuccin theme
-end)
+return {
+  {
+    "kdheepak/lazygit.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      -- Configure lazygit floating window
+      vim.g.lazygit_floating_window_winblend = 0
+      vim.g.lazygit_floating_window_scaling_factor = 0.9
+      vim.g.lazygit_floating_window_border_chars = {'╭','─', '╮', '│', '╯','─', '╰', '│'}
+      vim.g.lazygit_floating_window_use_plenary = 0
+      vim.g.lazygit_use_neovim_remote = 1
+      vim.g.lazygit_use_custom_config_file_path = 1
+      vim.g.lazygit_config_file_path = vim.fn.expand("~/.config/lazygit/config.yml")
+    end,
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
+      { "<leader>gG", "<cmd>LazyGitCurrentFile<cr>", desc = "Open LazyGit for current file" },
+      { "<leader>gl", "<cmd>LazyGitFilter<cr>", desc = "Open LazyGit log" },
+      { "<leader>gc", "<cmd>LazyGitFilterCurrentFile<cr>", desc = "Open LazyGit commits for current file" },
+    },
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    opts = {
+      size = function(term)
+        if term.direction == "horizontal" then
+          return 15
+        elseif term.direction == "vertical" then
+          return vim.o.columns * 0.4
+        end
+      end,
+      open_mapping = [[<c-\>]],
+      hide_numbers = true,
+      shade_terminals = false,
+      start_in_insert = true,
+      insert_mappings = true,
+      terminal_mappings = true,
+      persist_size = true,
+      direction = "float",
+      close_on_exit = true,
+      shell = vim.o.shell,
+      float_opts = {
+        border = "curved",
+        winblend = 0,
+        highlights = {
+          border = "Normal",
+          background = "Normal",
+        },
+      },
+    },
+  },
+}
 ```
 
-## Additional Recommendations
+### Custom Keybindings
 
-1. For full Catppuccin Mocha theme consistency, add this to your Neovim config:
+Add these to your AstroNvim configuration for enhanced lazygit workflow:
+
+**File: `~/.config/nvim/lua/user/mappings.lua`**
 
 ```lua
-vim.cmd.colorscheme('catppuccin-mocha')
-```
-
-2. Consider adding these Gentoo-specific optimizations to your shell rc file:
-
-```bash
-# Optimize lazygit for Gentoo
-export LAZYGIT_USE_SYSTEM_GIT=1
-export LAZYGIT_NEW_DIR_FILE=~/.local/share/lazygit/newdir
-```
-
-This configuration provides:
-- Full Vim keybindings
-- Catppuccin Mocha theme
-- Deep Neovim integration
-- Gentoo-optimized settings
-- Delta pager for beautiful diffs
-- Custom commands for efficient workflow
-
-The configuration is designed to be both performant and visually consistent with your development environment.
+return {
+  n = {
+    -- Lazygit mappings
+    ["<leader>g"] = { name = "Git" },
+    ["<leader>gg"] = { "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
+    ["<leader>gG"] = { 
+      function()
+        local Terminal = require("toggleterm.terminal").Terminal
+        local lazygit = Terminal:new({
+          cmd = "lazygit",
+          direction = "float",
+          float_opts = {
+            border = "curved",
+            width = math.floor(vim.o.columns * 0.9),
+            height = math.floor(vim.o.lines * 0.9),
+          },
+          on_open = function(term)
+            vim.cmd("startinsert!")
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+          end,
+          on_close = function(term)
+            vim.cmd("startinsert!")
+          end,
+        })
+        lazygit:toggle()
+      end,
+      desc = "Open LazyGit (Float)"
+    },
+    ["<leader>gl"] = { 
+      function()
+        local Terminal = require("toggleterm.terminal").Terminal
+        local lazygit_log = Terminal:new({
+          cmd = "lazygit log",
+          direction = "float",
+          float_opts = {
+            border = "curved",
+          },
+        })
+        lazygit_log:toggle()
+      end,
+      desc = "LazyGit Log"
+    },
+    ["<leader>gf"] = { 
+      function()
+        local file = vim.fn.expand("%:p")
+        if file ~= "" then
+          local Terminal = require("toggleterm.terminal").Terminal
+          local lazygit_file = Terminal:new({
+            cmd = "lazygit -f " .. file,
+            direction = "float",
+            float_opts = {
+              border = "curved",
+            },
+          })
+          lazygit_file:toggle()
+        end
+      end,
+      desc = "LazyGit Current File"
+    },
+  },
+}
+```````
