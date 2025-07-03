@@ -1,0 +1,6 @@
+## Find read-only hardening script is located in gemini with bristy gmail
+The goal of this task to write a comprehensive, advanced and modular python3 program for hardening Fedora 42 with following features: it must have least amout of attack surface; fedora 42 will be used a personal compliant; make fedora 42 CIS compliant to certain degree to satisfy desktop use. It must cover a wide range of features. Use the attached pdf file as a guide. Make sure the script accounts for fedora 42 while keeping in mind that the attached file for RHEL 9. Do not setup for server use. Keep in mind the fedora 42 installation will utilize btrfs file system with subvolumes 
+
+Are sure the script make cis compliant to a certain degree considering that fedora 42 is for desktop use? Implement the features from secureblue https://secureblue.dev/features except for the following features: remove sudo, su, and pkexec entirely in favor of run0; Disable XWayland by default (for GNOME, Plasma, and Sway images; Install and enable hardened_malloc globally, including for Flatpaks; Install USBGuard and provide ujust commands to automatically configure it.
+
+Further enhance the above script by implementing more hardening features from the attached pdf file. Then rewrite the whole configuration. 

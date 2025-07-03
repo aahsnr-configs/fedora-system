@@ -2,9 +2,11 @@
 echo "Installing Rust pkgs"
 sleep 3
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default stable
 cargo install emacs-lsp-booster
 cargo install hyprlux
 cargo install tuckr
+cargo install wl-screenrec
 cargo install --git https://github.com/latex-lsp/texlab
 cd && curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh
 sudo install -Dm755 tectonic "/usr/local/bin/tectonic"
