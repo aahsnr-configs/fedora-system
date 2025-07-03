@@ -4,6 +4,7 @@
 - [ ] Integrate with Caelestia dot files
 - [ ] Remove fedora repo for flatpak
 - [ ] Move rustpkgs near the beginning
+- [ ] Setup media and codecs
 - [ ] Packages to update:
   - [ ] atuin
   - [ ] hyprpolkitagent
@@ -25,4 +26,5 @@
   - [ ] emacs-lsp-booster
   - [ ] texlab
   - [ ] tectonic
+
 
