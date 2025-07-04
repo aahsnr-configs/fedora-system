@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "Installing Packages from Source"
-bash $HOME/git/
