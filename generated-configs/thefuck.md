@@ -323,7 +323,7 @@ priority = 1000
 
 Add to your `~/.zshrc`:
 
-```zsh
+```sh
 # thefuck configuration with Catppuccin Mocha theme
 eval $(thefuck --alias)
 
@@ -406,72 +406,6 @@ fi
 if [[ -f ~/.config/thefuck/fedora_rules.py ]]; then
     export THEFUCK_RULES_DIR="$HOME/.config/thefuck"
 fi
-```
-
-## 5. Bash Integration (Alternative)
-
-Add to your `~/.bashrc`:
-
-```bash
-# thefuck configuration
-eval $(thefuck --alias)
-
-# Custom keybinding for thefuck (Alt+f)
-bind -x '"\ef": thefuck-command-line'
-
-# Function to run thefuck on current command line
-thefuck-command-line() {
-    local FUCK="$(THEFUCK_REQUIRE_CONFIRMATION=false thefuck "$(history | tail -n1 | sed 's/^[ ]*[0-9]*[ ]*//')" 2>/dev/null)"
-    if [[ -n $FUCK ]]; then
-        history -s "$FUCK"
-        eval "$FUCK"
-    fi
-}
-
-# Load custom Fedora rules
-if [[ -f ~/.config/thefuck/fedora_rules.py ]]; then
-    export THEFUCK_RULES_DIR="$HOME/.config/thefuck"
-fi
-```
-
-## 6. Environment Variables Configuration
-
-Create `~/.config/thefuck/env.sh`:
-
-```bash
-#!/bin/bash
-# thefuck environment variables for Fedora
-
-# Basic settings
-export THEFUCK_REQUIRE_CONFIRMATION=true
-export THEFUCK_WAIT_COMMAND=3
-export THEFUCK_NO_COLORS=false
-export THEFUCK_HISTORY_LIMIT=2000
-export THEFUCK_NUM_CLOSE_MATCHES=5
-export THEFUCK_ALTER_HISTORY=true
-export THEFUCK_INSTANT_MODE=false
-export THEFUCK_DEBUG=false
-
-# Priority settings (lower number = higher priority)
-export THEFUCK_PRIORITY='no_command=9999:apt_get=100:git_push=1000:rm_root=1:dnf_no_such_command=50:sudo=100:systemctl=200'
-
-# Exclude problematic or unwanted rules
-export THEFUCK_EXCLUDE_RULES=''
-
-# Slow commands configuration
-export THEFUCK_SLOW_COMMANDS='lein,react-native,gradle,./gradlew,vagrant,emerge,yum'
-export THEFUCK_WAIT_SLOW_COMMAND=15
-export THEFUCK_SLOW_COMMANDS_HISTORY_LIMIT=999
-
-# Custom rules directory
-export THEFUCK_RULES_DIR="$HOME/.config/thefuck"
-```
-
-Source this file in your shell rc:
-
-```bash
-# Add to ~/.bashrc or ~/.zshrc
-source ~/.config/thefuck/env.sh
 ```
 
 ## 7. Systemd Service for Cache Management

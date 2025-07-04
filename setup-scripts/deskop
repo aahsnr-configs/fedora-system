@@ -1,4 +1,17 @@
 #!/bin/bash
 echo "Installing Desktop Packages"
 sleep 3
-sudo dnf install adw-gtk3-theme atuin aubio bat brightnessctl bluez btop brightnessctl cliphist cava ddcutil eza fastfetch ffmpegthumbnailer file-roller fish fuzzel fzf gnome-themes-extra greetd grim gtk-murrine-engine hypridle hyprland hyprland-contrib hyprland-devel hyprnome hyprpaper hyprpicker hyprpolkitagent ImageMagick imv inotify-tools jq kvantum kvantum-qt5 kitty lm_sensors mpv nwg-look papirus-icon-theme pyprland qt5ct qt6ct quickshell-git rofi-wayland sassc slurp socat starship swappy tealdeer thefuck thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin transmission-qt tmux trash-cli tumbler tuigreet uwsm xdg-desktop-portal-gtk xdg-desktop-portal-hyprland zathura zathura-pdf-poppler zen-browser zoxide zsh 
+sudo dnf install adw-gtk3-theme atuin aubio bat brightnessctl bluez btop brightnessctl cliphist cava ddcutil eza fastfetch ffmpegthumbnailer file-roller fish fuzzel fzf gnome-themes-extra greetd grim gtk-murrine-engine hypridle hyprland hyprland-contrib hyprland-devel hyprnome hyprpaper hyprpicker hyprpolkitagent ImageMagick imv inotify-tools jq kvantum kvantum-qt5 kitty libavif libheif libwebp lm_sensors nwg-look papirus-icon-theme pyprland qt5ct qt6ct quickshell-git rofi-wayland sassc slurp socat starship swappy tealdeer thefuck thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin transmission-qt tmux trash-cli tumbler tuigreet uwsm xdg-desktop-portal-gtk xdg-desktop-portal-hyprland zathura zathura-pdf-poppler zen-browser zoxide zsh
+
+echo "Bat Setup"
+# Download the theme
+curl -o ~/.config/bat/themes/Catppuccin-mocha.tmTheme \
+  https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme
+
+# Build the cache to make the theme available
+bat cache --build
+
+# Generate initial cache
+tldr --update
+
+

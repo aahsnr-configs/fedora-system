@@ -1,0 +1,3 @@
+#!/bin/bash
+systemctl --user daemon-reload
+systemctl --user enable --now atuin.service atuin-maintenance.timer tldr-update.timer thefuck-cache.timer

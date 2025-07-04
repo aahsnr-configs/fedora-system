@@ -183,7 +183,7 @@ bindkey '^o' fzf_toolbox_widget              # Ctrl+O for toolbox containers
 
 ## ~/.config/fzf/fzf.fedora
 
-```zsh
+```sh
 #!/usr/bin/env zsh
 
 # Fedora-specific FZF functions with proper error handling

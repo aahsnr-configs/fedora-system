@@ -326,7 +326,7 @@ sudo dnf install -y jetbrains-mono-fonts fira-code-fonts
 mkdir -p ~/.tmux/plugins
 
 # Clone TPM
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git submodule add https://github.com/tmux-plugins/tpm ./.tmux/plugins/tpm
 
 # Set proper permissions
 chmod 700 ~/.tmux

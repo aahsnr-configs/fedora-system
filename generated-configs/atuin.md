@@ -24,8 +24,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 # Use correct path - check both locations
-ExecStartPre=/bin/sh -c 'test -x %h/.cargo/bin/atuin || test -x /usr/bin/atuin'
-ExecStart=/bin/sh -c 'if [ -x %h/.cargo/bin/atuin ]; then %h/.cargo/bin/atuin daemon; else /usr/bin/atuin daemon; fi'
+ExecStartPre=/bin/sh -c 'test -x /usr/bin/atuin'
+ExecStart=usr/bin/atuin daemon
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=5
@@ -240,9 +240,6 @@ if command -v flatpak &> /dev/null; then
     alias fpl='flatpak list'
     alias fpinfo='flatpak info'
 fi
-
-# RPM Fusion setup helper
-alias enable-rpmfusion='sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
 
 # Function to show dnf history with better formatting
 dnf-history() {

@@ -461,46 +461,8 @@ Windows = " "
 
 ## Shell Integration
 
-### For Bash (`~/.bashrc`):
-```bash
-# Enable Starship
-eval "$(starship init bash)"
-
-# Fedora-specific optimizations
-export STARSHIP_CONFIG="$HOME/.config/starship.toml"
-
-# Faster DNF operations
-alias dnf='dnf --color=always'
-alias dnfs='dnf search'
-alias dnfi='dnf install'
-alias dnfu='dnf update'
-alias dnfr='dnf remove'
-alias dnfg='dnf group'
-alias dnfh='dnf history'
-
-# Flatpak aliases
-alias fpi='flatpak install'
-alias fpu='flatpak update'
-alias fpr='flatpak remove'
-alias fps='flatpak search'
-alias fpl='flatpak list'
-
-# Podman aliases
-alias pps='podman ps'
-alias pimg='podman images'
-alias prun='podman run'
-alias pstop='podman stop'
-alias prm='podman rm'
-
-# System shortcuts
-alias sysinfo='hostnamectl && echo && lscpu | head -10'
-alias ports='ss -tuln'
-alias meminfo='free -h'
-alias diskinfo='df -h'
-```
-
 ### For Zsh (`~/.zshrc`):
-```zsh
+```sh
 # Enable Starship
 eval "$(starship init zsh)"
 
@@ -522,29 +484,6 @@ alias systemctl='nocorrect systemctl'
 
 # Git performance optimization
 export GIT_OPTIONAL_LOCKS=0
-```
-
-### For Fish (`~/.config/fish/config.fish`):
-```fish
-# Enable Starship
-starship init fish | source
-
-# Fedora-specific optimizations
-set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
-
-# Aliases
-alias dnf='dnf --color=always'
-alias dnfs='dnf search'
-alias dnfi='dnf install'
-alias dnfu='dnf update'
-alias dnfr='dnf remove'
-
-# Flatpak aliases
-alias fpi='flatpak install'
-alias fpu='flatpak update'
-alias fpr='flatpak remove'
-alias fps='flatpak search'
-alias fpl='flatpak list'
 ```
 
 ## Installation Instructions

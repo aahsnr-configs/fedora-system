@@ -26,7 +26,7 @@ sudo dnf install -y jetbrains-mono-fonts-all fira-code-fonts fontawesome-fonts
 sudo dnf install -y 'nerd-fonts-*'
 
 # Install preview and utility dependencies
-sudo dnf install -y ffmpeg-free pandoc poppler-utils
+sudo dnf install -y ffmpeg pandoc poppler-utils
 sudo dnf install -y unrar zip unzip p7zip p7zip-plugins
 sudo dnf install -y ImageMagick fzf zoxide
 sudo dnf install -y trash-cli file
@@ -1080,7 +1080,7 @@ Add to your shell config:
 ```bash
 # Yazi completion
 if command -v yazi &> /dev/null; then
-    source <(yazi --generate-completion bash)  # or zsh
+    source <(yazi --generate-completion zsh)
 fi
 ```
 
