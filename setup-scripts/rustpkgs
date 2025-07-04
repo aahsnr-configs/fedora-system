@@ -6,6 +6,7 @@ rustup default stable
 cargo install emacs-lsp-booster
 cargo install hyprlux
 cargo install tuckr
+cargo install du-dust
 cargo install wl-screenrec
 cargo install --git https://github.com/latex-lsp/texlab
 cd && curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh

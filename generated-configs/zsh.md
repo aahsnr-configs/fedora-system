@@ -198,23 +198,6 @@ function zvm_after_init() {
 }
 
 # ===== Modern Command Replacements =====
-# Check for modern CLI tools and create aliases
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat --pager=never'
-  alias batcat='bat'
-fi
-
-if command -v eza >/dev/null 2>&1; then
-  alias ls='eza --group-directories-first --icons'
-  alias ll='eza --long --header --git --group --icons --group-directories-first'
-  alias la='eza --long --header --git --group --icons --group-directories-first --all'
-  alias tree='eza --tree --level=3 --group-directories-first --icons'
-  alias lt='eza --tree --level=2 --long --icons'
-else
-  alias ll='ls -lah --color=auto'
-  alias la='ls -la --color=auto'
-  alias ls='ls --color=auto'
-fi
 
 # Handle fd-find (Fedora package name)
 if command -v fd-find >/dev/null 2>&1; then
@@ -341,45 +324,6 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 # History substring search
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#313244,fg=#f38ba8,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#313244,fg=#f38ba8,bold'
-
-# ===== External Tool Integration =====
-# FZF configuration
-if command -v fzf >/dev/null 2>&1; then
-  export FZF_DEFAULT_OPTS="
-    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
-    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc
-    --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8
-    --height=50% --border=rounded --preview-window=right:50%"
-  
-  # Use fd-find for FZF if available
-  if command -v fd-find >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND='fd-find --type f --hidden --follow --exclude .git'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  fi
-  
-  # Source FZF completion
-  [[ -f /usr/share/fzf/shell/completion.zsh ]] && source /usr/share/fzf/shell/completion.zsh
-fi
-
-# Atuin integration
-command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh --disable-up-arrow)"
-
-# Starship prompt
-if command -v starship >/dev/null 2>&1; then
-  eval "$(starship init zsh)"
-else
-  # Fallback prompt
-  autoload -U colors && colors
-  PROMPT='%F{#89b4fa}%n@%m%f %F{#a6e3a1}%~%f %F{#f38ba8}%#%f '
-  RPROMPT='%F{#6c7086}%*%f'
-fi
-
-# ===== LS_COLORS Configuration =====
-if command -v vivid >/dev/null 2>&1; then
-  export LS_COLORS="$(vivid generate catppuccin-mocha)"
-elif [[ -f "$HOME/.config/dircolors/catppuccin-mocha" ]]; then
-  eval "$(dircolors "$HOME/.config/dircolors/catppuccin-mocha")"
-fi
 
 # ===== Utility Functions =====
 # Quick directory creation and navigation
@@ -521,111 +465,6 @@ cargo install atuin
 ```
 
 ### 3. Backup and Install Configuration
-
-```bash
-# Backup existing configuration
-[[ -f ~/.zshrc ]] && mv ~/.zshrc ~/.zshrc.backup
-
-# Install the new configuration
-curl -L https://raw.githubusercontent.com/your-repo/zsh-config/main/.zshrc -o ~/.zshrc
-
-# Or copy the configuration manually from the artifact above
-```
-
-### 4. Set ZSH as Default Shell
-
-```bash
-chsh -s $(which zsh)
-```
-
-### 5. Install Starship Configuration (Optional)
-
-Create a Starship configuration with Catppuccin theme:
-
-```bash
-mkdir -p ~/.config
-cat > ~/.config/starship.toml << 'EOF'
-format = """
-[](#a6e3a1)\
-$os\
-$username\
-[](bg:#89b4fa fg:#a6e3a1)\
-$directory\
-[](fg:#89b4fa bg:#fab387)\
-$git_branch\
-$git_status\
-[](fg:#fab387 bg:#f38ba8)\
-$nodejs\
-$rust\
-$golang\
-$php\
-[](fg:#f38ba8 bg:#b4befe)\
-$time\
-[ ](fg:#b4befe)\
-"""
-
-[os]
-disabled = false
-style = "bg:#a6e3a1 fg:#1e1e2e"
-symbols.Fedora = " "
-
-[username]
-show_always = true
-style_user = "bg:#a6e3a1 fg:#1e1e2e"
-style_root = "bg:#a6e3a1 fg:#1e1e2e"
-format = '[$user ]($style)'
-disabled = false
-
-[directory]
-style = "bg:#89b4fa fg:#1e1e2e"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
-
-[git_branch]
-symbol = ""
-style = "bg:#fab387 fg:#1e1e2e"
-format = '[[ $symbol $branch ](bg:#fab387 fg:#1e1e2e)]($style)'
-
-[git_status]
-style = "bg:#fab387 fg:#1e1e2e"
-format = '[[($all_status$ahead_behind )](bg:#fab387 fg:#1e1e2e)]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#f38ba8 fg:#1e1e2e"
-format = '[[ $symbol ($version) ](bg:#f38ba8 fg:#1e1e2e)]($style)'
-
-[rust]
-symbol = ""
-style = "bg:#f38ba8 fg:#1e1e2e"
-format = '[[ $symbol ($version) ](bg:#f38ba8 fg:#1e1e2e)]($style)'
-
-[golang]
-symbol = ""
-style = "bg:#f38ba8 fg:#1e1e2e"
-format = '[[ $symbol ($version) ](bg:#f38ba8 fg:#1e1e2e)]($style)'
-
-[php]
-symbol = ""
-style = "bg:#f38ba8 fg:#1e1e2e"
-format = '[[ $symbol ($version) ](bg:#f38ba8 fg:#1e1e2e)]($style)'
-
-[time]
-disabled = false
-time_format = "%R"
-style = "bg:#b4befe fg:#1e1e2e"
-format = '[[  $time ](bg:#b4befe fg:#1e1e2e)]($style)'
-EOF
-```
-
-### 6. Install Catppuccin LS_COLORS (Optional)
-
-```bash
-mkdir -p ~/.config/dircolors
-curl -o ~/.config/dircolors/catppuccin-mocha \
-  https://raw.githubusercontent.com/catppuccin/dircolors/main/themes/catppuccin-mocha.dircolors
-```
 
 ### 7. First Run
 
