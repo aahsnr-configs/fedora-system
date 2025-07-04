@@ -1,8 +1,9 @@
 #!/bin/bash
 sudo dnf install flatpak
-flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak remote-delete --system fedora
 flatpak remote-delete --system flathub-beta
+flatpak remote-delete --system flathub
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 flatpak install flathub com.ticktick.TickTick
 flatpak install flathub org.onlyoffice.desktopeditors

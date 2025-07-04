@@ -7,4 +7,5 @@ curl -fsSL https://bun.sh/install | bash
 cd && mkdir -p ~/.npm-global/lib
 npm config set prefix '~/.npm-global'
 export PATH=~/.npm-global/bin:$PATH
+export PATH=~/.bun/bin:$PATH
 bun install -g neovim sass pyright

@@ -2,9 +2,12 @@
 - [ ] Setup fedora build system
 - [ ] Integrate with app2unit
 - [ ] Integrate with Caelestia dot files
-- [ ] Remove fedora repo for flatpak
+- [ ] Remove fedora system repo for flatpak
+- [ ] Remove flathub system remove from flatpak
 - [ ] Move rustpkgs near the beginning
 - [ ] Setup media and codecs
+- [ ] Add bun to path in commandline
+- [ ] Add cargo to path in commandline
 - [ ] Packages to update:
   - [ ] atuin
   - [ ] hyprpolkitagent
