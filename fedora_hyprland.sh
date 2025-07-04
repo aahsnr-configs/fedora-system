@@ -28,7 +28,7 @@ sudo fc-cache -v
 ln -s $HOME/.dots/.config/nvim-astronvim/ $HOME/.config/nvim
 
 sudo systemctl set-default graphical.target
-systemctl --user enable --now wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service
+systemctl --user enable --now wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service 
 
 cd && mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
