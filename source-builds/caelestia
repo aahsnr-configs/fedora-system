@@ -2,14 +2,15 @@
 echo "Setting Up Caelestia"
 sleep 3
 set -e
-sudo dnf install glib2-devel libqalculate-devel qt6-qtdeclarative-devel pipewire-devel aubio-devel hatch python3-hatch-vcs python3-pillow libnotify-devel pulseaudio-utils glib2-devel
+sudo dnf install glib2-devel libqalculate-devel qt6-qtdeclarative-devel pipewire-devel aubio-devel hatch python3-hatch-vcs python3-pillow python3-build python3-installer libnotify-devel pulseaudio-utils glib2-devel
 
 cd && git clone https://github.com/caelestia-dots/cli.git
 cd cli
 python -m build --wheel
 sudo python -m installer dist/*.whl
 sudo cp completions/caelestia.fish /usr/share/fish/vendor_completions.d/caelestia.fish
-cd && sudo rm -rf cli
+cd 
+sudo rm -rf cli
 
 mkdir -p $HOME/.config/quickshell
 cd $HOME/.config/quickshell
