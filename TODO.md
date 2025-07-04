@@ -2,12 +2,15 @@
 - [ ] Setup fedora build system
 - [ ] Integrate with app2unit
 - [ ] Integrate with Caelestia dot files
+- [ ] Fix atuin bad service unit
+- [ ] Fix this error for .zshrc 
+no matches found: --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
 - [ ] Remove fedora system repo for flatpak
 - [ ] Remove flathub system remove from flatpak
 - [ ] Move rustpkgs near the beginning
 - [ ] Setup media and codecs
-- [ ] Add bun to path in commandline
-- [ ] Add cargo to path in commandline
+- [x] Add bun to path in commandline
+- [x] Add cargo to path in commandline
 - [ ] Packages to update:
   - [ ] atuin
   - [ ] hyprpolkitagent
