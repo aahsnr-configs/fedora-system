@@ -4,7 +4,6 @@ flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/fl
 flatpak remote-delete --system fedora
 flatpak remote-delete --system flathub-beta
 
-flatpak install flathub io.github.zen_browser.zen
 flatpak install flathub com.ticktick.TickTick
 flatpak install flathub org.onlyoffice.desktopeditors
 flatpak install flathub com.github.tchx84.Flatseal
