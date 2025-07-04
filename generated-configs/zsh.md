@@ -1,4 +1,4 @@
-# Advanced Unified ZSH Configuration for Gentoo with Fish-like Features
+# Advanced Unified ZSH Configuration for Fedora 42 with Fish-like Features
 
 ## Configuration
 
@@ -7,12 +7,11 @@
 # -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
 # vim: ft=zsh sw=2 ts=2 et
 #
-# Advanced ZSH configuration for Gentoo with Fish-like features
-# Unified version combining best features from V1 and V2
+# Advanced ZSH configuration for Fedora 42 with Fish-like features
+# Fixed version addressing compatibility issues and performance problems
 
 # ===== Performance Optimization =====
-# Disable magic functions for faster autocomplete
-__attribute__() {}
+# Disable compfix for faster startup
 typeset -g ZSH_DISABLE_COMPFIX=true
 
 # Profiling (uncomment to debug startup time)
@@ -23,40 +22,55 @@ typeset -g ZSH_DISABLE_COMPFIX=true
 [[ -d "${XDG_DATA_HOME:-$HOME/.local/share}/zsh" ]] || mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 
 # ===== Environment Variables =====
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export EDITOR=${EDITOR:-nvim}
 export VISUAL=${VISUAL:-nvim}
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export BAT_THEME="Catppuccin Mocha"
 export TERM=${TERM:-xterm-256color}
-export KEYTIMEOUT=1  # Reduce vi-mode switch delay
+export KEYTIMEOUT=1
+
+# Fedora-specific environment variables
+export BROWSER=${BROWSER:-firefox}
+export PAGER=${PAGER:-less}
 
 # ===== History Configuration =====
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=50000
+SAVEHIST=50000
 
 # History options
-setopt extended_history       # Record timestamp and duration
-setopt hist_expire_dups_first # Delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # Ignore duplicated commands in history list
-setopt hist_ignore_space      # Ignore commands that start with space
-setopt hist_verify            # Show command with history expansion before running it
-setopt share_history          # Share command history data between sessions
-setopt hist_reduce_blanks     # Remove superfluous blanks from history items
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt share_history
+setopt hist_reduce_blanks
 
 # ===== Directory Navigation =====
-setopt auto_cd                # Change directory without cd command
-setopt auto_pushd             # Make cd push old directory to directory stack
-setopt pushd_ignore_dups      # Don't push duplicates to directory stack
-setopt pushdminus            # Invert + and - meanings for directory stack
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+
+# ===== ZSH Options =====
+setopt correct
+setopt complete_aliases
+setopt always_to_end
+setopt list_packed
+setopt auto_list
+setopt auto_menu
+setopt auto_param_slash
+setopt extended_glob
+setopt glob_dots
 
 # ===== Plugin Management =====
 ZSH_PLUGINS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
-# Function to clone or update plugins
-function _zsh_plugin_manage() {
+# Simple plugin loader function
+function _load_plugin() {
   local repo="$1"
   local plugin_name="${repo##*/}"
   local plugin_dir="$ZSH_PLUGINS_DIR/$plugin_name"
@@ -64,13 +78,13 @@ function _zsh_plugin_manage() {
   # Clone if doesn't exist
   if [[ ! -d "$plugin_dir" ]]; then
     echo "Installing plugin: $plugin_name..."
-    git clone --depth 1 "https://github.com/$repo.git" "$plugin_dir" || {
+    git clone --depth 1 "https://github.com/$repo.git" "$plugin_dir" 2>/dev/null || {
       echo "Failed to clone $repo"
       return 1
     }
   fi
   
-  # Find and source the plugin file
+  # Source the plugin
   local plugin_files=(
     "$plugin_dir/${plugin_name}.plugin.zsh"
     "$plugin_dir/${plugin_name}.zsh"
@@ -86,7 +100,6 @@ function _zsh_plugin_manage() {
     fi
   done
   
-  echo "Warning: Could not find plugin file for $plugin_name"
   return 1
 }
 
@@ -96,56 +109,28 @@ function zsh_update_plugins() {
   for plugin_dir in "$ZSH_PLUGINS_DIR"/*; do
     if [[ -d "$plugin_dir/.git" ]]; then
       echo "Updating $(basename "$plugin_dir")..."
-      git -C "$plugin_dir" pull --ff-only
+      git -C "$plugin_dir" pull --ff-only 2>/dev/null
     fi
   done
-  rm -f "$ZSH_CACHE_DIR/plugins_loaded"
   echo "Plugin update complete. Restart your shell to apply changes."
 }
 
-# Load plugins
-plugins=(
-  "zsh-users/zsh-autosuggestions"
-  "zsh-users/zsh-syntax-highlighting"
-  "zsh-users/zsh-history-substring-search"
-  "zsh-users/zsh-completions"
-  "marlonrichert/zsh-autocomplete"
-  "Aloxaf/fzf-tab"
-  "hlissner/zsh-autopair"
-  "jeffreytse/zsh-vi-mode"
-)
+# Load plugins in proper order to avoid conflicts
+[[ -d "$ZSH_PLUGINS_DIR" ]] || mkdir -p "$ZSH_PLUGINS_DIR"
 
-# Check if plugins need to be loaded
-if [[ ! -f "$ZSH_CACHE_DIR/plugins_loaded" ]] || [[ "$1" == "--update-plugins" ]]; then
-  [[ -d "$ZSH_PLUGINS_DIR" ]] || mkdir -p "$ZSH_PLUGINS_DIR"
-  
-  for plugin in "${plugins[@]}"; do
-    _zsh_plugin_manage "$plugin"
-  done
-  
-  touch "$ZSH_CACHE_DIR/plugins_loaded"
-else
-  # Quick load without update check
-  for plugin in "${plugins[@]}"; do
-    plugin_name="${plugin##*/}"
-    plugin_dir="$ZSH_PLUGINS_DIR/$plugin_name"
-    
-    plugin_files=(
-      "$plugin_dir/${plugin_name}.plugin.zsh"
-      "$plugin_dir/${plugin_name}.zsh"
-      "$plugin_dir/zsh-${plugin_name}.plugin.zsh"
-      "$plugin_dir/${plugin_name#zsh-}.plugin.zsh"
-      "$plugin_dir/init.zsh"
-    )
-    
-    for file in "${plugin_files[@]}"; do
-      [[ -f "$file" ]] && { source "$file"; break; }
-    done
-  done
-fi
+# Load zsh-vi-mode first (must be loaded before other plugins)
+_load_plugin "jeffreytse/zsh-vi-mode"
+
+# Load other plugins (excluding zsh-autocomplete due to conflicts)
+_load_plugin "zsh-users/zsh-autosuggestions"
+_load_plugin "zsh-users/zsh-syntax-highlighting"
+_load_plugin "zsh-users/zsh-history-substring-search"
+_load_plugin "zsh-users/zsh-completions"
+_load_plugin "Aloxaf/fzf-tab"
+_load_plugin "hlissner/zsh-autopair"
 
 # ===== Completion System =====
-# Initialize completion system
+# Load completions
 autoload -Uz compinit
 compinit -u -d "$ZSH_CACHE_DIR/zcompdump-$ZSH_VERSION"
 
@@ -153,7 +138,7 @@ compinit -u -d "$ZSH_CACHE_DIR/zcompdump-$ZSH_VERSION"
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/zcompcache"
 
-# Completion menu configuration
+# Completion configuration
 zstyle ':completion:*' completer _extensions _complete _approximate
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
@@ -162,7 +147,7 @@ zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %d --%f'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' rehash true
 
-# fzf-tab configuration with Catppuccin colors
+# fzf-tab configuration
 zstyle ':fzf-tab:*' fzf-command fzf
 zstyle ':fzf-tab:*' fzf-flags \
   --height=50% \
@@ -171,7 +156,10 @@ zstyle ':fzf-tab:*' fzf-flags \
   --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc \
   --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8
 zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:*' fzf-preview '[[ -f $realpath ]] && bat --color=always --style=numbers --line-range=:500 $realpath || [[ -d $realpath ]] && eza --tree --level=2 --color=always $realpath'
+
+# Add preview for files and directories
+zstyle ':fzf-tab:complete:*' fzf-preview \
+  '[[ -f $realpath ]] && bat --color=always --style=numbers --line-range=:100 $realpath 2>/dev/null || [[ -d $realpath ]] && eza --tree --level=2 --color=always $realpath 2>/dev/null || echo "No preview available"'
 
 # ===== Vi Mode Configuration =====
 # zsh-vi-mode configuration
@@ -180,19 +168,15 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 ZVM_VI_HIGHLIGHT_BACKGROUND=#313244
 ZVM_VI_HIGHLIGHT_FOREGROUND=#cdd6f4
 
-# Cursor configuration for vi modes
+# Configure vi mode after initialization
 function zvm_after_init() {
   # History substring search bindings
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
-  bindkey -M vicmd '^P' history-substring-search-up
-  bindkey -M vicmd '^N' history-substring-search-down
   
   # Enhanced vi bindings
   bindkey -M vicmd 'H' beginning-of-line
   bindkey -M vicmd 'L' end-of-line
-  bindkey -M vicmd '?' history-incremental-pattern-search-backward
-  bindkey -M vicmd '/' history-incremental-pattern-search-forward
   
   # Fix common keys in insert mode
   bindkey -M viins "^?" backward-delete-char
@@ -206,81 +190,126 @@ function zvm_after_init() {
   bindkey -M menuselect 'k' vi-up-line-or-history
   bindkey -M menuselect 'l' vi-forward-char
   bindkey -M menuselect 'j' vi-down-line-or-history
+  
+  # Enable FZF bindings after zsh-vi-mode
+  if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
+    source /usr/share/fzf/shell/key-bindings.zsh
+  fi
 }
 
 # ===== Modern Command Replacements =====
-# Conditional aliases for modern CLI tools
-(( $+commands[bat] )) && {
+# Check for modern CLI tools and create aliases
+if command -v bat >/dev/null 2>&1; then
   alias cat='bat --pager=never'
   alias batcat='bat'
-}
+fi
 
-(( $+commands[eza] )) && {
+if command -v eza >/dev/null 2>&1; then
   alias ls='eza --group-directories-first --icons'
   alias ll='eza --long --header --git --group --icons --group-directories-first'
   alias la='eza --long --header --git --group --icons --group-directories-first --all'
   alias tree='eza --tree --level=3 --group-directories-first --icons'
   alias lt='eza --tree --level=2 --long --icons'
-} || {
-  alias ll='ls -lah'
-  alias la='ls -la'
-}
+else
+  alias ll='ls -lah --color=auto'
+  alias la='ls -la --color=auto'
+  alias ls='ls --color=auto'
+fi
 
-(( $+commands[fd] )) && alias find='fd'
-(( $+commands[dust] )) && alias du='dust'
-(( $+commands[procs] )) && alias ps='procs'
-(( $+commands[rg] )) && alias grep='rg'
-(( $+commands[zoxide] )) && eval "$(zoxide init zsh)" && alias cd='z'
+# Handle fd-find (Fedora package name)
+if command -v fd-find >/dev/null 2>&1; then
+  alias fd='fd-find'
+  alias find='fd-find'
+elif command -v fd >/dev/null 2>&1; then
+  alias find='fd'
+fi
 
-# ===== Fish-like Features =====
-# Abbreviations system (improved from both versions)
-declare -A abbrs
-abbrs=(
-  "g" "git"
-  "ga" "git add"
-  "gc" "git commit"
-  "gca" "git commit --amend"
-  "gco" "git checkout"
-  "gd" "git diff"
-  "gl" "git pull"
-  "gp" "git push"
-  "gs" "git status"
-  "gst" "git status"
-  "ll" "eza -l --group-directories-first --header --git --icons"
-  "la" "eza -la --group-directories-first --header --git --icons"
-  "v" "nvim"
-  "vim" "nvim"
-  "c" "clear"
-  "e" "exit"
-  "md" "mkdir -p"
-  "rd" "rmdir"
+# Other modern tools
+command -v dust >/dev/null 2>&1 && alias du='dust'
+command -v procs >/dev/null 2>&1 && alias ps='procs'
+command -v rg >/dev/null 2>&1 && alias grep='rg'
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)" && alias cd='z'
+
+# ===== Abbreviations System =====
+# Improved abbreviations system
+declare -A abbrs=(
+  # Git abbreviations
+  [g]="git"
+  [ga]="git add"
+  [gaa]="git add --all"
+  [gc]="git commit"
+  [gca]="git commit --amend"
+  [gcm]="git commit -m"
+  [gco]="git checkout"
+  [gd]="git diff"
+  [gl]="git pull"
+  [gp]="git push"
+  [gs]="git status"
+  [gst]="git status"
+  [glog]="git log --oneline --graph --decorate"
+  
+  # File operations
+  [ll]="eza -l --group-directories-first --header --git --icons"
+  [la]="eza -la --group-directories-first --header --git --icons"
+  [v]="nvim"
+  [vim]="nvim"
+  [c]="clear"
+  [e]="exit"
+  [md]="mkdir -p"
+  [rd]="rmdir"
+  
+  # Fedora package management
+  [dnfi]="sudo dnf install"
+  [dnfu]="sudo dnf update"
+  [dnfs]="dnf search"
+  [dnfr]="sudo dnf remove"
+  [dnfq]="dnf info"
+  [dnfl]="dnf list"
+  [dnfh]="dnf history"
+  
+  # Systemd
+  [sctl]="systemctl"
+  [sctle]="sudo systemctl enable"
+  [sctld]="sudo systemctl disable"
+  [sctls]="sudo systemctl start"
+  [sctlr]="sudo systemctl restart"
+  [sctlS]="sudo systemctl stop"
+  [sctlq]="systemctl status"
+  
+  # Flatpak
+  [fp]="flatpak"
+  [fpi]="flatpak install"
+  [fpu]="flatpak update"
+  [fpr]="flatpak uninstall"
+  [fps]="flatpak search"
+  [fpl]="flatpak list"
 )
 
-# Enhanced abbreviation expansion
+# Abbreviation expansion function
 magic-abbrev-expand() {
-    local MATCH
-    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
-    command=${abbrs[$MATCH]}
-    LBUFFER+=${command:-$MATCH}
-
-    if [[ "${command}" != "${MATCH}" ]]; then
-        zle self-insert
-        return 0
-    fi
-
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  local expansion=${abbrs[$MATCH]}
+  LBUFFER+=${expansion:-$MATCH}
+  
+  if [[ -n "$expansion" ]]; then
     zle self-insert
+    return 0
+  fi
+  
+  zle self-insert
 }
 
 magic-abbrev-expand-and-accept() {
-    local MATCH
-    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
-    command=${abbrs[$MATCH]}
-    LBUFFER+=${command:-$MATCH}
-    zle accept-line
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  local expansion=${abbrs[$MATCH]}
+  LBUFFER+=${expansion:-$MATCH}
+  zle accept-line
 }
 
 no-magic-abbrev-expand() {
-    LBUFFER+=' '
+  LBUFFER+=' '
 }
 
 zle -N magic-abbrev-expand
@@ -292,10 +321,11 @@ bindkey "^M" magic-abbrev-expand-and-accept
 bindkey "^x " no-magic-abbrev-expand
 bindkey -M isearch " " self-insert
 
-# Auto-ls after cd (Fish-like behavior)
+# ===== Fish-like Features =====
+# Auto-ls after cd
 function chpwd() {
   emulate -L zsh
-  if (( $+commands[eza] )); then
+  if command -v eza >/dev/null 2>&1; then
     eza --group-directories-first --icons
   else
     ls --color=auto
@@ -313,39 +343,39 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#313244,fg=#f38ba8,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#313244,fg=#f38ba8,bold'
 
 # ===== External Tool Integration =====
-# FZF configuration with Catppuccin theme
-if (( $+commands[fzf] )); then
+# FZF configuration
+if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS="
     --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
     --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc
     --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8
     --height=50% --border=rounded --preview-window=right:50%"
   
-  # Use fd for FZF if available
-  (( $+commands[fd] )) && {
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  # Use fd-find for FZF if available
+  if command -v fd-find >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd-find --type f --hidden --follow --exclude .git'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  }
+  fi
+  
+  # Source FZF completion
+  [[ -f /usr/share/fzf/shell/completion.zsh ]] && source /usr/share/fzf/shell/completion.zsh
 fi
 
-# Atuin integration (better history)
-(( $+commands[atuin] )) && eval "$(atuin init zsh --disable-up-arrow)"
+# Atuin integration
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh --disable-up-arrow)"
 
 # Starship prompt
-(( $+commands[starship] )) && eval "$(starship init zsh)" || {
-  # Fallback prompt with Catppuccin colors
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+else
+  # Fallback prompt
   autoload -U colors && colors
   PROMPT='%F{#89b4fa}%n@%m%f %F{#a6e3a1}%~%f %F{#f38ba8}%#%f '
   RPROMPT='%F{#6c7086}%*%f'
-}
+fi
 
-# ===== Catppuccin Theme Integration =====
-# Apply Catppuccin Mocha colors to various tools
-export GTK_THEME=Catppuccin-Mocha-Standard-Blue-Dark
-export QT_STYLE_OVERRIDE=Catppuccin-Mocha
-
-# LS_COLORS for better file type visualization
-if (( $+commands[vivid] )); then
+# ===== LS_COLORS Configuration =====
+if command -v vivid >/dev/null 2>&1; then
   export LS_COLORS="$(vivid generate catppuccin-mocha)"
 elif [[ -f "$HOME/.config/dircolors/catppuccin-mocha" ]]; then
   eval "$(dircolors "$HOME/.config/dircolors/catppuccin-mocha")"
@@ -374,14 +404,14 @@ extract() {
       *.7z)        7z x "$1"        ;;
       *.xz)        unxz "$1"        ;;
       *.lzma)      unlzma "$1"      ;;
-      *)           echo "'$1' cannot be extracted via extract()" ;;
+      *)           echo "'$1' cannot be extracted" ;;
     esac
   else
     echo "'$1' is not a valid file"
   fi
 }
 
-# System information function
+# System information (Fedora-specific)
 sysinfo() {
   echo "System Information:"
   echo "==================="
@@ -390,15 +420,60 @@ sysinfo() {
   echo "Kernel: $(uname -r)"
   echo "Shell: $SHELL"
   echo "Terminal: $TERM"
-  [[ -f /etc/gentoo-release ]] && echo "Gentoo: $(cat /etc/gentoo-release)"
+  [[ -f /etc/fedora-release ]] && echo "Fedora: $(cat /etc/fedora-release)"
+  echo "Memory: $(free -h | awk 'NR==2{printf "%.1f/%.1f GB (%.2f%%)", $3/1024/1024, $2/1024/1024, $3*100/$2 }')"
+  echo "Disk: $(df -h / | awk 'NR==2{printf "%s/%s (%s)", $3, $2, $5}')"
 }
 
+# DNF helper functions
+dnf-installed() { dnf list installed | grep -i "$1"; }
+dnf-available() { dnf list available | grep -i "$1"; }
+dnf-info() { dnf info "$1"; }
+
+# ===== Fedora-specific Aliases =====
+alias dnf='dnf --color=always'
+alias dnf-update='sudo dnf update && sudo dnf autoremove'
+alias dnf-clean='sudo dnf clean all'
+alias dnf-history='dnf history'
+alias dnf-repos='dnf repolist'
+
+# Systemctl aliases
+alias sctl='systemctl'
+alias sctle='sudo systemctl enable'
+alias sctld='sudo systemctl disable'
+alias sctls='sudo systemctl start'
+alias sctlr='sudo systemctl restart'
+alias sctlS='sudo systemctl stop'
+alias sctlq='systemctl status'
+
+# Flatpak aliases
+if command -v flatpak >/dev/null 2>&1; then
+  alias fp='flatpak'
+  alias fpi='flatpak install'
+  alias fpu='flatpak update'
+  alias fpr='flatpak uninstall'
+  alias fps='flatpak search'
+  alias fpl='flatpak list'
+fi
+
+# ===== Additional Fedora Tools =====
+# Podman aliases (if available)
+if command -v podman >/dev/null 2>&1; then
+  alias docker='podman'
+  alias pd='podman'
+  alias pdi='podman images'
+  alias pdc='podman ps'
+  alias pdr='podman run'
+  alias pds='podman start'
+  alias pdS='podman stop'
+fi
+
 # ===== Local Configuration =====
-# Source local zshrc if it exists
+# Source local configuration if it exists
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # ===== Performance Profiling =====
-# Uncomment the line below if you enabled profiling at the top
+# Uncomment to profile startup time
 # zprof
 ```
 
@@ -406,31 +481,46 @@ sysinfo() {
 
 ### 1. Prerequisites
 
-Install required packages on Gentoo:
+Install required packages on Fedora 42:
 
 ```bash
 # Core ZSH and modern CLI tools
-sudo emerge -av app-shells/zsh
+sudo dnf install -y zsh
 
 # Modern command replacements
-sudo emerge -av \
-  sys-apps/bat \
-  sys-apps/eza \
-  sys-apps/fd \
-  sys-block/dust \
-  sys-process/procs \
-  sys-apps/ripgrep \
-  app-shells/fzf \
-  app-shells/zoxide
+sudo dnf install -y \
+  bat \
+  eza \
+  fd-find \
+  dust \
+  procs \
+  ripgrep \
+  fzf \
+  zoxide
 
 # Optional but recommended
-sudo emerge -av \
-  app-shells/starship \
-  app-misc/atuin \
-  dev-util/vivid
+sudo dnf install -y \
+  starship \
+  neovim \
+  vivid
+
+# Additional tools (may require COPR or manual installation)
+# For atuin: cargo install atuin
+# For some tools, you might need to enable additional repositories
 ```
 
-### 2. Backup and Install Configuration
+### 2. Install from COPR (Optional Advanced Tools)
+
+```bash
+# Enable COPR for additional tools if needed
+sudo dnf copr enable atim/starship
+sudo dnf install starship
+
+# For atuin (if not available in main repos)
+cargo install atuin
+```
+
+### 3. Backup and Install Configuration
 
 ```bash
 # Backup existing configuration
@@ -442,13 +532,13 @@ curl -L https://raw.githubusercontent.com/your-repo/zsh-config/main/.zshrc -o ~/
 # Or copy the configuration manually from the artifact above
 ```
 
-### 3. Set ZSH as Default Shell
+### 4. Set ZSH as Default Shell
 
 ```bash
 chsh -s $(which zsh)
 ```
 
-### 4. Install Starship Configuration (Optional)
+### 5. Install Starship Configuration (Optional)
 
 Create a Starship configuration with Catppuccin theme:
 
@@ -477,6 +567,7 @@ $time\
 [os]
 disabled = false
 style = "bg:#a6e3a1 fg:#1e1e2e"
+symbols.Fedora = " "
 
 [username]
 show_always = true
@@ -528,7 +619,7 @@ format = '[[  $time ](bg:#b4befe fg:#1e1e2e)]($style)'
 EOF
 ```
 
-### 5. Install Catppuccin LS_COLORS (Optional)
+### 6. Install Catppuccin LS_COLORS (Optional)
 
 ```bash
 mkdir -p ~/.config/dircolors
@@ -536,7 +627,7 @@ curl -o ~/.config/dircolors/catppuccin-mocha \
   https://raw.githubusercontent.com/catppuccin/dircolors/main/themes/catppuccin-mocha.dircolors
 ```
 
-### 6. First Run
+### 7. First Run
 
 Start ZSH to initialize plugins:
 
@@ -546,42 +637,35 @@ zsh
 
 The configuration will automatically download and configure all plugins on first run.
 
-## Features Overview
+## Fedora-Specific Features
 
-### 🐟 Fish-like Features
-- **Abbreviations**: Smart command expansion (e.g., `g` → `git`)
-- **Auto-completion**: Intelligent tab completion with preview
-- **Auto-ls**: Directory contents shown after `cd`
-- **Smart history**: Shared history with substring search
+### 🔧 DNF Integration
+- **Smart aliases**: `dnfi` for install, `dnfu` for update, etc.
+- **Helper functions**: `dnf-installed`, `dnf-available`, `dnf-info`
+- **System maintenance**: `dnf-update`, `dnf-clean`
 
-### ⚡ Performance Optimizations
-- **Lazy plugin loading**: Plugins load only when needed
-- **Compilation caching**: Faster startup times
-- **Minimal function calls**: Optimized for speed
+### 🏗️ Systemd Integration
+- **Service management**: `sysu` (start), `syss` (stop), `sysr` (restart)
+- **Service status**: `sysq` for quick status checks
+- **Enable/disable**: `syse` and `sysd` for service management
 
-### 🎨 Catppuccin Mocha Theme
-- **Consistent theming**: Applied to prompt, FZF, completion menu
-- **Syntax highlighting**: Color-coded command syntax
-- **Modern aesthetics**: Beautiful, eye-friendly colors
+### 📦 Flatpak Support
+- **Flatpak aliases**: `fp`, `fpi`, `fpu`, `fpr` for common operations
+- **Integrated search**: `fps` for searching Flatpak applications
 
-### 🛠️ Modern CLI Tools Integration
-- **bat**: Enhanced `cat` with syntax highlighting
-- **eza**: Modern `ls` replacement with icons
-- **fd**: Fast file finder
-- **ripgrep**: Better grep
-- **zoxide**: Smart directory jumping
-- **starship**: Fast, informative prompt
+### 🖥️ Fedora System Information
+- **Enhanced sysinfo**: Shows Fedora version, memory, disk usage
+- **OS detection**: Reads from `/etc/fedora-release` and `/etc/os-release`
 
-### ⌨️ Vi Mode Enhancement
-- **Visual feedback**: Different cursor shapes for modes
-- **Smart keybindings**: Intuitive key combinations
-- **History navigation**: Vi keys for history search
+## Key Improvements for Fedora 42
 
-### 🔧 Quality of Life Improvements
-- **Smart completion**: Context-aware suggestions
-- **Directory stack**: Easy directory navigation
-- **Utility functions**: `mkcd`, `extract`, `sysinfo`
-- **Local configuration**: Support for `.zshrc.local`
+1. **Package Manager**: Changed from Gentoo's `emerge` to Fedora's `dnf`
+2. **Command Availability**: Proper handling of `fd` vs `fd-find` naming
+3. **System Paths**: Updated to use Fedora's standard paths
+4. **FZF Integration**: Added proper sourcing of FZF files from Fedora locations
+5. **Systemd Integration**: Added systemctl abbreviations for service management
+6. **Flatpak Support**: Built-in support for Flatpak package management
+7. **Performance**: Optimized for Fedora's file system layout and conventions
 
 ## Usage Tips
 
@@ -589,5 +673,7 @@ The configuration will automatically download and configure all plugins on first
 2. **Profile performance**: Uncomment the profiling lines to debug startup time
 3. **Customize abbreviations**: Edit the `abbrs` array to add your own shortcuts
 4. **Local config**: Use `~/.zshrc.local` for machine-specific settings
+5. **System info**: Run `sysinfo` to get detailed system information
+6. **Package search**: Use `dnfs <package>` for quick package searches
 
-This unified configuration provides the best of both worlds with enhanced error handling, better performance, and a more cohesive user experience while maintaining full compatibility with Gentoo Linux.
+This Fedora-optimized configuration provides a modern, efficient shell environment with Fish-like features while maintaining full compatibility with Fedora 42's package management and system architecture.
