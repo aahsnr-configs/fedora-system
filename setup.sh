@@ -14,3 +14,4 @@ bash $HOME/fedora-setup/setup-scripts/10asus
 bash $HOME/fedora-setup/setup-scripts/11flatpaks
 bash $HOME/fedora-setup/setup-scripts/12rustpkgs
 bash $HOME/fedora-setup/setup-scripts/13srcpkgs
+bash $HOME/fedora-setup/setup-scripts/14systemd
