@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "Setting Up Editors"
-sudo dnf install nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt
+sudo dnf install nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt ImageMagick
 
 cd && mkdir -p ~/.npm-global/lib
 npm config set prefix '~/.npm-global'
 export PATH=~/.npm-global/bin:$PATH
-npm install -g neovim
+npm install -g neovim sass

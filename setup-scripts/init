@@ -14,6 +14,8 @@ sudo dnf copr enable sneexy/zen-browser
 sudo dnf copr enable lukenukem/asus-linux
 sudo dnf copr enable errornointernet/quickshell
 sudo dnf copr enable alternateved/eza
+sudo dnf copr enable lihaohong/yazi
+sudo dnf copr enable mcpengu1/viu 
 
 sudo dnf update
 

@@ -122,17 +122,7 @@ export CATPPUCCIN_CRUST="#11111b"
 # ======================
 
 # Interactive directory selection with fzf (if available)
-if command -v fzf &> /dev/null; then
-    # Set fzf colors to match Catppuccin Mocha
-    export FZF_DEFAULT_OPTS="
-        --color=bg+:$CATPPUCCIN_SURFACE0,bg:$CATPPUCCIN_BASE,spinner:$CATPPUCCIN_ROSEWATER
-        --color=hl:$CATPPUCCIN_RED,fg:$CATPPUCCIN_TEXT,header:$CATPPUCCIN_RED
-        --color=info:$CATPPUCCIN_MAUVE,pointer:$CATPPUCCIN_ROSEWATER
-        --color=marker:$CATPPUCCIN_ROSEWATER,fg+:$CATPPUCCIN_TEXT,prompt:$CATPPUCCIN_MAUVE
-        --color=hl+:$CATPPUCCIN_RED,gutter:$CATPPUCCIN_BASE
-        --height=40% --layout=reverse --border --margin=1 --padding=1
-    "
-    
+if command -v fzf &> /dev/null; then   
     # Interactive zoxide with fzf
     function ji() {
         local selected_dir
@@ -415,88 +405,4 @@ function _zoxide_populate_common_dirs() {
 if [[ ! -f "$_ZO_DATA_DIR/db.zo" ]] || [[ ! -s "$_ZO_DATA_DIR/db.zo" ]]; then
     _zoxide_populate_common_dirs
 fi
-
-# ======================
-# Prompt Integration (Optional)
-# ======================
-
-# Add zoxide info to prompt (uncomment to enable)
-# This adds a star indicator for frequently visited directories
-function _zoxide_prompt_indicator() {
-    local score
-    score=$(zoxide query --score "$(pwd)" 2>/dev/null | cut -d' ' -f1)
-    if [[ -n "$score" ]] && (( score > 10 )); then
-        echo -n "%F{$CATPPUCCIN_GREEN}★%f "
-    fi
-}
-
-# Example prompt integration (uncomment to use)
-# RPROMPT='$(_zoxide_prompt_indicator)$(_zoxide_git_info)'
-
-# ======================
-# Help and Information
-# ======================
-
-# Show help for zoxide configuration
-function jhelp() {
-    echo "Zoxide Configuration Help"
-    echo "========================="
-    echo ""
-    echo "Basic Commands:"
-    echo "  j <directory>     - Jump to directory"
-    echo "  j <partial_name>  - Jump to directory matching partial name"
-    echo "  j -               - Jump to previous directory"
-    echo ""
-    echo "Enhanced Commands:"
-    echo "  ji                - Interactive directory selection (requires fzf)"
-    echo "  jf                - Smart jump (interactive if no args, normal if args)"
-    echo ""
-    echo "Database Management:"
-    echo "  jstats            - Show database statistics"
-    echo "  jclean            - Clean up non-existent directories"
-    echo "  jbackup           - Backup database"
-    echo "  jrestore <file>   - Restore database from backup"
-    echo ""
-    echo "Fedora-Specific Shortcuts:"
-    echo "  jetc, jvar, jusr, jopt, jbin, jsbin, jlib, jinclude, jsrc"
-    echo "  jhome, jconfig, jlocal, jdev, jdocs, jdownloads"
-    echo "  jrpm, jdnf, jrepos, jflatpak, jlog, jsystemd, jfirewall"
-    echo ""
-    echo "Package Management:"
-    echo "  jdoc <package>    - Jump to package documentation"
-    echo "  jconf <package>   - Jump to package configuration"
-    echo ""
-    echo "Environment Variables:"
-    echo "  _ZO_DATA_DIR      - Database location: $_ZO_DATA_DIR"
-    echo "  _ZO_EXCLUDE_DIRS  - Excluded directories: $_ZO_EXCLUDE_DIRS"
-    echo "  _ZO_ECHO          - Echo matched directory: $_ZO_ECHO"
-}
-
-# ======================
-# Final Verification
-# ======================
-
-# Display setup information on first run
-if [[ ! -f "$HOME/.zoxide_fedora_setup_complete" ]]; then
-    echo "✅ Zoxide configuration for Fedora 42 loaded successfully!"
-    echo ""
-    echo "📖 Type 'jhelp' for a complete list of commands"
-    echo "🎯 Use 'j <directory>' to jump to directories"
-    echo "📊 Use 'jstats' to see your navigation statistics"
-    echo ""
-    if command -v fzf &> /dev/null; then
-        echo "🔍 Interactive selection available with 'ji' command"
-    else
-        echo "💡 Install fzf for interactive directory selection: sudo dnf install fzf"
-    fi
-    echo ""
-    touch "$HOME/.zoxide_fedora_setup_complete"
-fi
-
-# Verify zoxide is working
-if ! zoxide query --version &> /dev/null; then
-    echo "⚠️  Warning: zoxide may not be properly initialized"
-    echo "   Try restarting your shell or running: source ~/.zshrc"
-fi
-
 ``````
