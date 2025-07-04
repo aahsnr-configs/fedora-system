@@ -1,4 +1,8 @@
 #!/bin/bash
 echo "Installing DNF groups"
 sleep 3
-sudo dnf install @base-x @python-science @rpm-development-tools @authoring-and-publishing @c-development @container-management @development-tools @engineering-and-scientific @hardware-support 
+sudo dnf install @rpm-development-tools @authoring-and-publishing @c-development @container-management @development-tools @engineering-and-scientific @hardware-support 
+
+sudo dnf install glx-utils plymouth-system-theme xorg-x11-drv-evdev xorg-x11-drv-libinput xorg-x11-drv-qxl xorg-x11-server-Xorg xorg-x11-xinit
+
+sudo dnf install python3-matplotlib python3-matplotlib-tk python3-notebook  python3-numpy python3-pandas python3-pillow python3-pillow-tk python3-scikit-image python3-scikit-learn python3-scipy python3-sympy python3-build python3-installer black pylint
