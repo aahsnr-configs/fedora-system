@@ -1,2 +1,2 @@
 #!/bin/bash
-bash $HOME/fedora-setup/setup-scripts/init
+bash $HOME/fedora-setup/setup-scripts/01init

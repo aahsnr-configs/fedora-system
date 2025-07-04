@@ -2,7 +2,7 @@
 echo "@fonts"
 sleep 3
 sudo mkdir -p /usr/local/share/fonts/
-sudo cp -R $HOME/git/.hyprdots/.fonts/* /usr/local/share/fonts/
+sudo cp -R $HOME/dotfiles/fonts/* /usr/local/share/fonts/
 sudo chown -R root: /usr/local/share/fonts/
 sudo chmod 644 /usr/local/share/fonts/*
 sudo restorecon -vFr /usr/local/share/fonts/nerd
