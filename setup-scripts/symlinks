@@ -1,2 +1,3 @@
 #!/bin/bash
-
+cd && wget https://github.com/twpayne/chezmoi/releases/download/v2.62.7/chezmoi-2.62.7-x86_64.rpm
+sudo dnf install ./*.rpm

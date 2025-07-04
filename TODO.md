@@ -26,5 +26,3 @@
   - [ ] emacs-lsp-booster
   - [ ] texlab
   - [ ] tectonic
-
-
