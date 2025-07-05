@@ -1,14 +1,20 @@
 #!/bin/bash
 echo "Setting up dotfiles"
 sleep 5
-ln -sv $HOME/.hyprdots/.config/atuin/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/bat/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/eza/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/fzf/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/kitty/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/lazygit/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/starship/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.config/zsh/ $HOME/.config/
-ln -sv $HOME/.hyprdots/.tmux/ $HOME/
-ln -sv $HOME/.hyprdots/.tmux.conf $HOME/
-ln -sv $HOME/.hyprdots/.zshrc $HOME/
+# ln -sv $HOME/.hyprdots/.config/atuin/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/bat/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/eza/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/fzf/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/kitty/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/lazygit/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/starship/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.config/zsh/ $HOME/.config/
+# ln -sv $HOME/.hyprdots/.tmux/ $HOME/
+# ln -sv $HOME/.hyprdots/.tmux.conf $HOME/
+# ln -sv $HOME/.hyprdots/.zshrc $HOME/
+
+sudo dnf install stow
+cd
+git clone https://github.com/aahsnr/.hyprdots
+cd .hyprdots/
+stow .
