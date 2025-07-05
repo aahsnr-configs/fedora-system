@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Setting Up Editors"
-sudo dnf install nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt ImageMagick
+sudo dnf install emacs nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt ImageMagick
 
 curl -fsSL https://bun.sh/install | bash
 

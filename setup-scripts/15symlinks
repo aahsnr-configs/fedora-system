@@ -1,7 +1,8 @@
 #!/bin/bash
 echo "Setting up dotfiles"
 sleep 5
-ln -sv $HOME/.config/zsh/ $HOME/.config/
+ln -sv $HOME/.hyprdots/.config/starship/ $HOME/.config
+ln -sv $HOME/.hyprdots/.config/zsh/ $HOME/.config/
 ln -sv $HOME/.hyprdots/.tmux/ $HOME/
 ln -sv $HOME/.hyprdots/.tmux.conf $HOME/
-ln -sv $HOME/.zshrc $HOME/
+ln -sv $HOME/.hyprdots/.zshrc $HOME/
