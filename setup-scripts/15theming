@@ -1,2 +1,9 @@
 #!/bin/bash
-sudo dnf install sassc papirus-icon-theme
+sudo dnf install sassc papirus-icon-theme gtk-murrine-engine gnome-themes-extra
+cd
+git clone https://github.com/vinceliuice/Colloid-gtk-theme.git
+cd Colloid-gtk-theme
+./install.sh -l system -s compact --tweaks catppuccin --tweaks rimless
+sudo ./install.sh -l system -s compact --tweaks catppuccin --tweaks rimless
+cd
+sudo rm -rf Colloid-gtk-theme

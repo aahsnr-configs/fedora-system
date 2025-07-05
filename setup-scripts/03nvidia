@@ -1,0 +1,7 @@
+#!/bin/bash
+sleep 3
+sudo dnf mark user akmod-nvidia
+sudo systemctl enable nvidia-{suspend,resume,hibernate}
+sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
+sudo akmods --kernels $(uname -r) --rebuild
+sudo systemctl mask nvidia-fallback.service

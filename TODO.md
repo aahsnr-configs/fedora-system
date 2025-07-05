@@ -9,6 +9,8 @@
 - [ ] Remove flathub system remove from flatpak
 - [ ] Move rustpkgs near the beginning
 - [ ] Setup media and codecs
+- [ ] replace some fedora pkgs with brew
+- [ ] Replace some rust pkgs with brew
 - [ ] Fix error in starship
 - [ ] Create home-brew script
 - [ ] Make atuin appear more compact
