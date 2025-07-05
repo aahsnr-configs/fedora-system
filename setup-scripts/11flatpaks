@@ -1,8 +1,8 @@
 #!/bin/bash
 sudo dnf install flatpak
-flatpak remote-delete --system fedora
-flatpak remote-delete --system flathub-beta
-flatpak remote-delete --system flathub
+sudo flatpak remote-delete --system fedora
+sudo flatpak remote-delete --system flathub-beta
+sudo flatpak remote-delete --system flathub
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 flatpak install flathub com.ticktick.TickTick
