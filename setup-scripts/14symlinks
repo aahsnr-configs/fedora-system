@@ -3,6 +3,8 @@ echo "Setting up dotfiles"
 sleep 5
 ln -sv $HOME/.hyprdots/.config/atuin/ $HOME/.config/
 ln -sv $HOME/.hyprdots/.config/bat/ $HOME/.config/
+ln -sv $HOME/.hyprdots/.config/eza/ $HOME/.config/
+ln -sv $HOME/.hyprdots/.config/fzf/ $HOME/.config/
 ln -sv $HOME/.hyprdots/.config/kitty/ $HOME/.config/
 ln -sv $HOME/.hyprdots/.config/lazygit/ $HOME/.config/
 ln -sv $HOME/.hyprdots/.config/starship/ $HOME/.config/
