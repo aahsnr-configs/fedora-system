@@ -10,3 +10,4 @@ flatpak install flathub org.onlyoffice.desktopeditors
 flatpak install flathub com.github.tchx84.Flatseal
 flatpak install flathub org.js.nuclear.Nuclear
 flatpak install flathub tv.kodi.Kodi
+flatpak install flathub com.bitwarden.desktop
