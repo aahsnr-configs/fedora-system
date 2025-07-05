@@ -1,8 +1,7 @@
 #!/bin/bash
 echo "Installing Desktop Packages"
 sleep 3
-sudo dnf install adw-gtk3-theme atuin aubio bat brightnessctl bluez btop brightnessctl chafa cliphist cava ddcutil exiftool eza fastfetch ffmpegthumbnailer file file-roller fish fontconfig fuzzel fzf gnome-themes-extra glow greetd grim gtk-murrine-engine highlight hypridle hyprland hyprland-contrib hyprland-devel hyprnome hyprpaper hyprpicker hyprpolkitagent ImageMagick imv inotify-tools jq kvantum kvantum-qt5 kitty libavif libxcb-devel libheif libwebp lm_sensors nwg-look pandoc papirus-icon-theme poppler-utils procs pyprland qt5ct qt6ct quickshell-git rofi-wayland sassc slurp socat starship swappy tealdeer thefuck thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin transmission-qt tmux trash-cli tree tumbler tuigreet uwsm viu xdg-desktop-portal-gtk xdg-desktop-portal-hyprland yazi zathura zathura-pdf-poppler zen-browser zoxide zsh
-
+sudo dnf install adw-gtk3-theme atuin aubio bat brightnessctl bluez btop brightnessctl chafa cliphist cava ddcutil exiftool eza fastfetch ffmpegthumbnailer file file-roller fish fontconfig fuzzel fzf gnome-themes-extra glow greetd grim gtk-murrine-engine highlight hypridle hyprland hyprland-contrib hyprland-devel hyprnome hyprpaper hyprpicker hyprpolkitagent ImageMagick imv inotify-tools jq kvantum kvantum-qt5 kitty libavif libxcb-devel libheif libwebp lm_sensors nwg-look pandoc poppler-utils procs pyprland qt5ct qt6ct quickshell-git rofi-wayland slurp socat swappy tealdeer thefuck thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin transmission-qt tmux trash-cli tree tumbler tuigreet uwsm viu xdg-desktop-portal-gtk xdg-desktop-portal-hyprland yazi zathura zathura-pdf-poppler zen-browser zoxide zsh
 
 # # Generate initial cache
 # tldr --update
