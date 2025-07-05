@@ -1,3 +1,7 @@
 #!/bin/bash
 systemctl --user daemon-reload
-systemctl --user enable --now atuin.service atuin-maintenance.timer tldr-update.timer thefuck-cache.timer wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service
+systemctl --user enable --now tldr-update.timer thefuck-cache.timer wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service hyprpaper hypridle
+
+#atuin.service atuin-maintenance.timer
+
+#sudo systemctl enable greetd haveged rngd

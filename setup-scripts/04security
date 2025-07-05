@@ -1,5 +1,4 @@
 #!/bin/bash
 echo "Setting Up Selinux"
 sleep 3
-sudo dnf install setroubleshoot copr-selinux checkpolicy libsemanage libsepol libsepol-utils mcstrans policycoreutils policycoreutils-dbus policycoreutils-devel policycoreutils-gui policycoreutils-python-utils policycoreutils-restorecond policycoreutils-sandbox python3-policycoreutils python3-setools secilc secilc-doc selint sepolicy_analysis setools setools-console setools-console-analyses setools-gui setroubleshoot-server udica selinux-policy selinux-policy-devel selinux-policy-doc selinux-policy-sandbox selinux-policy-targeted aide arpwatch fail2ban lynis psacct rng-tools sysstat  
-
+sudo dnf install setroubleshoot copr-selinux checkpolicy libsemanage libsepol libsepol-utils mcstrans policycoreutils policycoreutils-dbus policycoreutils-devel policycoreutils-gui policycoreutils-python-utils policycoreutils-restorecond policycoreutils-sandbox python3-policycoreutils python3-setools secilc secilc-doc selint sepolicy_analysis setools setools-console setools-console-analyses setools-gui setroubleshoot-server udica selinux-policy selinux-policy-devel selinux-policy-doc selinux-policy-sandbox selinux-policy-targeted aide arpwatch fail2ban lynis psacct rng-tools sysstat haveged
