@@ -11,17 +11,19 @@
 - [ ] Setup media and codecs
 - [ ] replace some fedora pkgs with brew
 - [ ] Replace some rust pkgs with brew
-- [ ] Fix error in starship
+- [ ] Except for brew pkgs, symlink all local bin packages to /usr/local/bin
+- [x] Fix error in starship
 - [ ] Create home-brew script
 - [ ] Make atuin appear more compact
+- [ ] Created deep research on caelestia - gemini and chatgpt
 - [x] Add bun to path in commandline
 - [x] Add cargo to path in commandline
 - [ ] Packages to update:
-  - [ ] Lazygit
+  - [x] Lazygit - using brew pkgs instead
 - [ ] Install From Source
   - [ ] app2unit
 - [ ] Cargo Packages
   - [ ] hyprlux
   - [ ] emacs-lsp-booster
-  - [ ] texlab
-  - [ ] tectonic
+  - [x] texlab - using brew pkg instead
+  - [x] tectonic

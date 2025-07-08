@@ -1,11 +1,7 @@
 #!/bin/bash
 echo "Setting Up Editors"
-sudo dnf install emacs nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt ImageMagick hunspell hunspell-en-US pylint black
+sudo dnf install emacs nodejs npm yarnpkg fzf fd-find ripgrep neovim python3-neovim tree-sitter-cli wl-clipboard shfmt ImageMagick hunspell hunspell-en-US pyright pylint black isort debugpy stix-fonts google-noto-sans-fonts google-noto-color-emoji-fonts bash-language-server ansible direnv clang-tools-extra fprettify fortls gfortran grip shellcheck java jetbrains-mono-fonts-all emacs-rpm-spec-mode
 
 curl -fsSL https://bun.sh/install | bash
-
-cd && mkdir -p ~/.npm-global/lib
-npm config set prefix '~/.npm-global'
-export PATH=~/.npm-global/bin:$PATH
 export PATH=~/.bun/bin:$PATH
 bun install -g neovim sass pyright
