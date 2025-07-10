@@ -3,11 +3,13 @@ sudo dnf install flatpak
 sudo flatpak remote-delete --system fedora
 sudo flatpak remote-delete --system flathub-beta
 sudo flatpak remote-delete --system flathub
-flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-delete --user flathub
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-flatpak install flathub com.ticktick.TickTick
-flatpak install flathub org.onlyoffice.desktopeditors
-flatpak install flathub com.github.tchx84.Flatseal
-flatpak install flathub org.js.nuclear.Nuclear
-flatpak install flathub tv.kodi.Kodi
-flatpak install flathub com.bitwarden.desktop
+sudo flatpak install flathub com.ticktick.TickTick -y
+sudo flatpak install flathub org.onlyoffice.desktopeditors -y
+sudo flatpak install flathub com.github.tchx84.Flatseal -y
+sudo flatpak install flathub org.js.nuclear.Nuclear -y
+sudo flatpak install flathub tv.kodi.Kodi -y
+sudo flatpak install flathub com.bitwarden.desktop -y
+sudo flatpak install flathub io.github.alainm23.planify -y

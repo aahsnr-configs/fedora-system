@@ -15,3 +15,5 @@ export PATH="$PATH:$HOME/.config/emacs/bin"
 export PATH="$PATH:$HOME/.npm-global/bin"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export "PATH=$PATH:/home/linuxbrew/.linuxbrew/bin"
+export "PATH=$PATH:/home/linuxbrew/.linuxbrew/sbin"
