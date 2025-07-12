@@ -13,3 +13,4 @@ flatpak install flathub org.js.nuclear.Nuclear -y
 flatpak install flathub tv.kodi.Kodi -y
 flatpak install flathub com.bitwarden.desktop -y
 flatpak install flathub io.github.alainm23.planify -y
+flatpak install flathub com.ranfdev.DistroShelf -y
