@@ -4,4 +4,4 @@ systemctl --user enable --now tldr-update.timer thefuck-cache.timer wireplumber.
 
 #atuin.service atuin-maintenance.timer
 
-#sudo systemctl enable greetd haveged rngd
+sudo systemctl enable haveged rngd pmcd pmlogger --now
