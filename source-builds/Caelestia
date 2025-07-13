@@ -4,7 +4,8 @@ sleep 3
 set -e
 sudo dnf install glib2-devel libqalculate-devel qt6-qtdeclarative-devel pipewire-devel aubio-devel hatch python3-hatch-vcs python3-pillow python3-build python3-installer libnotify-devel pulseaudio-utils glib2-devel
 
-cd && git clone https://github.com/caelestia-dots/cli.git
+cd
+git clone https://github.com/caelestia-dots/cli.git
 cd cli
 python -m build --wheel
 sudo python -m installer dist/*.whl
