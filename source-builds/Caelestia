@@ -12,8 +12,8 @@ sudo cp completions/caelestia.fish /usr/share/fish/vendor_completions.d/caelesti
 cd
 sudo rm -rf cli
 
-mkdir -p $HOME/.config/quickshell
-cd $HOME/.config/quickshell
+mkdir -p "$HOME/.config/quickshell"
+cd "$HOME/.config/quickshell"
 git clone https://github.com/caelestia-dots/shell.git caelestia
 g++ -std=c++17 -Wall -Wextra -I/usr/include/pipewire-0.3 -I/usr/include/spa-0.2 -I/usr/include/aubio -o beat_detector caelestia/assets/beat_detector.cpp -lpipewire-0.3 -laubio
 sudo mkdir -p /usr/lib/caelestia
