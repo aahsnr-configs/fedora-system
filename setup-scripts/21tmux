@@ -1,0 +1,148 @@
+#!/bin/bash
+
+# This script automates the setup of tmux on Fedora 42.
+# It assumes your primary tmux configuration file (.tmux.conf)
+# is managed externally (e.g., in a dotfiles repository) and will be symlinked.
+# It also handles the installation of TPM (tmux Plugin Manager) and
+# automatically installs your defined tmux plugins.
+
+# --- Configuration ---
+# IMPORTANT:
+# Replace "$HOME/path/to/your/dotfiles/.tmux.conf" with the actual
+# absolute path to your tmux.conf file.
+# Using $HOME instead of ~ for better compatibility across shell environments.
+TMUX_CONF_SOURCE="$HOME/path/to/your/dotfiles/.tmux.conf"
+
+# Target destination for the tmux configuration symlink
+TMUX_CONF_TARGET="$HOME/.tmux.conf"
+
+# Directory for tmux plugins (TPM will be cloned here)
+TMUX_PLUGINS_DIR="$HOME/.tmux/plugins"
+TPM_REPO="https://github.com/tmux-plugins/tpm"
+TPM_TARGET="$TMUX_PLUGINS_DIR/tpm"
+
+# --- Functions for Logging ---
+
+# Displays an informational message in green
+log_info() {
+    echo -e "\e[32m[INFO]\e[0m $1"
+}
+
+# Displays a warning message in yellow
+log_warn() {
+    echo -e "\e[33m[WARN]\e[0m $1"
+}
+
+# Displays an error message in red and exits
+log_error() {
+    echo -e "\e[31m[ERROR]\e[0m $1"
+    exit 1
+}
+
+# --- Main Setup Process ---
+
+log_info "Starting automated tmux setup for Fedora 42..."
+
+# 1. Install Required System Packages
+log_info "Updating DNF package lists and installing core dependencies (tmux, git, curl, wl-clipboard)..."
+sudo dnf update -y || log_error "Failed to update DNF package lists."
+sudo dnf install -y tmux git curl wl-clipboard || log_error "Failed to install required packages."
+log_info "All required packages installed successfully."
+
+# 2. Set up TPM (tmux Plugin Manager)
+log_info "Setting up TPM (tmux Plugin Manager)..."
+
+# Ensure the plugins directory exists
+mkdir -p "$TMUX_PLUGINS_DIR" || log_error "Failed to create tmux plugins directory: $TMUX_PLUGINS_DIR"
+
+# Clone TPM if it's not already present, otherwise update it
+if [ ! -d "$TPM_TARGET" ]; then
+    log_info "Cloning TPM repository to $TPM_TARGET..."
+    git clone "$TPM_REPO" "$TPM_TARGET" || log_error "Failed to clone TPM repository."
+else
+    log_warn "TPM directory already exists at $TPP_TARGET. Attempting to update it."
+    (cd "$TPM_TARGET" && git pull) || log_warn "Failed to update TPM. Manual check might be needed."
+fi
+
+# Set appropriate permissions for the ~/.tmux directory
+chmod 700 "$HOME/.tmux" || log_warn "Failed to set permissions for $HOME/.tmux. Please check manually."
+log_info "TPM setup complete."
+
+# 3. Create Symbolic Link for .tmux.conf
+log_info "Creating symbolic link for your tmux configuration file..."
+
+# Verify the source configuration file exists
+if [ ! -f "$TMUX_CONF_SOURCE" ]; then
+    log_error "Source tmux configuration file not found at: $TMUX_CONF_SOURCE"
+    log_error "Please edit this script and update the 'TMUX_CONF_SOURCE' variable to your actual .tmux.conf path."
+fi
+
+# Handle existing .tmux.conf at the target location
+if [ -f "$TMUX_CONF_TARGET" ] && [ ! -L "$TMUX_CONF_TARGET" ]; then
+    # If it's a regular file, back it up
+    BACKUP_NAME="$TMUX_CONF_TARGET.backup.$(date +%Y%m%d_%H%M%S)"
+    log_warn "Existing ~/.tmux.conf (regular file) found. Backing it up to $BACKUP_NAME."
+    mv "$TMUX_CONF_TARGET" "$BACKUP_NAME" || log_error "Failed to backup existing ~/.tmux.conf."
+elif [ -L "$TMUX_CONF_TARGET" ]; then
+    # If it's a symlink, check if it points to the correct source
+    CURRENT_SYMLINK_TARGET=$(readlink "$TMUX_CONF_TARGET")
+    if [ "$CURRENT_SYMLINK_TARGET" == "$TMUX_CONF_SOURCE" ]; then
+        log_info "~/.tmux.conf is already correctly symlinked to $TMUX_CONF_SOURCE. Skipping symlink creation."
+        SKIP_SYMLINK=true
+    else
+        # If it points elsewhere, remove it before creating the new one
+        log_warn "Existing ~/.tmux.conf is a symlink to a different location: $CURRENT_SYMLINK_TARGET. Removing it."
+        rm "$TMUX_CONF_TARGET" || log_error "Failed to remove existing incorrect symlink."
+    fi
+fi
+
+# Create the symlink if not skipped
+if [ -z "$SKIP_SYMLINK" ]; then
+    ln -sf "$TMUX_CONF_SOURCE" "$TMUX_CONF_TARGET" || log_error "Failed to create symlink from $TMUX_CONF_SOURCE to $TMUX_CONF_TARGET."
+    chmod 600 "$TMUX_CONF_TARGET" || log_warn "Failed to set permissions for symlinked ~/.tmux.conf. Please check manually."
+    log_info "Symlink for ~/.tmux.conf created successfully."
+fi
+
+# 4. Automatically Install Tmux Plugins via TPM
+log_info "Attempting to install tmux plugins automatically using TPM..."
+
+TEMP_SESSION_STARTED=false
+# Check if a tmux server is already running
+if ! tmux has-session &>/dev/null; then
+    log_info "No active tmux server found. Starting a temporary detached session for plugin installation."
+    tmux new-session -d -s tpm_installer &>/dev/null || log_error "Failed to start temporary tmux session."
+    TEMP_SESSION_STARTED=true
+else
+    log_info "An active tmux server is running. Using existing session for plugin installation."
+fi
+
+# Reload the tmux configuration to ensure TPM and plugin definitions are loaded
+log_info "Reloading tmux configuration to ensure TPM is active and plugins are defined..."
+tmux source-file "$TMUX_CONF_TARGET" || log_warn "Failed to reload tmux configuration. Plugin installation might be affected."
+
+# Execute TPM's install_plugins script within tmux
+if [ -f "$TPM_TARGET/bin/install_plugins" ]; then
+    log_info "Running TPM's install_plugins script. Output will appear in your tmux session."
+    # Use 'run-shell' to execute the script within tmux.
+    # Note: The success of 'run-shell' doesn't guarantee the inner script's success,
+    # but it's the standard way to trigger TPM from outside.
+    tmux run-shell "$TPM_TARGET/bin/install_plugins"
+    log_info "TPM plugin installation command sent. Please check your tmux session for progress and completion messages."
+else
+    log_error "TPM install_plugins script not found at $TPM_TARGET/bin/install_plugins. TPM might not be set up correctly."
+fi
+
+# If a temporary session was started by this script, kill it
+if [ "$TEMP_SESSION_STARTED" = true ]; then
+    log_info "Killing temporary tmux session 'tpm_installer'."
+    tmux kill-session -t tpm_installer &>/dev/null || log_warn "Failed to kill temporary tmux session 'tpm_installer'."
+fi
+
+# --- Post-Installation Instructions ---
+log_info "Tmux setup script completed."
+log_info "Final steps and verification:"
+log_info "1. Start or attach to a tmux session: \`tmux\` or \`tmux attach\`"
+log_info "2. Verify that your plugins are installed. TPM usually shows a message upon completion."
+log_info "   If plugins are not installed, you can manually trigger installation inside tmux by pressing: \`Ctrl-a + I\` (capital i)."
+log_info "3. If you make further changes to your ~/.tmux.conf, reload it inside tmux with: \`Ctrl-a + r\`."
+log_info "You may need to restart your terminal emulator or log out and back in for all changes to take full effect."
