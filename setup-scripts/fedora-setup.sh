@@ -122,7 +122,7 @@ install_packages() {
     return 0
   fi
 
-  # Deduplicate packages (though the main list is already deduplicated, this adds a layer of safety)
+  # Deduplicate packages
   IFS=$'\n' sorted_unique_packages=($(sort -u <<<"${packages[*]}"))
   unset IFS
 
@@ -271,13 +271,161 @@ set_timezone() {
   return 0
 }
 
-# Function to install all DNF packages
-install_all_dnf_packages() {
-  log "INFO" "Starting installation of all DNF packages..." "$BLUE"
+# Function to install Git and configure it
+setup_git() {
+  log "INFO" "Setting up Git..." "$BLUE"
+  local git_packages=(
+    git-core
+    git-credential-libsecret
+    gnome-keyring
+    subversion
+    git-delta
+    highlight
+  )
+  install_packages "${git_packages[@]}" || return 1
 
-  # Combined, deduplicated, and sorted list of all packages from the original scripts
+  # Git configurations - check if already set before attempting to set
+  log "INFO" "Configuring Git user name and email..." "$BLUE"
+  if [[ "$(git config --global user.name)" != "aahsnr" ]]; then
+    git config --global user.name "aahsnr"
+    log "SUCCESS" "Git user.name set to 'aahsnr'." "$GREEN"
+  else
+    log "INFO" "Git user.name is already 'aahsnr'." "$YELLOW"
+  fi
+
+  if [[ "$(git config --global user.email)" != "ahsanur041@proton.me" ]]; then
+    git config --global user.email "ahsanur041@proton.me"
+    log "SUCCESS" "Git user.email set to 'ahsanur041@proton.me'." "$GREEN"
+  else
+    log "INFO" "Git user.email is already 'ahsanur041@proton.me'." "$YELLOW"
+  fi
+
+  if [[ "$(git config --global credential.helper)" != "/usr/libexec/git-core/git-credential-libsecret" ]]; then
+    git config --global credential.helper /usr/libexec/git-core/git-credential-libsecret
+    log "SUCCESS" "Git credential.helper set." "$GREEN"
+  else
+    log "INFO" "Git credential.helper is already set." "$YELLOW"
+  fi
+
+  # Other Git global configurations (these are generally safe to re-apply)
+  log "INFO" "Setting other Git global configurations..." "$BLUE"
+  git config --global core.preloadindex true
+  git config --global core.fscache true
+  git config --global gc.auto 256
+  log "SUCCESS" "Other Git configurations applied." "$GREEN"
+
+  return 0
+}
+
+# Function to install editors and related tools
+setup_editors() {
+  log "INFO" "Setting up Editors and related tools..." "$BLUE"
+  local editor_packages=(
+    emacs
+    nodejs
+    npm
+    yarnpkg
+    fzf
+    fd-find
+    ripgrep
+    neovim
+    python3-neovim
+    tree-sitter-cli
+    wl-clipboard
+    shfmt
+    ImageMagick
+    hunspell
+    hunspell-en-US
+    pyright
+    pylint
+    black
+    isort
+    debugpy
+    stix-fonts
+    google-noto-sans-fonts
+    google-noto-color-emoji-fonts
+    bash-language-server
+    ansible
+    direnv
+    clang-tools-extra
+    fprettify
+    fortls
+    gfortran
+    grip
+    shellcheck
+    java
+    jetbrains-mono-fonts-all
+    conda
+  )
+  install_packages "${editor_packages[@]}" || return 1
+  return 0
+}
+
+# Function to install media-related packages
+setup_multimedia() {
+  log "INFO" "Installing Media-Related packages..." "$BLUE"
+
+  # Update @multimedia group without weak dependencies and excluding PackageKit-gstreamer-plugin
+  log "INFO" "Updating @multimedia group..." "$BLUE"
+  if sudo dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y; then
+    log "SUCCESS" "@multimedia group updated successfully." "$GREEN"
+  else
+    log "ERROR" "Failed to update @multimedia group." "$RED"
+    return 1
+  fi
+
+  local media_packages=(
+    alsa-utils
+    pipewire
+    pipewire-alsa
+    pipewire-gstreamer
+    pipewire-pulseaudio
+    pipewire-utils
+    pulseaudio-utils
+    wireplumber
+    libva-nvidia-driver
+    mesa-vdpau-drivers-freeworld
+    mesa-va-drivers-freeworld
+    nvidia-vaapi-driver
+    mesa-vulkan-drivers
+    vulkan-tools
+    ffmpeg
+    mediainfo
+  )
+  install_packages "${media_packages[@]}" || return 1
+
+  log "INFO" "Installing rpmfusion-nonfree-release-tainted and firmware..." "$BLUE"
+  # Install rpmfusion-nonfree-release-tainted
+  dnf_install_idempotent \
+    "RPM Fusion Nonfree Tainted repository" \
+    "dnf repolist enabled | grep -q 'rpmfusion-nonfree-tainted'" \
+    "sudo dnf install -y rpmfusion-nonfree-release-tainted" || return 1
+
+  # Install tainted firmware
+  log "INFO" "Installing tainted firmware..." "$BLUE"
+  # Check if any firmware from this repo is already installed
+  if rpm -qa | grep -q "*-firmware-"; then # A more general check for installed firmware packages
+    log "INFO" "Some tainted firmware packages appear to be already installed." "$YELLOW"
+  fi
+  # We still try to install to ensure all are present, dnf is idempotent for packages.
+  if sudo dnf --repo=rpmfusion-nonfree-tainted install "*-firmware" -y; then
+    log "SUCCESS" "Tainted firmware installed successfully." "$GREEN"
+  else
+    log "ERROR" "Failed to install tainted firmware." "$RED"
+    return 1
+  fi
+
+  return 0
+}
+
+# Function to install all general DNF packages
+install_all_dnf_packages() {
+  log "INFO" "Starting installation of all general DNF packages..." "$BLUE"
+
+  # Combined, deduplicated, and sorted list of all packages.
+  # Packages handled by setup_git, setup_editors, setup_multimedia are EXCLUDED here.
+  # @multimedia is also excluded as it's handled specifically in setup_multimedia.
   local all_packages=(
-    @multimedia
     @fonts
     abseil-cpp-devel
     abseil-cpp-testing
@@ -293,8 +441,7 @@ install_all_dnf_packages() {
     automake
     bat
     bison
-    black
-    bluez
+    bluez # Moved here as it's a general system package
     brightnessctl
     btop
     byacc
@@ -303,7 +450,6 @@ install_all_dnf_packages() {
     cava
     checkpolicy
     chrony
-    clang
     cliphist
     copr-selinux
     cronie
@@ -336,19 +482,12 @@ install_all_dnf_packages() {
     flex
     fontconfig
     fuzzel
-    fzf
-    gcc
-    gcc-c++
-    gdb
-    gettext
-    git-core
     glaze-devel
     glib2
     glx-utils
     gmock
     gnome-software
     gnuplot
-    google-noto-emoji-fonts
     groff-base
     gsl
     gsl-devel
@@ -358,7 +497,6 @@ install_all_dnf_packages() {
     greetd
     grim
     haveged
-    highlight
     hwdata-devel
     hyprcursor-devel
     hyprgraphics-devel
@@ -373,7 +511,6 @@ install_all_dnf_packages() {
     hyprpolkitagent
     hyprshot
     hyprsunset
-    ImageMagick
     imv
     inotify-tools
     intel-audio-firmware
@@ -434,12 +571,10 @@ install_all_dnf_packages() {
     maxima
     mcstrans
     mesa-libgbm-devel
-    mesa-vulkan-drivers
     mock
     mokutil
     NetworkManager-tui
     nvidia-gpu-firmware
-    nvidia-vaapi-driver
     nvtop
     nwg-look
     openssl
@@ -465,7 +600,6 @@ install_all_dnf_packages() {
     powertop
     procs
     psacct
-    pylint
     pyprland
     python3-build
     python3-devel
@@ -515,7 +649,6 @@ install_all_dnf_packages() {
     socat
     starship
     strace
-    subversion
     swappy
     switcheroo-control
     swww
@@ -547,7 +680,6 @@ install_all_dnf_packages() {
     usb_modeswitch
     uwsm
     valgrind
-    vulkan
     wayland-protocols-devel
     wget
     wxMaxima
@@ -576,6 +708,19 @@ install_all_dnf_packages() {
     zip
     zoxide
     zsh
+    # Removed from here: @multimedia, git-core, git-credential-libsecret, gnome-keyring, subversion, git-delta, highlight,
+    # emacs, nodejs, npm, yarnpkg, fzf, fd-find, ripgrep, neovim, python3-neovim, tree-sitter-cli, wl-clipboard, shfmt,
+    # ImageMagick, hunspell, hunspell-en-US, pyright, pylint, black, isort, debugpy, stix-fonts, google-noto-sans-fonts,
+    # google-noto-color-emoji-fonts, bash-language-server, ansible, direnv, clang-tools-extra, fprettify, fortls,
+    # gfortran, grip, shellcheck, java, jetbrains-mono-fonts-all, conda, alsa-utils, pipewire, pipewire-alsa,
+    # pipewire-gstreamer, pipewire-pulseaudio, pipewire-utils, pulseaudio-utils, wireplumber, libva-nvidia-driver,
+    # mesa-vdpau-drivers-freeworld, mesa-va-drivers-freeworld, nvidia-vaapi-driver, mesa-vulkan-drivers,
+    # vulkan-tools, ffmpeg, mediainfo (all handled in specific functions)
+    # Also removed `gcc` and `gcc-c++` as they are commonly installed as dependencies or part of @development-tools,
+    # though keeping them doesn't strictly hurt, it's a minor redundancy. For explicit clarity, they can remain.
+    # Added `gcc` and `gcc-c++` back for explicit installation for development tools.
+    gcc
+    gcc-c++
   )
 
   install_packages "${all_packages[@]}" || return 1
@@ -587,7 +732,11 @@ configure_nvidia() {
   log "INFO" "Starting NVIDIA specific configurations..." "$BLUE"
 
   log "INFO" "Marking akmod-nvidia as user-managed..." "$BLUE"
-  if sudo dnf mark user akmod-nvidia; then
+  # Check if akmod-nvidia is already marked user-managed
+  # This check tries to see if the package was explicitly installed by user (marked user).
+  if dnf repoquery --userinstalled akmod-nvidia &>/dev/null; then
+    log "INFO" "akmod-nvidia is already marked as user-managed." "$YELLOW"
+  elif sudo dnf mark user akmod-nvidia; then
     log "SUCCESS" "akmod-nvidia marked as user-managed." "$GREEN"
   else
     log "ERROR" "Failed to mark akmod-nvidia as user-managed." "$RED"
@@ -595,15 +744,25 @@ configure_nvidia() {
   fi
 
   log "INFO" "Enabling NVIDIA suspend, resume, and hibernate services..." "$BLUE"
-  if sudo systemctl enable nvidia-{suspend,resume,hibernate}; then
-    log "SUCCESS" "NVIDIA services enabled." "$GREEN"
-  else
-    log "ERROR" "Failed to enable NVIDIA services." "$RED"
-    return 1
-  fi
+  local nvidia_services=(nvidia-suspend.service nvidia-resume.service nvidia-hibernate.service)
+  local all_nvidia_services_enabled=true
+  for service in "${nvidia_services[@]}"; do
+    if sudo systemctl is-enabled "$service" &>/dev/null; then
+      log "INFO" "$service is already enabled." "$YELLOW"
+    elif sudo systemctl enable "$service"; then
+      log "SUCCESS" "$service enabled." "$GREEN"
+    else
+      log "ERROR" "Failed to enable $service." "$RED"
+      all_nvidia_services_enabled=false
+    fi
+  done
+  "$all_nvidia_services_enabled" || return 1
 
   log "INFO" "Creating RPM macro for NVIDIA kmod..." "$BLUE"
-  if sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'; then
+  local macro_file="/etc/rpm/macros.nvidia-kmod"
+  if [[ -f "$macro_file" && "$(cat "$macro_file")" == "%_with_kmod_nvidia_open 1" ]]; then
+    log "INFO" "RPM macro for NVIDIA kmod already exists and is correct." "$YELLOW"
+  elif sudo sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'; then
     log "SUCCESS" "RPM macro for NVIDIA kmod created." "$GREEN"
   else
     log "ERROR" "Failed to create RPM macro for NVIDIA kmod." "$RED"
@@ -611,7 +770,10 @@ configure_nvidia() {
   fi
 
   log "INFO" "Rebuilding NVIDIA akmods for current kernel..." "$BLUE"
-  if sudo akmods --kernels "$(uname -r)" --rebuild; then
+  # Check if the NVIDIA kernel module is already built and present for the current kernel
+  if ls /lib/modules/"$(uname -r)"/extra/nvidia/nvidia.ko &>/dev/null; then
+    log "INFO" "NVIDIA akmods for current kernel already built." "$YELLOW"
+  elif sudo akmods --kernels "$(uname -r)" --rebuild; then
     log "SUCCESS" "NVIDIA akmods rebuilt successfully." "$GREEN"
   else
     log "ERROR" "Failed to rebuild NVIDIA akmods." "$RED"
@@ -619,7 +781,9 @@ configure_nvidia() {
   fi
 
   log "INFO" "Masking nvidia-fallback.service..." "$BLUE"
-  if sudo systemctl mask nvidia-fallback.service; then
+  if sudo systemctl is-masked nvidia-fallback.service &>/dev/null; then
+    log "INFO" "nvidia-fallback.service is already masked." "$YELLOW"
+  elif sudo systemctl mask nvidia-fallback.service; then
     log "SUCCESS" "nvidia-fallback.service masked." "$GREEN"
   else
     log "ERROR" "Failed to mask nvidia-fallback.service." "$RED"
@@ -633,11 +797,11 @@ update_system() {
   log "INFO" "Starting full system update..." "$BLUE"
   if sudo dnf update -y; then
     log "SUCCESS" "System update completed successfully." "$GREEN"
+    return 0
   else
     log "ERROR" "System update failed." "$RED"
     return 1
   fi
-  return 0
 }
 
 # --- Main Script Execution Flow ---
@@ -685,7 +849,11 @@ main() {
   execute_task set_timezone "Timezone setup to Asia/Dhaka"
 
   # --- Package Installation ---
-  execute_task install_all_dnf_packages "All DNF package installation (groups, system, security, desktop)"
+  # These functions handle their specific package lists. Order matters somewhat for dependencies.
+  execute_task setup_git "Git and related tools setup"
+  execute_task setup_editors "Editors and development tools setup"
+  execute_task setup_multimedia "Multimedia packages setup"
+  execute_task install_all_dnf_packages "All general DNF package installation" # This handles remaining general packages
 
   # --- Post-Installation Configurations ---
   execute_task configure_nvidia "NVIDIA specific configurations"

@@ -3,4 +3,3 @@ echo "Setting up for Asus Laptops"
 sleep 3
 sudo dnf install asusctl power-profiles-daemon supergfxctl asusctl-rog-gui
 sudo systemctl enable supergfxd power-profiles-daemon
-
