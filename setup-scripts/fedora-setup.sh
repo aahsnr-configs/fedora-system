@@ -547,7 +547,6 @@ install_all_dnf_packages() {
     usb_modeswitch
     uwsm
     valgrind
-    viu
     vulkan
     wayland-protocols-devel
     wget
@@ -567,7 +566,6 @@ install_all_dnf_packages() {
     xorg-x11-server-Xwayland-devel
     xournalpp
     xcur2png
-    yazi
     zathura
     zathura-cb
     zathura-djvu
