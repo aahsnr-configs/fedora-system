@@ -1,6 +1,6 @@
 #!/bin/bash
 systemctl --user daemon-reload
-systemctl --user enable --now tldr-update.timer thefuck-cache.timer wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service hyprpaper hypridle gnome-keyring-daemon
+systemctl --user enable --now wireplumber.service pipewire-pulse.socket pipewire.socket pipewire-pulse.service pipewire.service hyprpolkitagent hyprpaper hypridle gnome-keyring-daemoin
 
 #atuin.service atuin-maintenance.timer
 

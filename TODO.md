@@ -22,6 +22,7 @@
   - [x] Lazygit - using brew pkgs instead
 - [ ] Install From Source
   - [ ] app2unit
+- [ ] Look at Axenide dots to run everything using uwsm
 - [ ] Cargo Packages
   - [ ] hyprlux
   - [ ] emacs-lsp-booster
