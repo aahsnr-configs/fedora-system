@@ -1,8 +1,0 @@
-#!/bin/sh
-cd && git clone https://github.com/Antynea/grub-btrfs.git
-cd grub-btrfs
-make
-sudo make install
-sudo systemctl enable grub-btrfsd --now
-cd
-sudo rm -rf grub-btrfs
