@@ -1,7 +1,0 @@
-#!/bin/bash
-cd 
-git clone https://github.com/jrabinow/snapper-rollback.git
-cd snapper-rollback
-sudo cp snapper-rollback.py /usr/local/bin/snapper-rollback
-sudo cp snapper-rollback.conf /etc/
-cd && sudo rm -rf snapper-rollback

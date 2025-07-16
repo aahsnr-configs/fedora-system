@@ -1,6 +1,0 @@
-#!/bin/bash
-# Generate initial cache
-tldr --update
-
-chsh -s $(which zsh)
-zsh
