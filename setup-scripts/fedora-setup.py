@@ -570,6 +570,7 @@ def setup_editors() -> bool:
         "fd-find",
         "ripgrep",
         "neovim",
+        "python3-lsp-server+all",
         "python3-neovim",
         "tree-sitter-cli",
         "wl-clipboard",
