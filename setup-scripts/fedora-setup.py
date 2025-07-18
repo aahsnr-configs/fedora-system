@@ -637,7 +637,9 @@ def setup_multimedia() -> bool:
         "pipewire-utils",
         "pulseaudio-utils",
         "wireplumber",
-        "libva-nvidia-driver",
+        "vdpauinfo",
+        "libva-vdpau-driver",
+        "libva-utils",
         "mesa-vdpau-drivers-freeworld",
         "mesa-va-drivers-freeworld",
         "nvidia-vaapi-driver",
@@ -1427,7 +1429,14 @@ def configure_systemd_services_general() -> bool:
         if not configure_systemd_service(service, user_mode=True):
             all_ok = False
 
-    system_services = ["haveged", "rngd", "pmcd", "pmlogger"]
+    system_services = [
+        "haveged",
+        "rngd",
+        "pmcd",
+        "pmlogger",
+        "power-profiles-daemon",
+        "supergfxd",
+    ]
     for service in system_services:
         if not configure_systemd_service(service):
             all_ok = False
