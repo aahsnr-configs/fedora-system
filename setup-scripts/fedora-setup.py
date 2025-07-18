@@ -570,6 +570,8 @@ def setup_editors() -> bool:
         "fd-find",
         "ripgrep",
         "neovim",
+        "enchant2-devel",
+        "pkgconf",
         "python3-lsp-server+all",
         "python3-neovim",
         "tree-sitter-cli",
