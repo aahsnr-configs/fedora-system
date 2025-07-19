@@ -47,9 +47,10 @@ def create_virtual_environment(env_name="my_env"):
         sys.exit(1)
 
 
-def install_packages(env_name, packages):
+def install_packages_after_activation(env_name, packages):
     """
-    Installs a list of Python packages into the specified virtual environment.
+    Installs a list of Python packages into the specified virtual environment
+    by first activating the environment within the shell command.
 
     Args:
         env_name (str): The name of the virtual environment directory.
@@ -59,36 +60,57 @@ def install_packages(env_name, packages):
         print("No packages specified for installation. Skipping package installation.")
         return
 
-    # Construct the path to the pip executable within the Linux virtual environment
-    pip_executable = os.path.join(env_name, "bin", "pip")
+    # Path to the activation script for Linux
+    activate_script = os.path.join(env_name, "bin", "activate")
 
-    if not os.path.exists(pip_executable):
-        print(f"Error: pip executable not found at '{pip_executable}'.")
+    if not os.path.exists(activate_script):
+        print(f"Error: Activation script not found at '{activate_script}'.")
         print(
             f"This indicates an issue with the virtual environment '{env_name}' creation."
         )
         sys.exit(1)
 
+    # Construct the pip install command
+    pip_install_command = f"pip install --no-input {' '.join(packages)}"
+
+    # Construct the full shell command: source activate script && run pip install
+    # Using '&&' ensures that pip install only runs if activation is successful
+    full_shell_command = f"source {activate_script} && {pip_install_command}"
+
     print(
-        f"\nAttempting to install packages into '{env_name}': {', '.join(packages)}..."
+        f"\nAttempting to activate '{env_name}' and install packages: {', '.join(packages)}..."
     )
+    print(f"Executing command: {full_shell_command}")
+
     try:
-        # Construct the command for pip installation
-        # The '--no-input' flag can be useful in automated scripts to prevent prompts
-        command = [pip_executable, "install", "--no-input"] + packages
-        subprocess.run(command, check=True, capture_output=True, text=True)
-        print("Packages installed successfully.")
+        # Use shell=True to execute the combined command string
+        # This creates a subshell where the activation happens before pip runs
+        subprocess.run(
+            full_shell_command,
+            shell=True,
+            check=True,
+            capture_output=True,
+            text=True,
+            executable="/bin/bash",
+        )
+        print(
+            "Packages installed successfully within the activated environment context."
+        )
     except subprocess.CalledProcessError as e:
-        print(f"Error installing packages:")
-        print(f"  Command: {' '.join(e.cmd)}")
+        print(f"Error during package installation (after activation):")
+        print(
+            f"  Command: {e.cmd}"
+        )  # Note: e.cmd will be the full_shell_command string when shell=True
         print(f"  Return Code: {e.returncode}")
         print(f"  STDOUT: {e.stdout}")
         print(f"  STDERR: {e.stderr}")
-        print("Please check the package names and your internet connection.")
+        print(
+            "Please check the package names, your internet connection, or environment setup."
+        )
         sys.exit(1)
     except FileNotFoundError:
         print(
-            f"Error: '{pip_executable}' command not found. This should not happen if pip_executable exists."
+            "Error: Shell executable (/bin/bash) not found. This is highly unusual on Linux."
         )
         sys.exit(1)
 
@@ -106,13 +128,13 @@ if __name__ == "__main__":
     # Step 1: Create the virtual environment
     create_virtual_environment(env_name)
 
-    # Step 2: Install specified packages into the newly created environment
-    install_packages(env_name, packages_to_install)
+    # Step 2: Activate the environment and then install specified packages
+    install_packages_after_activation(env_name, packages_to_install)
 
     print(f"\n--- Setup Complete ---")
     print(f"Virtual environment '{env_name}' has been created and packages installed.")
     print(
-        f"To activate the virtual environment, run the following command in your terminal:"
+        f"To activate the virtual environment manually in your current terminal, run:"
     )
     print(f"  source {env_name}/bin/activate")
     print(
