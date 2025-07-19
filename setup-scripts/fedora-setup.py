@@ -838,6 +838,7 @@ def install_all_dnf_packages() -> bool:
         "procs",
         "psacct",
         "python3-build",
+        "python3-colorama",
         "python3-devel",
         "python3-installer",
         "python3-matplotlib",
@@ -1377,8 +1378,7 @@ def install_theming() -> bool:
 def setup_hyprland() -> bool:
     log("INFO", "Starting Hyprland Desktop Environment Setup...", Colors.BLUE)
     packages = [
-        "hyprland",
-        "hyprland-devel",
+        "hyprland-git",
         "hypridle",
         "hyprpaper",
         "hyprlock",
