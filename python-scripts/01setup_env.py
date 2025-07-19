@@ -120,7 +120,7 @@ if __name__ == "__main__":
     check_os_compatibility()
 
     # Define the virtual environment name
-    env_name = "my_env"
+    env_name = "venv"
 
     # Define the list of packages to install
     packages_to_install = ["requests", "beautifulsoup4", "numpy"]
