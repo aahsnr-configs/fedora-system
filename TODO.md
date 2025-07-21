@@ -1,7 +1,16 @@
 - [ ] Include features from both bazzite, aurora, and secureblue
 - [ ] Setup fedora build system
 - [ ] Integrate with app2unit
+- [ ] Flatpak apps to install
+      - 
 - [ ] Integrate with Caelestia dot files
+- [ ] Install conda, flatseal as rpm
+- [ ] Add distrobox packages to install
+      - Ferdium
+      - Bitwarden
+      - OnlyOffice DesktopEditors
+- [ ] Don't bin directory
+- [ ] Create bash scripts using python
 - [ ] Fix atuin bad service unit
 - [x] Fix this error for .zshrc 
 - [x] no matches found: --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
@@ -19,7 +28,7 @@
 - [x] Add bun to path in commandline
 - [x] Add cargo to path in commandline
 - [ ] Packages to update:
-  - [x] Lazygit - using brew pkgs instead
+- [ ] Install lazygit using nix
 - [ ] Install From Source
   - [ ] app2unit
 - [ ] Look at Axenide dots to run everything using uwsm
