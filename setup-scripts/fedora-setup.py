@@ -1033,7 +1033,7 @@ def setup_asus_laptops() -> bool:
         return False
 
     all_ok = True
-    for service in ["supergfxd", "power-profiles-daemon"]:
+    for service in ["supergfxd", "power-profiles-daemon", "acpid"]:
         if not configure_systemd_service(service):
             all_ok = False
     return all_ok
