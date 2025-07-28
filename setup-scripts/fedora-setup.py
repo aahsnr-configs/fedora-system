@@ -263,11 +263,10 @@ def setup_desktop_environment():
         "kitty",
         "rofi-wayland",
         "waybar",
-        "swaybg",
+        "hyprpaper",
         "xdg-desktop-portal-hyprland",
         "polkit-gnome",
         "thunar",
-        "mako",
     ]
     install_packages(de_packages, "Hyprland Desktop Environment")
 
