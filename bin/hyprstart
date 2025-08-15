@@ -1,40 +1,41 @@
 #!/bin/bash
 
 # polkit
-/usr/libexec/polkit-mate-authentication-agent-1 &
+# provided by hyprpolkitdagent systemd user service
+#/usr/libexec/polkit-mate-authentication-agent-1 &
 
 # services
-#nm-applet &
+# need a custom user service
 thunar --daemon &
-emacs --daemon &
-GDK_DPI_SCALE=1.2 ags &
-pypr &
-dropbox &
+# replaced by custom pypr servie
+# pypr &
 
 # theme
 hyprtheme &
 
 # wallpaper &
-hyprpaper &
+# enabled by user service
+# hyprpaper &
 
 # idle daemon
-hypridle &
-
-# lock
+# enabled by user service
+# hypridle &
 
 # xdg
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
 systemctl --user start xdg-desktop-portal-hyprland &
 
 # cliphist
-wl-paste --type text --watch cliphist store --no-newline &
-wl-paste --type image --watch cliphist store &
+# replaced by custom systemd user service
+# wl-paste --type text --watch cliphist store --no-newline &
+# wl-paste --type image --watch cliphist store &
 
 # git
-dbus-update-activation-environment --all &
-gnome-keyring-daemon -r -d &
+# dbus-update-activation-environment --all &
+# gnome-keyring-daemon -r -d &
 
-hyprshade on ~/.config/hypr/shaders/blue-light-filter.glsl &
+# replace by hyprsunset service
+# hyprshade on ~/.config/hypr/shaders/blue-light-filter.glsl &
 
 # reload hyprland plugins
 hyprpm reload -n &

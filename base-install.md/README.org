@@ -1,0 +1,16 @@
+#+TITLE: README.org
+#+AUTHOR: Ahsanur Rahman
+#+DESCRIPTION: A custom arch linux installer based on archinstall
+
+*It should have the following features and in the following order*
+1. dracut instead of mkinitcpio
+2. full disk encryption using LUKS2
+3. lvm2 setup
+4. swap
+5. btrfs subvolumes
+6. disables root account
+7. have cachyos repos and endeavorous repos already enabled
+8. uses grub boot manager by default
+9. installs and run eos-dracut
+10. install packages using yay
+

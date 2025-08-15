@@ -1,9 +1,9 @@
 #!/bin/bash
 
 THEME='Colloid-Dark-Catppuccin'
-ICONS='Colloid-Orange-Catppuccin-Dark'
-FONT='JetBrains Mono Medium 13'
-CURSOR='Adwaita'
+ICONS='Papirus-Dark'
+FONT='JetBrainsMono Nerd Font Medium 13'
+CURSOR='Bibata-Modern-Ice'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
 

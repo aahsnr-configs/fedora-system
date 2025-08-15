@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Pacman-specific ripgrep helper for Arch Linux.
+
+This script provides shortcuts to search pacman's metadata cache,
+transaction history, and repository configuration files.
+"""
+
+import argparse
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import List, Sequence
+
+
+def find_existing_paths(paths: List[Path]) -> List[str]:
+    """
+    Filters a list of Path objects, returning a list of strings
+    for paths that actually exist on the filesystem.
+    """
+    existing_paths = []
+    for path in paths:
+        p = path.expanduser()
+        if p.exists():
+            existing_paths.append(str(p))
+    return existing_paths
+
+
+def run_rg(rg_args: List[str], search_paths: List[str]):
+    """
+    Executes the ripgrep (rg) command with the given arguments and paths.
+    """
+    if not search_paths:
+        print("No valid files or directories found for search.", file=sys.stderr)
+        sys.exit(1)
+
+    command = ["rg"] + rg_args + search_paths
+    try:
+        process = subprocess.run(command, check=False)
+        sys.exit(process.returncode)
+    except FileNotFoundError:
+        print("Error: 'rg' (ripgrep) command not found.", file=sys.stderr)
+        print("Please install ripgrep to use this script.", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Main entry point for the script."""
+    parser = argparse.ArgumentParser(
+        description="Pacman-specific ripgrep helper.",
+        epilog="Examples:\n"
+        "  rg-pacman --metadata 'some-package'\n"
+        "  rg-pacman --history 'installed | upgraded'\n"
+        "  rg-pacman -r 'Server = '",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "-m",
+        "--metadata",
+        action="store_true",
+        help="Search pacman's local and sync metadata databases",
+    )
+    group.add_argument(
+        "-H",
+        "--history",
+        action="store_true",
+        help="Search pacman's transaction history log (/var/log/pacman.log)",
+    )
+    group.add_argument(
+        "-r",
+        "--repos",
+        action="store_true",
+        help="Search pacman repository configuration files",
+    )
+
+    # Capture the search pattern and any other arguments for rg
+    parser.add_argument(
+        "pattern_and_args",
+        nargs="+",
+        help="Pattern and other arguments to pass to rg.",
+    )
+
+    args = parser.parse_args(argv)
+
+    # Base arguments for all rg searches
+    rg_base_args = ["--smart-case", "--hidden", "--follow"]
+    rg_args = rg_base_args + args.pattern_and_args
+    search_paths = []
+
+    if args.metadata:
+        search_paths = find_existing_paths(
+            [
+                Path("/var/lib/pacman/sync"),
+                Path("/var/lib/pacman/local"),
+            ]
+        )
+    elif args.history:
+        search_paths = find_existing_paths([Path("/var/log/pacman.log")])
+    elif args.repos:
+        search_paths = find_existing_paths(
+            [
+                Path("/etc/pacman.conf"),
+                Path("/etc/pacman.d/"),
+            ]
+        )
+
+    run_rg(rg_args, search_paths)
+
+
+if __name__ == "__main__":
+    main()

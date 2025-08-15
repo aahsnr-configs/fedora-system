@@ -1,39 +1,6 @@
-- [ ] Include features from both bazzite, aurora, and secureblue
-- [ ] Setup fedora build system
-- [ ] Integrate with app2unit
-- [ ] Flatpak apps to install
-      - 
-- [ ] Integrate with Caelestia dot files
-- [ ] Install conda, flatseal as rpm
-- [ ] Add distrobox packages to install
-      - Ferdium
-      - Bitwarden
-      - OnlyOffice DesktopEditors
-- [ ] Don't bin directory
-- [ ] Create bash scripts using python
-- [ ] Fix atuin bad service unit
-- [x] Fix this error for .zshrc 
-- [x] no matches found: --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
-- [ ] Remove fedora system repo for flatpak
-- [ ] Remove flathub system remove from flatpak
-- [ ] Move rustpkgs near the beginning
-- [ ] Setup media and codecs
-- [ ] replace some fedora pkgs with brew
-- [ ] Replace some rust pkgs with brew
-- [ ] Except for brew pkgs, symlink all local bin packages to /usr/local/bin
-- [x] Fix error in starship
-- [ ] Create home-brew script
-- [ ] Make atuin appear more compact
-- [ ] Created deep research on caelestia - gemini and chatgpt
-- [x] Add bun to path in commandline
-- [x] Add cargo to path in commandline
-- [ ] Packages to update:
-- [ ] Install lazygit using nix
-- [ ] Install From Source
-  - [ ] app2unit
-- [ ] Look at Axenide dots to run everything using uwsm
-- [ ] Cargo Packages
-  - [ ] hyprlux
-  - [ ] emacs-lsp-booster
-  - [x] texlab - using brew pkg instead
-  - [x] tectonic
+- [ ] Checkout Rudder at a later date
+- [ ] Write a python script that automatically check AUR packages for any securiy issues
+- [ ] Bring some optimization features from gentoo to arch linux.
+- [ ] Update pkger.py
+- [ ] Convert all bash scripts to python scripts
+- [ ] How to use nix installed pkgs outside of nix

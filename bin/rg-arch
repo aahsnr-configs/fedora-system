@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Arch Linux-specific ripgrep wrapper.
+
+This script provides convenient shortcuts to search for patterns in common
+Arch Linux locations, such as pacman configuration, PKGBUILD files,
+system logs, and kernel sources.
+"""
+
+import argparse
+import platform
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import List, Sequence
+
+
+def find_existing_paths(paths: List[Path]) -> List[str]:
+    """
+    Filters a list of Path objects, returning a list of strings
+    for paths that actually exist on the filesystem.
+    """
+    existing_paths = []
+    for path in paths:
+        # Expand the ~ character to the user's home directory
+        p = path.expanduser()
+        if p.exists():
+            existing_paths.append(str(p))
+    return existing_paths
+
+
+def run_rg(rg_args: List[str], search_paths: List[str]):
+    """
+    Executes the ripgrep (rg) command with the given arguments and paths.
+    """
+    if not search_paths:
+        print("No valid directories found for search.", file=sys.stderr)
+        sys.exit(1)
+
+    command = ["rg"] + rg_args + search_paths
+    try:
+        # We use sys.exit and don't capture output, so rg's return code
+        # and output are passed directly to the user's shell.
+        process = subprocess.run(command, check=False)
+        sys.exit(process.returncode)
+    except FileNotFoundError:
+        print("Error: 'rg' (ripgrep) command not found.", file=sys.stderr)
+        print("Please install ripgrep to use this script.", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Main entry point for the script."""
+    parser = argparse.ArgumentParser(
+        description="Arch Linux-specific ripgrep wrapper.",
+        epilog="Examples:\n"
+        "  rg-arch --pkgbuild 'make dependencies'\n"
+        "  rg-arch --pacman 'IgnorePkg'\n"
+        "  rg-arch -l 'error'",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "-b",
+        "--pkgbuild",
+        action="store_true",
+        help="Search for PKGBUILD files and patches",
+    )
+    group.add_argument(
+        "-m", "--pacman", action="store_true", help="Search Pacman configuration files"
+    )
+    group.add_argument(
+        "-k",
+        "--kernel",
+        action="store_true",
+        help="Search installed kernel source files",
+    )
+    group.add_argument(
+        "-c",
+        "--config",
+        action="store_true",
+        help="Search system and user configuration files",
+    )
+    group.add_argument(
+        "-l", "--logs", action="store_true", help="Search system log files in /var/log"
+    )
+    group.add_argument(
+        "-d",
+        "--docs",
+        action="store_true",
+        help="Search package documentation and man pages",
+    )
+
+    # Capture the search pattern and any extra rg flags
+    parser.add_argument(
+        "pattern_and_args",
+        nargs=argparse.REMAINDER,
+        help="Pattern and other arguments to pass to rg.",
+    )
+
+    args = parser.parse_args(argv)
+
+    if not args.pattern_and_args:
+        parser.print_help()
+        sys.exit(1)
+
+    # Base arguments for most rg searches
+    rg_base_args = ["--smart-case", "--hidden", "--follow"]
+    rg_args = rg_base_args + args.pattern_and_args
+    search_paths = []
+
+    if args.pkgbuild:
+        search_paths = find_existing_paths(
+            [Path("~/aur"), Path("~/.cache/yay"), Path("~/.cache/paru")]
+        )
+        rg_args = [
+            "--type-set",
+            "pkgbuild:PKGBUILD,*.install,*.patch",
+            "--type",
+            "pkgbuild",
+        ] + rg_args
+    elif args.pacman:
+        search_paths = find_existing_paths(
+            [Path("/etc/pacman.conf"), Path("/etc/pacman.d/")]
+        )
+        rg_args = [
+            "--type-set",
+            "pacman:*.conf,mirrorlist",
+            "--type",
+            "pacman",
+        ] + rg_args
+    elif args.kernel:
+        kernel_release = platform.release()
+        search_paths = find_existing_paths(
+            [
+                Path(f"/usr/lib/modules/{kernel_release}/build"),
+                Path("/usr/lib/modules"),
+            ]
+        )
+        rg_args = [
+            "--type",
+            "c",
+            "--type",
+            "h",
+            "--type",
+            "make",
+            "--type-set",
+            "kernel:*.config,*.patch",
+            "--type",
+            "kernel",
+        ] + rg_args
+    elif args.config:
+        search_paths = find_existing_paths([Path("/etc"), Path("~/.config")])
+        rg_args = [
+            "--glob=*.conf",
+            "--glob=*.config",
+            "--glob=*.cfg",
+            "--glob=*.ini",
+            "--glob=*.toml",
+            "--glob=*.yaml",
+            "--glob=*.yml",
+        ] + rg_args
+    elif args.logs:
+        search_paths = find_existing_paths([Path("/var/log")])
+        rg_args = [
+            "--type-set",
+            "log:*.log,*.journal",
+            "--type",
+            "log",
+        ] + rg_args
+    elif args.docs:
+        search_paths = find_existing_paths(
+            [Path("/usr/share/doc"), Path("/usr/share/man")]
+        )
+    else:
+        # Default behavior: pass all arguments directly to rg
+        # This mirrors the `*) rg "$@";;` case in the original script.
+        command = ["rg"] + args.pattern_and_args
+        try:
+            process = subprocess.run(command, check=False)
+            sys.exit(process.returncode)
+        except FileNotFoundError:
+            print("Error: 'rg' (ripgrep) command not found.", file=sys.stderr)
+            sys.exit(1)
+
+    run_rg(rg_args, search_paths)
+
+
+if __name__ == "__main__":
+    main()
