@@ -50,6 +50,7 @@ COPR_REPOS=(
   "sneexy/zen-browser"
   "lukenukem/asus-linux"
   "wehagy/protonplus"
+  "dejan/lazygit"
 )
 
 # Swap file configuration
