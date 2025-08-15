@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# DNF-specific ripgrep helper
+set -e
+
+# Function to check if directory exists before searching
+search_if_exists() {
+    local dirs=("$@")
+    local existing_dirs=()
+    
+    for dir in "${dirs[@]}"; do
+        if [[ -d "$dir" ]]; then
+            existing_dirs+=("$dir")
+        fi
+    done
+    
+    if [[ ${#existing_dirs[@]} -eq 0 ]]; then
+        echo "No valid directories found for search."
+        return 1
+    fi
+    
+    echo "${existing_dirs[@]}"
+}
+
+case "$1" in
+    -m|--metadata)
+        shift
+        dirs=($(search_if_exists /var/cache/dnf /var/lib/dnf))
+        if [[ $? -eq 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -h|--history)
+        shift
+        # Search DNF history and log files
+        files=()
+        [[ -f /var/lib/dnf/history.sqlite ]] && files+=(/var/lib/dnf/history.sqlite)
+        [[ -f /var/log/dnf.log ]] && files+=(/var/log/dnf.log)
+        [[ -f /var/log/dnf.rpm.log ]] && files+=(/var/log/dnf.rpm.log)
+        
+        if [[ ${#files[@]} -gt 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${files[@]}"
+        else
+            echo "No DNF history or log files found."
+        fi
+        ;;
+    -r|--repos)
+        shift
+        dirs=($(search_if_exists /etc/yum.repos.d /etc/dnf/repos.d))
+        if [[ $? -eq 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -h|--help)
+        echo "Usage: rg-dnf [OPTION] PATTERN"
+        echo "DNF-specific ripgrep helper"
+        echo ""
+        echo "Options:"
+        echo "  -m, --metadata    Search DNF metadata"
+        echo "  -h, --history     Search DNF history and logs"
+        echo "  -r, --repos       Search repository files"
+        echo "  --help            Show this help message"
+        echo ""
+        echo "Examples:"
+        echo "  rg-dnf -m 'package-name'"
+        echo "  rg-dnf -h 'install'"
+        echo "  rg-dnf -r 'baseurl'"
+        ;;
+    *)
+        echo "Usage: rg-dnf [OPTION] PATTERN"
+        echo "Use 'rg-dnf --help' for more information."
+        exit 1
+        ;;
+esac
