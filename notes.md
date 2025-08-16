@@ -16,6 +16,6 @@
   sudo akmods --kernels $(uname -r) --rebuild
 - sudo dnf install nvidia-vaapi-driver libva-utils vdpauinfo
 - sudo dnf install yarn
-- sudo dnf install hspell hspell-devel nuspell nuspell-devel libvoikko libvoikko-devel hunspell-en-US
+- sudo dnf install hspell hspell-devel nuspell nuspell-devel libvoikko libvoikko-devel hunspell-en-US  enchant2-devel pkgconf
 - sudo dnf install atuin python-neovim npm git-delta git-lfs libsecret-devel
 - systemctl --user enable --now gnome-keyring-daemon

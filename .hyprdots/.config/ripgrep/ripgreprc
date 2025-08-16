@@ -1,0 +1,72 @@
+# # Catppuccin Mocha theme colors
+# --colors=path:fg:#cba6f7      # Mauve (file paths)
+# --colors=path:style:bold
+# --colors=line:fg:#bac2de      # Subtext1 (line numbers)
+# --colors=line:style:nobold
+# --colors=column:fg:#9399b2    # Overlay2 (column numbers)
+# --colors=column:style:nobold
+# --colors=match:fg:#f5c2e7     # Pink (matches)
+# --colors=match:style:bold
+# --colors=separator:fg:#9399b2 # Overlay2 (separators)
+# --colors=context:fg:#6c7086   # Overlay0 (context lines)
+#
+# Performance optimizations
+--max-columns=300
+--max-columns-preview
+--smart-case
+--one-file-system
+--mmap
+
+# Search preferences
+--hidden
+--follow
+--glob=!.git/
+--glob=!.svn/
+--glob=!.hg/
+--glob=!CVS/
+--glob=!.idea/
+--glob=!.vscode/
+--glob=!*.min.*
+--glob=!*.o
+--glob=!*.so
+--glob=!*.pyc
+--glob=!__pycache__/
+--glob=!node_modules/
+--glob=!target/
+--glob=!*.swp
+--glob=!*.swo
+--glob=!*.aux
+--glob=!*.out
+--glob=!*.toc
+--glob=!*.blg
+--glob=!*.bbl
+--glob=!*.fls
+--glob=!*.fdb_latexmk
+
+# Fedora-specific excludes
+--glob=!*.rpm
+--glob=!*.dnf
+--glob=!*.cache
+--glob=!*.tmp
+--glob=!*.lock
+--glob=!*.log
+--glob=!*.pid
+--glob=!*.socket
+--glob=!*.service.d/
+--glob=!*.target.d/
+--glob=!/var/cache/dnf/
+--glob=!/var/lib/dnf/
+--glob=!/var/log/dnf*/
+--glob=!/var/lib/rpm/
+--glob=!/proc/
+--glob=!/sys/
+--glob=!/dev/
+--glob=!/run/
+--glob=!/tmp/
+--glob=!/boot/
+--glob=!/media/
+--glob=!/mnt/
+
+# Binary handling
+--binary
+--text

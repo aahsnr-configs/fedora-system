@@ -1,0 +1,16 @@
+export PAGER="bat --paging=always --style=plain"
+export LESS="-R --use-color -Dd+r -Du+b -DS+s -DE+g"
+export EDITOR="${EDITOR:-/usr/bin/nvim}"
+export TERMINAL="kitty"
+export VISUAL="nvim"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.bun/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin/hypr"
+export PATH="$PATH:$HOME/.config/emacs/bin"
+export PATH="$PATH:$HOME/.npm-global/bin"
+export LANG="en_US.UTF-8"
+export COLORTERM=truecolor
+export PATH=$PATH:$HOME/.local/share/flatpak/exports/bin

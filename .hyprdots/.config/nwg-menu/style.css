@@ -1,0 +1,37 @@
+window {
+    background-color: rgba(32, 32, 32, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#search {
+    background-color: #2a2a2a;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+#categories {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+}
+
+#items {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+}
+
+#items flowboxchild {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#items flowboxchild:hover {
+    background-color: #0078d7;
+}

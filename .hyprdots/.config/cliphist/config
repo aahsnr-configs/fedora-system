@@ -1,0 +1,47 @@
+[General]
+# Store clipboard history in memory for faster access (RAM disk)
+persistence=memory
+# Limit history size to balance performance and utility
+max_entries=500
+# Use zstd compression for history file (when persisted to disk)
+compression=zstd
+# Enable secure clipboard clearing after 30 minutes of inactivity
+secure_clear_timeout=1800
+# Ignore passwords copied from password managers
+ignore_pattern=^.*password.*$|^.*passphrase.*$|^.*secret.*$
+
+[Performance]
+# Use direct memory access for faster operations (requires kernel support)
+memory_access_mode=direct
+# Preload frequent items into cache
+cache_size=20
+# Use asynchronous file operations when persisting to disk
+async_io=true
+
+[Integration]
+# Integrate with Gentoo's default X11 clipboard (primary and clipboard)
+x11_selections=primary,clipboard
+# Enable Wayland support if available
+wayland_support=auto
+# Use dmenu as default selector (optimized for Gentoo)
+# selector_command=dmenu -l 15 -fn 'JetBrain-10' -nb '#222222' -nf '#bbbbbb' -sb '#005577' -sf '#eeeeee'
+# Alternative rofi command (comment out dmenu above if using rofi)
+selector_command=rofi -dmenu -p "clipboard" -font "hack 10" -theme-str 'window {width: 60%;} listview {lines: 15;}'
+
+[Security]
+# Automatically exclude URLs with authentication tokens
+filter_urls_with_auth=true
+# Scramble sensitive data in memory
+memory_scrambling=true
+# Set strict permissions on history file
+file_permissions=600
+# Enable secure memory locking (mlock)
+lock_memory=true
+
+[Gentoo-Specific]
+# Use Portage query to detect package names in clipboard
+detect_gentoo_packages=true
+# Enable emerge command suggestion when package name is detected
+suggest_emerge_command=true
+# Integrate with Gentoo's news system
+check_gentoo_news=true

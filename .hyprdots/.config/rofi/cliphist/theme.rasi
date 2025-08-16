@@ -1,0 +1,74 @@
+* {
+    /* Catppuccin Mocha Color Scheme */
+    background:     #1e1e2e;
+    background-alt: #181825;
+    foreground:     #cdd6f4;
+    selected:       #f5e0dc;
+    active:         #a6e3a1;
+    urgent:         #f38ba8;
+    transparent:    #00000000;
+
+    /* Text and Font */
+    font: "JetBrains Mono 12";
+    text-color: @foreground;
+
+    /* Window */
+    width: 45%;
+    padding: 20px;
+    border-radius: 12px;
+    lines: 10;
+    columns: 1;
+
+    /* Elements */
+    element {
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    listview {
+        fixed-height: false;
+        dynamic: true;
+        scrollbar: false;
+    }
+
+    /* Input bar */
+    entry {
+        background: @background-alt;
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin: 0 0 8px 0;
+    }
+
+    /* Selection */
+    element selected {
+        background-color: @selected;
+        text-color: @background;
+    }
+
+    /* Active row */
+    element active {
+        background-color: @active;
+        text-color: @background;
+    }
+
+    /* Icons */
+    element-icon {
+        size: 1.2em;
+    }
+
+    /* Message area */
+    message {
+        background-color: @background-alt;
+        padding: 8px;
+        border-radius: 6px;
+        margin: 8px 0 0 0;
+    }
+
+    /* Mode switcher */
+    mode-switcher {
+        background-color: @background-alt;
+        padding: 8px;
+        border-radius: 6px;
+        margin: 8px 0 0 0;
+    }
+}

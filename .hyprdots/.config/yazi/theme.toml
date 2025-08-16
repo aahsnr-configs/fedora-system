@@ -1,0 +1,358 @@
+[mgr]
+# Catppuccin Mocha color scheme with enhanced contrast
+cwd = { fg = "#89b4fa", bold = true }  # Blue, bold for better visibility
+
+# Enhanced contrast for hovered items
+hovered         = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }  # Pink background for high contrast
+preview_hovered = { fg = "#f5c2e7", bg = "#313244", underline = true, bold = true }  # Pink text on surface0
+
+# Find - High contrast colors
+find_keyword  = { fg = "#1e1e2e", bg = "#f9e2af", italic = true, bold = true }  # Dark text on yellow background
+find_position = { fg = "#1e1e2e", bg = "#f5c2e7", italic = true, bold = true }  # Dark text on pink background
+
+# Marker - High contrast solid blocks
+marker_selected = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }    # Dark text on green
+marker_copied   = { fg = "#1e1e2e", bg = "#f9e2af", bold = true }    # Dark text on yellow
+marker_cut      = { fg = "#ffffff", bg = "#f38ba8", bold = true }    # White text on red
+marker_marked   = { fg = "#1e1e2e", bg = "#cba6f7", bold = true }    # Dark text on mauve
+
+# Tab - Enhanced contrast
+tab_active   = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }       # Dark text on pink
+tab_inactive = { fg = "#a6adc8", bg = "#313244", dim = true }        # Subtext0 on surface0
+tab_width    = 1
+
+# Count - High contrast badges
+count_copied   = { fg = "#1e1e2e", bg = "#f9e2af", bold = true }     # Dark text on yellow
+count_cut      = { fg = "#ffffff", bg = "#f38ba8", bold = true }     # White text on red
+count_selected = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }     # Dark text on green
+
+# Border - More visible
+border_symbol = "│"
+border_style  = { fg = "#585b70", bold = true }                      # Surface2, bold
+
+# Highlighting
+syntect_theme = "~/.config/yazi/Catppuccin-mocha.tmTheme"
+
+[mode]
+# Normal mode - High contrast blue
+normal_main = { fg = "#ffffff", bg = "#89b4fa", bold = true }  # White text on blue
+normal_alt  = { fg = "#89b4fa", bg = "#313244", bold = true }  # Blue text on surface0
+
+# Select mode - High contrast green
+select_main = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }  # Dark text on green
+select_alt  = { fg = "#a6e3a1", bg = "#313244", bold = true }  # Green text on surface0
+
+# Unset mode - High contrast red
+unset_main  = { fg = "#ffffff", bg = "#f38ba8", bold = true }  # White text on red
+unset_alt   = { fg = "#f38ba8", bg = "#313244", bold = true }  # Red text on surface0
+
+[status]
+overall = { fg = "#cdd6f4", bg = "#181825" }            # Text on mantle for contrast
+
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+# Permissions - High contrast colors
+perm_type = { fg = "#74c7ec", bold = true }  # Sapphire, bold
+perm_read = { fg = "#a6e3a1", bold = true }  # Green, bold
+perm_write = { fg = "#f38ba8", bold = true } # Red, bold
+perm_exec = { fg = "#f9e2af", bold = true }  # Yellow, bold
+perm_sep  = { fg = "#9399b2", bold = true }  # Overlay1, bold
+
+# Progress - Enhanced visibility
+progress_label  = { fg = "#ffffff", bg = "#313244", bold = true }
+progress_normal = { fg = "#1e1e2e", bg = "#89b4fa", bold = true }     # Dark text on blue
+progress_error  = { fg = "#ffffff", bg = "#f38ba8", bold = true }     # White text on red
+
+[which]
+cols = 3
+mask            = { bg = "#11111b", fg = "#6c7086" }     # Crust with surface2 text
+cand            = { fg = "#f5c2e7", bg = "#313244", bold = true }     # Pink on surface0
+rest            = { fg = "#a6adc8", bg = "#313244" }     # Subtext0 on surface0
+desc            = { fg = "#74c7ec", bg = "#313244", italic = true }     # Sapphire on surface0
+separator       = " → "
+separator_style = { fg = "#f9e2af", bold = true }     # Yellow, bold
+
+[confirm]
+border  = { fg = "#f5c2e7", bold = true }   # Pink, bold
+title   = { fg = "#f5c2e7", bg = "#313244", bold = true }   # Pink on surface0
+content = { fg = "#cdd6f4", bg = "#313244" }   # Text on surface0
+list    = { fg = "#a6adc8", bg = "#313244" }   # Subtext0 on surface0
+btn_yes = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }   # Dark text on green
+btn_no  = { fg = "#ffffff", bg = "#f38ba8", bold = true }   # White text on red
+btn_labels = ["Yes", "No"]
+
+[spot]
+border   = { fg = "#89b4fa", bold = true }   # Blue, bold
+title    = { fg = "#f5c2e7", bg = "#313244", bold = true }   # Pink on surface0
+tbl_col  = { fg = "#1e1e2e", bg = "#74c7ec", bold = true }   # Dark text on sapphire
+tbl_cell = { fg = "#1e1e2e", bg = "#cba6f7", bold = true }   # Dark text on mauve
+
+[notify]
+title_info  = { fg = "#ffffff", bg = "#89b4fa", bold = true }   # White on blue
+title_warn  = { fg = "#1e1e2e", bg = "#f9e2af", bold = true }   # Dark text on yellow
+title_error = { fg = "#ffffff", bg = "#f38ba8", bold = true }   # White on red
+
+[pick]
+border   = { fg = "#89b4fa", bold = true }   # Blue, bold
+active   = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }   # Dark text on pink
+inactive = { fg = "#a6adc8", bg = "#313244" }   # Subtext0 on surface0
+
+[input]
+border   = { fg = "#89b4fa", bold = true }   # Blue, bold
+title    = { fg = "#f5c2e7", bg = "#313244", bold = true }   # Pink on surface0
+value    = { fg = "#cdd6f4", bg = "#313244" }   # Text on surface0
+selected = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }  # Dark text on pink
+
+[cmp]
+border   = { fg = "#89b4fa", bold = true }   # Blue, bold
+active   = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }   # Dark text on pink
+inactive = { fg = "#a6adc8", bg = "#313244" }   # Subtext0 on surface0
+
+icon_file    = ""
+icon_folder  = ""
+icon_command = ""
+
+[tasks]
+border  = { fg = "#89b4fa", bold = true }    # Blue, bold
+title   = { fg = "#f5c2e7", bg = "#313244", bold = true }    # Pink on surface0
+hovered = { fg = "#1e1e2e", bg = "#f5c2e7", underline = true, bold = true }  # Dark text on pink
+
+[help]
+on      = { fg = "#1e1e2e", bg = "#f5c2e7", bold = true }             # Dark text on pink
+run     = { fg = "#1e1e2e", bg = "#74c7ec", bold = true }             # Dark text on sapphire
+desc    = { fg = "#a6adc8", bg = "#313244" }             # Subtext0 on surface0
+hovered = { fg = "#1e1e2e", bg = "#f9e2af", bold = true } # Dark text on yellow
+footer  = { fg = "#9399b2", bg = "#313244", bold = true }             # Overlay1 on surface0
+
+icon_info  = ""
+icon_warn  = ""
+icon_error = ""
+
+[filetype]
+rules = [
+    # Images - Bright pink for high visibility
+    { mime = "image/*", fg = "#f5c2e7", bold = true },              # Pink, bold
+    
+    # Videos - Bright peach
+    { mime = "video/*", fg = "#fab387", bold = true },              # Peach, bold
+    { mime = "video/webm", fg = "#fab387", bold = true },
+    { mime = "video/mp4", fg = "#fab387", bold = true },
+    { mime = "video/x-msvideo", fg = "#fab387", bold = true },
+    
+    # Audio - Bright blue
+    { mime = "audio/*", fg = "#89b4fa", bold = true },              # Blue, bold
+    
+    # Empty files - Dimmed but visible
+    { mime = "inode/empty", fg = "#6c7086", italic = true },        # Surface2, italic
+    
+    # Archives - Bright yellow
+    { mime = "application/zip", fg = "#f9e2af", bold = true },      # Yellow, bold
+    { mime = "application/gzip", fg = "#f9e2af", bold = true },
+    { mime = "application/x-tar", fg = "#f9e2af", bold = true },
+    { mime = "application/x-bzip", fg = "#f9e2af", bold = true },
+    { mime = "application/x-bzip2", fg = "#f9e2af", bold = true },
+    { mime = "application/x-7z-compressed", fg = "#f9e2af", bold = true },
+    { mime = "application/x-rar", fg = "#f9e2af", bold = true },
+    { mime = "application/xz", fg = "#f9e2af", bold = true },
+    
+    # Documents - Distinctive colors
+    { mime = "application/pdf", fg = "#f38ba8", bold = true },      # Red, bold
+    { mime = "application/msword", fg = "#89b4fa", bold = true },   # Blue, bold
+    { mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fg = "#89b4fa", bold = true },
+    { mime = "application/vnd.ms-excel", fg = "#a6e3a1", bold = true },      # Green, bold
+    { mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fg = "#a6e3a1", bold = true },
+    { mime = "application/vnd.ms-powerpoint", fg = "#fab387", bold = true }, # Peach, bold
+    { mime = "application/vnd.openxmlformats-officedocument.presentationml.presentation", fg = "#fab387", bold = true },
+    
+    # Text - Bright green
+    { mime = "text/*", fg = "#a6e3a1", bold = true },               # Green, bold
+    
+    # Programming files - High contrast colors
+    { name = "*.c", fg = "#74c7ec", bold = true },                  # Sapphire, bold
+    { name = "*.cpp", fg = "#74c7ec", bold = true },
+    { name = "*.cc", fg = "#74c7ec", bold = true },
+    { name = "*.h", fg = "#74c7ec", bold = true },
+    { name = "*.hpp", fg = "#74c7ec", bold = true },
+    { name = "*.rs", fg = "#fab387", bold = true },                 # Peach, bold
+    { name = "*.go", fg = "#74c7ec", bold = true },                 # Sapphire, bold
+    { name = "*.py", fg = "#f9e2af", bold = true },                 # Yellow, bold
+    { name = "*.js", fg = "#f9e2af", bold = true },
+    { name = "*.ts", fg = "#89b4fa", bold = true },                 # Blue, bold
+    { name = "*.html", fg = "#fab387", bold = true },               # Peach, bold
+    { name = "*.css", fg = "#89b4fa", bold = true },                # Blue, bold
+    { name = "*.scss", fg = "#f5c2e7", bold = true },               # Pink, bold
+    { name = "*.sass", fg = "#f5c2e7", bold = true },
+    { name = "*.json", fg = "#f9e2af", bold = true },               # Yellow, bold
+    { name = "*.xml", fg = "#a6e3a1", bold = true },                # Green, bold
+    { name = "*.yaml", fg = "#f38ba8", bold = true },               # Red, bold
+    { name = "*.yml", fg = "#f38ba8", bold = true },
+    { name = "*.toml", fg = "#fab387", bold = true },               # Peach, bold
+    { name = "*.ini", fg = "#cba6f7", bold = true },                # Mauve, bold
+    { name = "*.conf", fg = "#cba6f7", bold = true },
+    { name = "*.sh", fg = "#a6e3a1", bold = true },                 # Green, bold
+    { name = "*.bash", fg = "#a6e3a1", bold = true },
+    { name = "*.zsh", fg = "#a6e3a1", bold = true },
+    { name = "*.fish", fg = "#a6e3a1", bold = true },
+    { name = "*.vim", fg = "#a6e3a1", bold = true },
+    { name = "*.lua", fg = "#89b4fa", bold = true },                # Blue, bold
+    { name = "*.rb", fg = "#f38ba8", bold = true },                 # Red, bold
+    { name = "*.php", fg = "#cba6f7", bold = true },                # Mauve, bold
+    { name = "*.java", fg = "#fab387", bold = true },               # Peach, bold
+    { name = "*.class", fg = "#fab387", bold = true },
+    { name = "*.jar", fg = "#fab387", bold = true },
+    
+    # Makefiles and build - Bright green
+    { name = "Makefile", fg = "#a6e3a1", bold = true },             # Green, bold
+    { name = "Dockerfile", fg = "#89b4fa", bold = true },           # Blue, bold
+    { name = "docker-compose.yml", fg = "#89b4fa", bold = true },
+    { name = "*.mk", fg = "#a6e3a1", bold = true },
+    
+    # Git - Bright peach
+    { name = ".gitignore", fg = "#fab387", bold = true },           # Peach, bold
+    { name = ".gitattributes", fg = "#fab387", bold = true },
+    { name = ".gitmodules", fg = "#fab387", bold = true },
+    
+    # Configs - Bright mauve
+    { name = "*.cfg", fg = "#cba6f7", bold = true },                # Mauve, bold
+    { name = "*.config", fg = "#cba6f7", bold = true },
+    { name = "*.properties", fg = "#cba6f7", bold = true },
+    
+    # Logs - Dimmed but visible
+    { name = "*.log", fg = "#6c7086", italic = true },              # Surface2, italic
+    { name = "*.out", fg = "#6c7086", italic = true },
+    
+    # Temporary files - Very dimmed
+    { name = "*~", fg = "#585b70", dim = true },                    # Surface2, dim
+    { name = "*.tmp", fg = "#585b70", dim = true },
+    { name = "*.temp", fg = "#585b70", dim = true },
+    { name = "*.bak", fg = "#585b70", dim = true },
+    { name = "*.swp", fg = "#585b70", dim = true },
+    { name = "*.swo", fg = "#585b70", dim = true },
+    
+    # Special files - High contrast
+    { name = "*", is = "orphan", fg = "#f38ba8", bg = "#313244", bold = true },     # Red on surface0 for orphan symlinks
+    { name = "*", is = "exec", fg = "#a6e3a1", bold = true },       # Green, bold for executables
+    
+    # Directories and fallback - Enhanced contrast
+    { name = "*/", fg = "#89b4fa", bold = true },                   # Blue, bold for directories
+    { name = "*", fg = "#cdd6f4" },                                 # Text for regular files
+]
+
+[icon]
+rules = [
+    # Programming
+    { name = "*.c", text = "", fg = "#74c7ec" },
+    { name = "*.cpp", text = "", fg = "#74c7ec" },
+    { name = "*.cc", text = "", fg = "#74c7ec" },
+    { name = "*.h", text = "", fg = "#74c7ec" },
+    { name = "*.hpp", text = "", fg = "#74c7ec" },
+    { name = "*.rs", text = "", fg = "#fab387" },
+    { name = "*.go", text = "", fg = "#74c7ec" },
+    { name = "*.py", text = "", fg = "#f9e2af" },
+    { name = "*.js", text = "", fg = "#f9e2af" },
+    { name = "*.ts", text = "", fg = "#89b4fa" },
+    { name = "*.html", text = "", fg = "#fab387" },
+    { name = "*.css", text = "", fg = "#89b4fa" },
+    { name = "*.scss", text = "", fg = "#f5c2e7" },
+    { name = "*.sass", text = "", fg = "#f5c2e7" },
+    { name = "*.json", text = "", fg = "#f9e2af" },
+    { name = "*.xml", text = "", fg = "#a6e3a1" },
+    { name = "*.yaml", text = "", fg = "#f38ba8" },
+    { name = "*.yml", text = "", fg = "#f38ba8" },
+    { name = "*.toml", text = "", fg = "#fab387" },
+    { name = "*.ini", text = "", fg = "#cba6f7" },
+    { name = "*.conf", text = "", fg = "#cba6f7" },
+    { name = "*.sh", text = "", fg = "#a6e3a1" },
+    { name = "*.bash", text = "", fg = "#a6e3a1" },
+    { name = "*.zsh", text = "", fg = "#a6e3a1" },
+    { name = "*.fish", text = "", fg = "#a6e3a1" },
+    { name = "*.vim", text = "", fg = "#a6e3a1" },
+    { name = "*.lua", text = "", fg = "#89b4fa" },
+    { name = "*.rb", text = "", fg = "#f38ba8" },
+    { name = "*.php", text = "", fg = "#cba6f7" },
+    { name = "*.java", text = "", fg = "#fab387" },
+    { name = "*.class", text = "", fg = "#fab387" },
+    { name = "*.jar", text = "", fg = "#fab387" },
+    
+    # Archives
+    { name = "*.zip", text = "", fg = "#f9e2af" },
+    { name = "*.tar", text = "", fg = "#f9e2af" },
+    { name = "*.gz", text = "", fg = "#f9e2af" },
+    { name = "*.bz2", text = "", fg = "#f9e2af" },
+    { name = "*.xz", text = "", fg = "#f9e2af" },
+    { name = "*.7z", text = "", fg = "#f9e2af" },
+    { name = "*.rar", text = "", fg = "#f9e2af" },
+    { name = "*.deb", text = "", fg = "#f9e2af" },
+    { name = "*.rpm", text = "", fg = "#f9e2af" },
+    
+    # Images
+    { name = "*.png", text = "", fg = "#f5c2e7" },
+    { name = "*.jpg", text = "", fg = "#f5c2e7" },
+    { name = "*.jpeg", text = "", fg = "#f5c2e7" },
+    { name = "*.gif", text = "", fg = "#f5c2e7" },
+    { name = "*.bmp", text = "", fg = "#f5c2e7" },
+    { name = "*.ico", text = "", fg = "#f5c2e7" },
+    { name = "*.svg", text = "", fg = "#f5c2e7" },
+    { name = "*.webp", text = "", fg = "#f5c2e7" },
+    
+    # Videos
+    { name = "*.mp4", text = "", fg = "#fab387" },
+    { name = "*.mkv", text = "", fg = "#fab387" },
+    { name = "*.webm", text = "", fg = "#fab387" },
+    { name = "*.avi", text = "", fg = "#fab387" },
+    { name = "*.mov", text = "", fg = "#fab387" },
+    { name = "*.wmv", text = "", fg = "#fab387" },
+    { name = "*.flv", text = "", fg = "#fab387" },
+    
+    # Audio
+    { name = "*.mp3", text = "", fg = "#89b4fa" },
+    { name = "*.flac", text = "", fg = "#89b4fa" },
+    { name = "*.wav", text = "", fg = "#89b4fa" },
+    { name = "*.ogg", text = "", fg = "#89b4fa" },
+    { name = "*.m4a", text = "", fg = "#89b4fa" },
+    { name = "*.wma", text = "", fg = "#89b4fa" },
+    
+    # Documents
+    { name = "*.pdf", text = "", fg = "#f38ba8" },
+    { name = "*.doc", text = "", fg = "#89b4fa" },
+    { name = "*.docx", text = "", fg = "#89b4fa" },
+    { name = "*.xls", text = "", fg = "#a6e3a1" },
+    { name = "*.xlsx", text = "", fg = "#a6e3a1" },
+    { name = "*.ppt", text = "", fg = "#fab387" },
+    { name = "*.pptx", text = "", fg = "#fab387" },
+    { name = "*.odt", text = "", fg = "#89b4fa" },
+    { name = "*.ods", text = "", fg = "#a6e3a1" },
+    { name = "*.odp", text = "", fg = "#fab387" },
+    { name = "*.epub", text = "", fg = "#f5c2e7" },
+    
+    # Text
+    { name = "*.txt", text = "", fg = "#a6e3a1" },
+    { name = "*.md", text = "", fg = "#cdd6f4" },
+    { name = "*.markdown", text = "", fg = "#cdd6f4" },
+    { name = "*.rst", text = "", fg = "#cdd6f4" },
+    
+    # Special files
+    { name = "Makefile", text = "", fg = "#a6e3a1" },
+    { name = "Dockerfile", text = "", fg = "#89b4fa" },
+    { name = "docker-compose.yml", text = "", fg = "#89b4fa" },
+    { name = ".gitignore", text = "", fg = "#fab387" },
+    { name = ".gitattributes", text = "", fg = "#fab387" },
+    { name = ".gitmodules", text = "", fg = "#fab387" },
+    { name = "LICENSE", text = "", fg = "#cdd6f4" },
+    { name = "README.md", text = "", fg = "#89b4fa" },
+    { name = "README", text = "", fg = "#89b4fa" },
+    { name = "CHANGELOG.md", text = "", fg = "#a6e3a1" },
+    { name = "CHANGELOG", text = "", fg = "#a6e3a1" },
+    
+    # Directories
+    { name = "*/", text = "", fg = "#89b4fa" },
+    { name = ".git/", text = "", fg = "#fab387" },
+    { name = ".github/", text = "", fg = "#fab387" },
+    { name = "node_modules/", text = "", fg = "#f9e2af" },
+    { name = ".vscode/", text = "", fg = "#74c7ec" },
+    { name = ".idea/", text = "", fg = "#cba6f7" },
+    
+    # Default
+    { name = "*", text = "", fg = "#cdd6f4" },
+]

@@ -1,0 +1,152 @@
+#!/bin/bash
+
+# Fedora-specific ripgrep wrapper
+# Ensure the script fails on errors
+set -e
+
+# Function to check if directory exists before searching
+search_if_exists() {
+    local dirs=("$@")
+    local existing_dirs=()
+    
+    for dir in "${dirs[@]}"; do
+        if [[ -d "$dir" ]]; then
+            existing_dirs+=("$dir")
+        fi
+    done
+    
+    if [[ ${#existing_dirs[@]} -eq 0 ]]; then
+        echo "No valid directories found for search."
+        return 1
+    fi
+    
+    echo "${existing_dirs[@]}"
+}
+
+case "$1" in
+    -s|--spec)
+        shift
+        dirs=($(search_if_exists /usr/src/packages/SPECS ~/rpmbuild/SPECS))
+        if [[ $? -eq 0 ]]; then
+            rg --type-set 'spec:*.spec' \
+               --type-set 'rpm:*.spec,*.changes,*.patch' \
+               --type-set 'fedora:*.spec,*.changes,*.patch,*.service,*.target,*.mount' \
+               --type fedora \
+               --smart-case \
+               --hidden \
+               --follow \
+               --glob='!*.rpm' \
+               --glob='!*.cache' \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -d|--dnf)
+        shift
+        dirs=($(search_if_exists /etc/yum.repos.d /etc/dnf /var/lib/dnf))
+        if [[ $? -eq 0 ]]; then
+            rg --type-set 'dnf:*.repo,*.conf' \
+               --type dnf \
+               --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -k|--kernel)
+        shift
+        dirs=($(search_if_exists /usr/src/kernels /lib/modules))
+        if [[ $? -eq 0 ]]; then
+            rg --type c \
+               --type h \
+               --type make \
+               --type-set 'kernel:*.config,*.patch,*.spec' \
+               --type kernel \
+               --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -r|--rpm)
+        shift
+        dirs=($(search_if_exists ~/rpmbuild /usr/src/packages))
+        if [[ $? -eq 0 ]]; then
+            rg --type-set 'rpm:*.spec,*.changes,*.patch' \
+               --type rpm \
+               --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -c|--config)
+        shift
+        dirs=($(search_if_exists /etc ~/.config))
+        if [[ $? -eq 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               --glob='*.conf' \
+               --glob='*.config' \
+               --glob='*.cfg' \
+               --glob='*.ini' \
+               --glob='*.toml' \
+               --glob='*.yaml' \
+               --glob='*.yml' \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -l|--logs)
+        shift
+        dirs=($(search_if_exists /var/log /run/log))
+        if [[ $? -eq 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               --glob='*.log' \
+               --glob='*.journal' \
+               --type-set 'log:*.log,*.journal' \
+               --type log \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -p|--packages)
+        shift
+        dirs=($(search_if_exists /usr/share/doc /usr/share/man))
+        if [[ $? -eq 0 ]]; then
+            rg --smart-case \
+               --hidden \
+               --follow \
+               "$@" \
+               "${dirs[@]}"
+        fi
+        ;;
+    -h|--help)
+        echo "Usage: rg-fedora [OPTION] PATTERN"
+        echo "Fedora-specific ripgrep wrapper"
+        echo ""
+        echo "Options:"
+        echo "  -s, --spec        Search RPM spec files"
+        echo "  -d, --dnf         Search DNF configuration files"
+        echo "  -k, --kernel      Search kernel source files"
+        echo "  -r, --rpm         Search RPM build directories"
+        echo "  -c, --config      Search configuration files"
+        echo "  -l, --logs        Search log files"
+        echo "  -p, --packages    Search package documentation"
+        echo "  -h, --help        Show this help message"
+        echo ""
+        echo "Examples:"
+        echo "  rg-fedora -s 'BuildRequires'"
+        echo "  rg-fedora -d 'baseurl'"
+        echo "  rg-fedora -l 'error'"
+        ;;
+    *)
+        rg "$@"
+        ;;
+esac
