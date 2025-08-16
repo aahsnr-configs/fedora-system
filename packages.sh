@@ -70,6 +70,16 @@ sudo dnf install -y \
   grim \
   haveged \
   hwdata-devel \
+  hyprcursor \
+  hypridle \
+  hyprland \
+  hyprland-devel \
+  hyprland-contrib \
+  hyprlang \
+  hyprnome \
+  hyprpaper \
+  hyprpicker \
+  hyprwayland-scanner \
   imv \
   inotify-tools \
   intel-audio-firmware \
@@ -158,6 +168,7 @@ sudo dnf install -y \
   powertop \
   procs \
   psacct \
+  pyprland \
   python3-build \
   python3-devel \
   python3-installer \

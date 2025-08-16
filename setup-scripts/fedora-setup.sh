@@ -51,6 +51,7 @@ COPR_REPOS=(
   "lukenukem/asus-linux"
   "wehagy/protonplus"
   "dejan/lazygit"
+  "atim/starship"
 )
 
 # Swap file configuration
