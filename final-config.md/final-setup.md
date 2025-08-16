@@ -317,10 +317,10 @@ class PackageLists:
     @staticmethod
     def _get_security_and_system_admin() -> Set[str]:
         return {
-            "aide", "arpwatch", "audit", "checkpolicy", "copr-selinux", "cronie",
+            "aide", "apparmor", "arpwatch", "audit", "checkpolicy", "copr-selinux", "cronie",
             "dkms", "exiftool", "fail2ban", "git-credential-libsecret", "gnome-keyring",
             "libsemanage", "libsepol", "libsepol-utils", "ltrace", "lynis", "mcstrans", "libsecret",
-            "PackageKit-command-not-found", "perf",  "policycoreutils", "policycoreutils-dbus",
+            "PackageKit-command-not-found", "perf", "podman", "policycoreutils", "policycoreutils-dbus",
             "policycoreutils-gui", "policycoreutils-python-utils", "policycoreutils-restorecond",
             "policycoreutils-sandbox", "poppler-utils", "powertop", "psacct", "seahorse", "secilc",
             "selint", "selinux-policy", "selinux-policy-sandbox", "selinux-policy-targeted",
@@ -330,7 +330,7 @@ class PackageLists:
 
     @staticmethod
     def _get_virtualization_and_containers() -> Set[str]:
-        return {"distrobox", "lxc", "toolbox", "podman"}
+        return {"distrobox", "lxc", "toolbox"}
 
     @staticmethod
     def _get_documentation_and_tex() -> Set[str]:
