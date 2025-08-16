@@ -1,2 +1,0 @@
-#!/bin/bash
-sudo dnf install docker-cli containerd docker-compose docker-compose-switch
