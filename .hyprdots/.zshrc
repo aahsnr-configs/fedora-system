@@ -1,22 +1,21 @@
-source $HOME/.config/zsh/export.zsh
-source $HOME/.config/zsh/aliases.zsh
+source "$HOME/.config/zsh/export.zsh"
+source "$HOME/.config/zsh/aliases.zsh"
 #source $HOME/.config/zsh/atuin.zsh
-source $HOME/.config/zsh/bat.zsh
-source $HOME/.config/zsh/eza.zsh
-source $HOME/.config/zsh/fzf.zsh
-source $HOME/.config/fzf/fzf.fedora
-source $HOME/.config/zsh/ripgrep.zsh
-source $HOME/.config/zsh/starship.zsh
-source $HOME/.config/zsh/tealdeer.zsh
-source $HOME/.config/zsh/thefuck.zsh
-source $HOME/.config/zsh/tmux.zsh
-source $HOME/.config/zsh/yazi.zsh # main error
-source $HOME/.config/zsh/zoxide.zsh
+source "$HOME/.config/zsh/bat.zsh"
+source "$HOME/.config/zsh/eza.zsh"
+source "$HOME/.config/zsh/fzf.zsh"
+source "$HOME/.config/fzf/fzf.fedora"
+source "$HOME/.config/zsh/ripgrep.zsh"
+source "$HOME/.config/zsh/starship.zsh"
+source "$HOME/.config/zsh/tealdeer.zsh"
+source "$HOME/.config/zsh/thefuck.zsh"
+source "$HOME/.config/zsh/tmux.zsh"
+source "$HOME/.config/zsh/yazi.zsh" # main error
+source "$HOME/.config/zsh/zoxide.zsh"
 
 # ===== History Configuration =====
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
 HISTSIZE=50000
-SAVEHIST=50000
 
 # History options
 setopt extended_history

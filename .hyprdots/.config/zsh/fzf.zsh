@@ -1,4 +1,3 @@
-
 # FZF configuration for Fedora 42 with Catppuccin Mocha
 export FZF_DEFAULT_OPTS="
 --height 40% --layout=reverse --border
@@ -13,7 +12,7 @@ export FZF_DEFAULT_OPTS="
 --ansi"
 
 # Use fd (faster and respects .gitignore)
-if (( $+commands[fd] )); then
+if (($ + commands[fd])); then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
@@ -28,7 +27,6 @@ export FZF_PREVIEW_COMMAND="[[ \$(file --mime {}) =~ binary ]] &&
     (bat --style=numbers --color=always {} || 
     cat {}) 2>/dev/null | head -500"
 
-
 # Source FZF completion
 [[ -f /usr/share/fzf/shell/completion.zsh ]] && source /usr/share/fzf/shell/completion.zsh
 
@@ -40,11 +38,11 @@ function is_atomic_desktop() {
 # DNF package search integration (for traditional Fedora)
 function fzf_dnf_packages() {
     local selected
-    if ! (( $+commands[dnf] )); then
+    if ! (($ + commands[dnf])); then
         echo "DNF not found"
         return 1
     fi
-    
+
     selected=$(dnf list installed 2>/dev/null | awk 'NR>1 && NF>=3 {print $1}' | sed 's/\.[^.]*$//' | sort -u | fzf --multi \
         --preview 'dnf info {} 2>/dev/null || echo "Package info not available"' \
         --preview-window=right:50%:wrap \
@@ -55,14 +53,14 @@ function fzf_dnf_packages() {
 # RPM-OSTree package search integration (for Atomic Desktops)
 function fzf_rpm_ostree_packages() {
     local selected
-    if ! (( $+commands[rpm-ostree] )); then
+    if ! (($ + commands[rpm - ostree])); then
         echo "rpm-ostree not found"
         return 1
     fi
-    
+
     # Get layered packages from rpm-ostree status
-    selected=$(rpm-ostree status --json 2>/dev/null | \
-        jq -r '.deployments[0]["requested-packages"][]? // empty' 2>/dev/null | \
+    selected=$(rpm-ostree status --json 2>/dev/null |
+        jq -r '.deployments[0]["requested-packages"][]? // empty' 2>/dev/null |
         sort -u | fzf --multi \
         --preview 'rpm -qi {} 2>/dev/null || dnf info {} 2>/dev/null || echo "Package info not available"' \
         --preview-window=right:50%:wrap \
@@ -73,11 +71,11 @@ function fzf_rpm_ostree_packages() {
 # Flatpak package search integration
 function fzf_flatpak_packages() {
     local selected
-    if ! (( $+commands[flatpak] )); then
+    if ! (($ + commands[flatpak])); then
         echo "Flatpak not found"
         return 1
     fi
-    
+
     selected=$(flatpak list --app --columns=application 2>/dev/null | fzf --multi \
         --preview 'flatpak info {} 2>/dev/null || echo "Application info not available"' \
         --preview-window=right:50%:wrap \
@@ -105,11 +103,11 @@ function fzf_dnf_search() {
         echo "Usage: fzf_dnf_search <search_term>"
         return 1
     fi
-    
-    selected=$(dnf search "$query" 2>/dev/null | \
-        grep -E '^[a-zA-Z0-9].*\..*:' | \
-        awk '{print $1}' | \
-        sed 's/\.[^.]*$//' | \
+
+    selected=$(dnf search "$query" 2>/dev/null |
+        grep -E '^[a-zA-Z0-9].*\..*:' |
+        awk '{print $1}' |
+        sed 's/\.[^.]*$//' |
         sort -u | fzf --multi \
         --preview 'dnf info {} 2>/dev/null || echo "Package info not available"' \
         --preview-window=right:50%:wrap \
@@ -120,12 +118,12 @@ function fzf_dnf_search() {
 # Toolbox container management (for Atomic Desktops)
 function fzf_toolbox_containers() {
     local selected
-    if ! (( $+commands[toolbox] )); then
+    if ! (($ + commands[toolbox])); then
         echo "Toolbox not found"
         return 1
     fi
-    
-    selected=$(toolbox list --containers 2>/dev/null | \
+
+    selected=$(toolbox list --containers 2>/dev/null |
         awk 'NR>1 && NF>=2 {print $2}' | fzf \
         --preview 'toolbox list --containers 2>/dev/null | grep {} || echo "Container info not available"' \
         --preview-window=right:50%:wrap \
@@ -136,8 +134,8 @@ function fzf_toolbox_containers() {
 # System service management
 function fzf_systemd_services() {
     local selected
-    selected=$(systemctl list-units --type=service --all --no-pager --no-legend 2>/dev/null | \
-        awk '{print $1}' | \
+    selected=$(systemctl list-units --type=service --all --no-pager --no-legend 2>/dev/null |
+        awk '{print $1}' |
         grep '\.service$' | fzf --multi \
         --preview 'systemctl status {} 2>/dev/null || echo "Service status not available"' \
         --preview-window=right:50%:wrap \
@@ -176,7 +174,6 @@ zle -N fzf_systemd_services_widget
 zle -N fzf_toolbox_widget
 
 # Key bindings
-bindkey '^p' fzf_fedora_packages_widget      # Ctrl+P for packages
-bindkey '^s' fzf_systemd_services_widget     # Ctrl+S for services
-bindkey '^o' fzf_toolbox_widget              # Ctrl+O for toolbox containers
-
+bindkey '^p' fzf_fedora_packages_widget  # Ctrl+P for packages
+bindkey '^s' fzf_systemd_services_widget # Ctrl+S for services
+bindkey '^o' fzf_toolbox_widget          # Ctrl+O for toolbox containers
