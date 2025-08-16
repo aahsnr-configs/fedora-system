@@ -333,6 +333,8 @@ autoload -U compaudit compinit
 # ===== Emacs Integration
 source ~/.zshrc.vterm 2>/dev/null || true
 
+. "$HOME/.cargo/env" 
+
 # bun completions
 [ -s "/home/ahsan/.bun/_bun" ] && source "/home/ahsan/.bun/_bun"
 

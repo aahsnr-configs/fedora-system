@@ -5,6 +5,7 @@
 
 - setup brew
 - sudo dnf install openssh
+- setup rustup
 - setup ssh
 - brew install markdownlint-cli
 - sudo dnf install kitty
