@@ -1,4 +1,0 @@
-#!/bin/bash
-killall emacs
-killall emacs
-emacs --daemon &

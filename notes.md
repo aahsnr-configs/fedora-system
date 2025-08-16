@@ -1,4 +1,5 @@
 ## ssh setup
+[Note]: Run dnf swap function after issuing dnf update
 [Note]: Use brew for system wide tools, like for neovim
 [Note]: Use nix for project specific tools
 
