@@ -5,11 +5,7 @@
     enable = true;
     settings = {
       manager = {
-        layout = [
-          1
-          2
-          4
-        ];
+        layout = [ 1 2 4 ];
         sort_by = "natural";
         sort_sensitive = true;
         sort_reverse = false;
@@ -27,12 +23,7 @@
         max_height = 900;
         cache_dir = "";
         ueberzug_scale = 1;
-        ueberzug_offset = [
-          0
-          0
-          0
-          0
-        ];
+        ueberzug_offset = [ 0 0 0 0 ];
       };
       tasks = {
         micro_workers = 5;
@@ -45,4 +36,3 @@
     };
   };
 }
-
