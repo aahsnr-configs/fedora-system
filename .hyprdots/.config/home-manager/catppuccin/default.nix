@@ -11,13 +11,11 @@
     #   enable = true;
     #   flavor = "macchiato";
     # };
-    #
-    # cache.enable = true;
-    #
-    # delta = {
-    #   enable = true;
-    #   flavor = "macchiato";
-    # };
+
+    delta = {
+      enable = true;
+      flavor = "macchiato";
+    };
     #
     # foot = {
     #   enable = true;
