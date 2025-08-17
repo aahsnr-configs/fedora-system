@@ -322,7 +322,6 @@ in
   # Enable pay-respects and the appropriate shell integration.
   programs.pay-respects = {
     enable = true;
-    enableBashIntegration = true;
     enableZshIntegration = true;
   };
 
