@@ -1,0 +1,1 @@
+- [ ] Enable Catppuccin module settings one package at a time

@@ -41,6 +41,7 @@
   imports = [ 
     # ./ags
     ./bat
+    ./catppuccin
     ./pkgs
   ];
 
