@@ -1,6 +1,4 @@
-{ config, pkgs, nixpkgs, ...}: 
-
-{ 
+{pkgs, ...}: {
   home.packages = with pkgs; [
     ubuntu_font_family
     jetbrains-mono
@@ -13,7 +11,7 @@
   fonts = {
     fontconfig = {
       enable = true;
-      defaultFonts.monospace = [ "JetBrains Mono" ];
+      defaultFonts.monospace = ["JetBrainsMono Nerd Font"];
     };
   };
 }

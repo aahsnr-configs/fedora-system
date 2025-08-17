@@ -1,11 +1,6 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    deadnix
-    statix
-    niv
-  ];
+# ~/.config/home-manager/dev/default.nix
+{ pkgs, ... }: {
+  home.packages = with pkgs; [ deadnix statix niv ];
 
   programs.direnv = {
     enable = true;

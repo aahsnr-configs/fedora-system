@@ -1,7 +1,5 @@
 # ~/.config/home-manager/bat/default.nix
-{ ... }:
-
-{
+{...}: {
   programs.bat = {
     enable = true;
     config = {

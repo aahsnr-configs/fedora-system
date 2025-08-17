@@ -1,5 +1,6 @@
 # ~/.config/home-manager/yazi/default.nix
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   # --- Application Paths ---
   nvim = "/usr/bin/nvim";
   file-roller = "/usr/bin/file-roller";
@@ -9,7 +10,7 @@
   xdg-open = "/usr/bin/xdg-open";
 
   # --- Plugin Dependencies ---
-  pluginDeps = with pkgs; [rich-cli ouch];
+  pluginDeps = with pkgs; [ rich-cli ouch ];
 in {
   # Install plugin dependencies alongside Yazi
   home.packages = pluginDeps;
@@ -17,6 +18,7 @@ in {
   # Enable the Yazi program
   programs.yazi = {
     enable = true;
+    enableZshIntegration = true;
 
     # --- Yazi Plugins ---
     # This section declaratively installs the plugins for Yazi.
@@ -44,7 +46,7 @@ in {
         show_symlink = true;
         linemode = "size";
         scrolloff = 5;
-        mouse_events = ["click" "scroll"];
+        mouse_events = [ "click" "scroll" ];
         title_format = "Yazi: {cwd}";
         sort_by = "natural";
         sort_dir_first = true;
@@ -62,49 +64,35 @@ in {
         tab_size = 2;
       };
       opener = {
-        edit = [
-          {
-            run = ''${nvim} "$@"'';
-            desc = "Edit with Neovim";
-            block = true;
-          }
-        ];
-        archive = [
-          {
-            run = ''${file-roller} "$@"'';
-            desc = "Open with File Roller";
-          }
-        ];
-        image = [
-          {
-            run = ''${imv} "$@"'';
-            desc = "Open with Feh";
-          }
-        ];
-        video = [
-          {
-            run = ''${mpv} "$@"'';
-            desc = "Play with mpv";
-          }
-        ];
-        audio = [
-          {
-            run = ''${mpv} "$@"'';
-            desc = "Play with mpv";
-          }
-        ];
-        document = [
-          {
-            run = ''${zathura} "$@"'';
-            desc = "Open with Zathura";
-          }
-        ];
-        fallback = [
-          {
-            run = ''${xdg-open} "$@"'';
-            desc = "Open with default application";
-          }
-        ];
+        edit = [{
+          run = ''${nvim} "$@"'';
+          desc = "Edit with Neovim";
+          block = true;
+        }];
+        archive = [{
+          run = ''${file-roller} "$@"'';
+          desc = "Open with File Roller";
+        }];
+        image = [{
+          run = ''${imv} "$@"'';
+          desc = "Open with Feh";
+        }];
+        video = [{
+          run = ''${mpv} "$@"'';
+          desc = "Play with mpv";
+        }];
+        audio = [{
+          run = ''${mpv} "$@"'';
+          desc = "Play with mpv";
+        }];
+        document = [{
+          run = ''${zathura} "$@"'';
+          desc = "Open with Zathura";
+        }];
+        fallback = [{
+          run = ''${xdg-open} "$@"'';
+          desc = "Open with default application";
+        }];
       };
       open = {
         rules = [
@@ -163,7 +151,7 @@ in {
         macro_workers = 10;
         bizarre_retry = 5;
         image_alloc = 536870912;
-        image_bound = [0 0];
+        image_bound = [ 0 0 ];
         suppress_preload = false;
       };
     };
@@ -194,7 +182,7 @@ in {
             desc = "Enter directory";
           }
           {
-            on = ["g" "g"];
+            on = [ "g" "g" ];
             run = "arrow top";
             desc = "Move cursor to top";
           }
@@ -245,7 +233,7 @@ in {
             desc = "Paste files";
           }
           {
-            on = ["d" "d"];
+            on = [ "d" "d" ];
             run = "remove";
             desc = "Remove selected files";
           }
@@ -327,12 +315,12 @@ in {
             desc = "Select all files";
           }
           {
-            on = ["g" "r"];
+            on = [ "g" "r" ];
             run = "toggle_all --state=off";
             desc = "Deselect all files";
           }
           {
-            on = ["g" "t"];
+            on = [ "g" "t" ];
             run = "toggle_all";
             desc = "Toggle selection for all files";
           }
@@ -373,12 +361,12 @@ in {
             desc = "Switch to next tab";
           }
           {
-            on = ["g" "T"];
+            on = [ "g" "T" ];
             run = "tab_switch -1 --relative";
             desc = "Switch to previous tab";
           }
           {
-            on = ["g" "t"];
+            on = [ "g" "t" ];
             run = "tab_switch 1 --relative";
             desc = "Switch to next tab";
           }
@@ -512,32 +500,32 @@ in {
           }
           # Sorting
           {
-            on = ["s" "n"];
+            on = [ "s" "n" ];
             run = "sort natural";
             desc = "Sort naturally";
           }
           {
-            on = ["s" "s"];
+            on = [ "s" "s" ];
             run = "sort size";
             desc = "Sort by size";
           }
           {
-            on = ["s" "m"];
+            on = [ "s" "m" ];
             run = "sort mtime";
             desc = "Sort by modified time";
           }
           {
-            on = ["s" "c"];
+            on = [ "s" "c" ];
             run = "sort btime";
             desc = "Sort by created time";
           }
           {
-            on = ["s" "e"];
+            on = [ "s" "e" ];
             run = "sort extension";
             desc = "Sort by extension";
           }
           {
-            on = ["s" "r"];
+            on = [ "s" "r" ];
             run = "sort reverse";
             desc = "Reverse sort order";
           }

@@ -6,9 +6,7 @@
 # The Home Manager module for pay-respects only handles installation and
 # shell integration. All configuration is therefore handled declaratively by
 # writing the settings.py and custom rule files to the correct locations.
-
-{ config, pkgs, lib, ... }:
-
+{ ... }:
 let
   # Content of your custom fedora_rules.py.
   fedoraRules = ''
@@ -317,8 +315,7 @@ let
     # Instant mode (faster, but requires shell integration):
     instant_mode = False
   '';
-in
-{
+in {
   # Enable pay-respects and the appropriate shell integration.
   programs.pay-respects = {
     enable = true;

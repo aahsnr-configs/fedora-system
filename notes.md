@@ -23,5 +23,5 @@
 - sudo dnf install atuin python-neovim npm git-delta git-lfs libsecret-devel
 - systemctl --user enable --now gnome-keyring-daemon
 - sudo dnf install go ripgrep fd mpv
-- sudo dnf remove at abrt nfs-utils chrony tuned-ppd sssd-client
+- sudo dnf remove at abrt nfs-utils chrony tuned-ppd sssd-client zoxide
 - use home-manager to setup git and gnome-keyring

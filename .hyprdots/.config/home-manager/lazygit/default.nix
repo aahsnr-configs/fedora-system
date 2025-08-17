@@ -1,13 +1,6 @@
 # ~/.config/home-manager/lazygit/default.nix
-{ config, pkgs, ... }:
-
-{
-  # 1. Install necessary packages for lazygit and its integrations.
-  home.packages = with pkgs; [
-    delta # The pager for git diffs.
-  ];
-
-  # 2. Configure and enable the lazygit program.
+{pkgs, ...}: {
+  home.packages = with pkgs; [delta];
   programs.lazygit = {
     enable = true;
     settings = {
@@ -35,7 +28,7 @@
         portraitMode = "auto";
         filterMode = "substring";
         spinner = {
-          frames = [ "⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏" ];
+          frames = ["⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏"];
           rate = 50;
         };
       };
@@ -59,7 +52,7 @@
           gotoBottom = "<end>";
           toggleRangeSelect = "v";
           rangeSelectDown = "J"; # Corrected from <s-j>
-          rangeSelectUp = "K";   # Corrected from <s-k>
+          rangeSelectUp = "K"; # Corrected from <s-k>
           prevBlock = "<left>";
           nextBlock = "<right>";
           "prevBlock-alt" = "h";
@@ -130,9 +123,7 @@
           deleteBranch = "d";
           copyToClipboard = "y";
         };
-        worktrees = {
-          viewWorktreeOptions = "w";
-        };
+        worktrees = {viewWorktreeOptions = "w";};
         commits = {
           squashDown = "s";
           renameCommit = "r";
@@ -171,9 +162,7 @@
           viewStashOptions = "<enter>";
           dropStash = "d";
         };
-        commitFiles = {
-          checkoutCommitFile = "c";
-        };
+        commitFiles = {checkoutCommitFile = "c";};
         main = {
           pickBothHunks = "b";
           editSelectHunk = "e";
@@ -211,7 +200,7 @@
 
       os = {
         editCommand = "nvim";
-        editCommandTemplate = "{{editor}} \"{{filename}}\"";
+        editCommandTemplate = ''{{editor}} "{{filename}}"'';
         editPreset = "nvim";
         openCommand = "xdg-open";
         openLinkCommand = "xdg-open {{link}}";
@@ -251,14 +240,15 @@
         }
         {
           key = "T";
-          command = "nvim -c \"lua require(\\\"telescope.builtin\\\").git_files()\"";
+          command = ''nvim -c "lua require(\"telescope.builtin\").git_files()"'';
           context = "global";
           description = "Open AstroNvim with Telescope git files";
           output = "terminal";
         }
         {
           key = "H";
-          command = "nvim -c \"lua require(\\\"telescope.builtin\\\").git_bcommits()\" {{.SelectedFile.Name}}";
+          command = ''
+            nvim -c "lua require(\"telescope.builtin\").git_bcommits()" {{.SelectedFile.Name}}'';
           context = "files";
           description = "View file history with Telescope";
           output = "terminal";
@@ -272,21 +262,21 @@
         }
         {
           key = "B";
-          command = "nvim -c \"lua require(\\\"telescope.builtin\\\").git_branches()\"";
+          command = ''nvim -c "lua require(\"telescope.builtin\").git_branches()"'';
           context = "localBranches";
           description = "Browse branches with Telescope";
           output = "terminal";
         }
         {
           key = "/";
-          command = "nvim -c \"lua require(\\\"telescope.builtin\\\").git_commits()\"";
+          command = ''nvim -c "lua require(\"telescope.builtin\").git_commits()"'';
           context = "commits";
           description = "Search commits with Telescope";
           output = "terminal";
         }
         {
           key = "D";
-          command = "nvim -c \"Gvdiffsplit\" {{.SelectedFile.Name}}";
+          command = ''nvim -c "Gvdiffsplit" {{.SelectedFile.Name}}'';
           context = "files";
           description = "View diff in AstroNvim with fugitive";
           output = "terminal";
@@ -300,7 +290,7 @@
         }
         {
           key = "S";
-          command = "git stash push -m \"{{.Form.Message}}\"";
+          command = ''git stash push -m "{{.Form.Message}}"'';
           context = "files";
           description = "Stash with custom message";
           prompts = [
@@ -322,21 +312,21 @@
         }
         {
           key = "b";
-          command = "nvim -c \"Git blame\" {{.SelectedFile.Name}}";
+          command = ''nvim -c "Git blame" {{.SelectedFile.Name}}'';
           context = "files";
           description = "View git blame in AstroNvim";
           output = "terminal";
         }
         {
           key = "v";
-          command = "nvim -c \"G stash show -p {{.SelectedStashEntry.Index}}\"";
+          command = ''nvim -c "G stash show -p {{.SelectedStashEntry.Index}}"'';
           context = "stash";
           description = "View stash content in AstroNvim";
           output = "terminal";
         }
         {
           key = "M";
-          command = "nvim -c \"Gvdiffsplit!\" {{.SelectedFile.Name}}";
+          command = ''nvim -c "Gvdiffsplit!" {{.SelectedFile.Name}}'';
           context = "files";
           description = "Open merge tool in AstroNvim";
           output = "terminal";
@@ -365,7 +355,8 @@
         }
         {
           key = "R";
-          command = "nvim -c \"lua require(\\\"telescope.builtin\\\").git_branches({show_remote_tracking_branches=true})\"";
+          command = ''
+            nvim -c "lua require(\"telescope.builtin\").git_branches({show_remote_tracking_branches=true})"'';
           context = "remoteBranches";
           description = "Browse remote branches with Telescope";
           output = "terminal";
