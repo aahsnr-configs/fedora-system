@@ -23,3 +23,4 @@
 - sudo dnf install atuin python-neovim npm git-delta git-lfs libsecret-devel
 - systemctl --user enable --now gnome-keyring-daemon
 - sudo dnf install go ripgrep fd
+- sudo dnf remove at abrt

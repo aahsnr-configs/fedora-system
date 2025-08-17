@@ -11,13 +11,6 @@ export FZF_DEFAULT_OPTS="
 --bind='ctrl-e:execute(\$EDITOR {})'
 --ansi"
 
-# Use fd (faster and respects .gitignore)
-if (($ + commands[fd])); then
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-fi
-
 # Fedora-specific optimizations
 export FZF_COMPLETION_DIR_COMMANDS="dnf rpm-ostree flatpak toolbox podman"
 
