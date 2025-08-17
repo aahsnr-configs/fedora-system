@@ -1,6 +1,4 @@
-{ config, pkgs, catppuccin, ... }:
-
-{
+{ config, pkgs, catppuccin, ... }: {
   catppuccin = {
     bat = {
       enable = true;
@@ -77,11 +75,10 @@
     #   flavor = "macchiato";
     # };
     #
-    # yazi = {
-    #   enable = true;
-    #   accent = "flamingo";
-    #   flavor = "macchiato";
-    # };
-
+    yazi = {
+      enable = true;
+      accent = "flamingo";
+      flavor = "macchiato";
+    };
   };
 }

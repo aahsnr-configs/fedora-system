@@ -1,1 +1,2 @@
 - [ ] Enable Catppuccin module settings one package at a time
+- [ ] Add custom lua files for the plugins
