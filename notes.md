@@ -22,6 +22,6 @@
 - sudo dnf install hspell hspell-devel nuspell nuspell-devel libvoikko libvoikko-devel hunspell-en-US enchant2-devel pkgconf
 - sudo dnf install atuin python-neovim npm git-delta git-lfs libsecret-devel
 - systemctl --user enable --now gnome-keyring-daemon
-- sudo dnf install go ripgrep fd
+- sudo dnf install go ripgrep fd mpv
 - sudo dnf remove at abrt nfs-utils chrony tuned-ppd sssd-client
 - use home-manager to setup git and gnome-keyring

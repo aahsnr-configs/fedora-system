@@ -1,12 +1,10 @@
-{ inputs, pkgs, config, lib, nixgl, ... }:
-
-{
+{ inputs, pkgs, config, lib, nixgl, ... }: {
   home = {
     username = "ahsan";
     homeDirectory = "/home/ahsan";
     stateVersion = "25.05";
-    extraOutputsToInstall = ["doc" "info" "devdoc"];
-    
+    extraOutputsToInstall = [ "doc" "info" "devdoc" ];
+
     #--- Setting Session Variables ---
     # sessionVariables = {
     #   EDITOR = "nvim";
@@ -17,11 +15,10 @@
     #--- Setting Session Path ---
     sessionPath = [
       "$HOME/.local/bin"
-    # "/usr/libexec"
+      # "/usr/libexec"
     ];
   };
 
-  
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -37,16 +34,17 @@
     # '';
   };
 
-
-  imports = [ 
+  imports = [
     ./bat
     ./catppuccin
+    ./dev
     ./eza
     ./fonts
     ./lazygit
     ./pay-respects
     ./pkgs
     ./ripgrep
+    ./yazi
   ];
 
   nixpkgs = {

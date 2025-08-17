@@ -15,8 +15,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    yazi = { 
-      url = "github:sxyazi/yazi"; 
+    yazi = {
+      url = "github:sxyazi/yazi";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -26,31 +26,30 @@
     };
 
     catppuccin.url = "github:catppuccin/nix";
-
   };
 
-  outputs = { nixpkgs, home-manager, yazi, rust-overlay, catppuccin, ... }@inputs:
-    let
-      system = "x86_64-linux";   
-    in {
-      homeConfigurations."ahsan" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { 
-          inherit system;
-        };
-        extraSpecialArgs = { 
-          inherit inputs;
-          inherit yazi;
-          inherit rust-overlay;
-          inherit catppuccin;
-        };
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ 
-          ./home.nix
-          catppuccin.homeModules.catppuccin
-       ];
-
+  outputs = {
+    nixpkgs,
+    home-manager,
+    yazi,
+    rust-overlay,
+    catppuccin,
+    ...
+  } @ inputs: let
+    system = "x86_64-linux";
+  in {
+    homeConfigurations."ahsan" = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {inherit system;};
+      extraSpecialArgs = {
+        inherit inputs;
+        inherit yazi;
+        inherit rust-overlay;
+        inherit catppuccin;
       };
+
+      # Specify your home configuration modules here, for example,
+      # the path to your home.nix.
+      modules = [./home.nix catppuccin.homeModules.catppuccin];
     };
+  };
 }
