@@ -42,11 +42,11 @@
     #   flavor = "macchiato";
     # };
     #
-    # lazygit = {
-    #   enable = true;
-    #   accent = "flamingo";
-    #   flavor = "macchiato";
-    # };
+    lazygit = {
+      enable = true;
+      accent = "flamingo";
+      flavor = "macchiato";
+    };
     #
     # mpv = {
     #   enable = true;

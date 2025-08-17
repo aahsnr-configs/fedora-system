@@ -44,6 +44,7 @@
     ./catppuccin
     ./eza
     ./fonts
+    ./lazygit
     ./pkgs
   ];
 
