@@ -44,6 +44,7 @@
     ./eza
     ./fonts
     ./lazygit
+    ./pay-respects
     ./pkgs
     ./ripgrep
   ];

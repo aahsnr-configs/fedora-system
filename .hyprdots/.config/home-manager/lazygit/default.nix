@@ -4,9 +4,7 @@
 {
   # 1. Install necessary packages for lazygit and its integrations.
   home.packages = with pkgs; [
-    neovim # The chosen editor for git operations.
     delta # The pager for git diffs.
-    wl-clipboard # For copy/paste functionality on Wayland.
   ];
 
   # 2. Configure and enable the lazygit program.
