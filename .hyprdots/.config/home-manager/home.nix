@@ -42,6 +42,8 @@
     # ./ags
     ./bat
     ./catppuccin
+    ./eza
+    ./fonts
     ./pkgs
   ];
 

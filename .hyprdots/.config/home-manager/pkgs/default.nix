@@ -3,10 +3,10 @@
 {
   home.packages = with pkgs; [
     emacs-lsp-booster
-    eza
     markdownlint-cli
     nix-prefetch-git
     nix-prefetch-github
+    nixfmt
     proselint
     tectonic
     texlab
