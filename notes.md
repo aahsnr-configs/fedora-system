@@ -24,3 +24,6 @@
 - systemctl --user enable --now gnome-keyring-daemon
 - sudo dnf install go ripgrep fd
 - sudo dnf remove at abrt
+- sudo dnf remove nfs-utils
+- sudo dnf remove chrony
+- sudo dnf remove tuned-ppd sssd-client
