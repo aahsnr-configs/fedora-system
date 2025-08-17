@@ -39,12 +39,12 @@
 
 
   imports = [ 
-    # ./ags
     ./bat
     ./catppuccin
     ./eza
     ./fonts
     ./lazygit
+    ./ripgrep
     ./pkgs
   ];
 
