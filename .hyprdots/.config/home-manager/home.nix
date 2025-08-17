@@ -40,42 +40,8 @@
 
   imports = [ 
     # ./ags
-    ./alacritty
-    ./anyrun
     ./bat
-    # ./cliphist
-    ./direnv
-    # ./emacs
-    ./eza
-    ./fastfetch
-    ./fonts
-    # ./foot
-    ./fzf
-    # ./git
-    # ./gpg
-    # ./helpers
-    # ./hyprland
-    # ./hypridle
-    # ./hyprpaper
-    # ./hyprlock
-    # ./keyring
-    # ./kitty
-    ./lazygit
-    # ./mpv
     ./pkgs
-    #./rofi
-    ./starship
-    # ./tealdeer
-    # ./theming
-    # ./texlive #old libraries
-    # ./xdg-portal
-    # ./yazi
-    # ./zathura
-    ./zoxide
-    # ./zsh
-    # inputs.ags.homeManagerModules.default
-    inputs.anyrun.homeManagerModules.default
-    # inputs.nix-doom-emacs-unstraightened.hmModule
   ];
 
   nixpkgs = {

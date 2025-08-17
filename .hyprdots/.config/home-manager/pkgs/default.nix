@@ -2,31 +2,14 @@
 
 {
   home.packages = with pkgs; [
-    blesh
-    bun
-    bottom
-    #cargo
-    dart-sass
     emacs-lsp-booster
-    hyprland-qtutils
-    hyprnome
-    matugen
+    eza
     markdownlint-cli
     nix-prefetch-git
     nix-prefetch-github
-    nodejs_22
-    nwg-drawer
-    nwg-menu
     proselint
-    pyprland
-    rbenv
-    #rofi-wayland-unwrapped
-    #rustc
-    swww
+    tectonic
     texlab
     textlint
-    typescript
-    # yazi
-    zellij
   ];
 }

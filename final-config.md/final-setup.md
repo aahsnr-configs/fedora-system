@@ -1,11 +1,12 @@
 Of course. I have re-engineered the application to support a fully automated installation process that intelligently handles reboots and resumes without any user intervention. This is a significant enhancement, transforming the script into a true "fire-and-forget" solution for a complete system setup.
 
 The key improvements are:
-*   **Automatic Reboot & Resume**: When run without flags (for a full installation), the script now automatically reboots the system after installing core packages and drivers—a step often necessary for kernel modules to load correctly.
-*   **State Management**: The script saves its progress to a state file (`/var/tmp/fedora_installer.state`) before rebooting. Upon restart, it reads this file to seamlessly continue from where it left off, skipping already completed tasks.
-*   **Systemd Resume Service**: A temporary `systemd` service is dynamically created to relaunch the installer automatically after the reboot. This service cleans itself up once the entire process is finished, leaving the system in a pristine state.
-*   **User-Initiated vs. Automatic Flow**: The new reboot logic is **only** active during a full, no-flag installation. If you run the script with any specific task flags (e.g., `--install-packages`), it will perform only that task and exit as before, preserving its modularity for testing and debugging.
-*   **Enhanced `--dry-run`**: The dry run mode now simulates the entire reboot-and-resume process, showing you when a reboot would be triggered and how the resume service would be configured, all without making any changes.
+
+- **Automatic Reboot & Resume**: When run without flags (for a full installation), the script now automatically reboots the system after installing core packages and drivers—a step often necessary for kernel modules to load correctly.
+- **State Management**: The script saves its progress to a state file (`/var/tmp/fedora_installer.state`) before rebooting. Upon restart, it reads this file to seamlessly continue from where it left off, skipping already completed tasks.
+- **Systemd Resume Service**: A temporary `systemd` service is dynamically created to relaunch the installer automatically after the reboot. This service cleans itself up once the entire process is finished, leaving the system in a pristine state.
+- **User-Initiated vs. Automatic Flow**: The new reboot logic is **only** active during a full, no-flag installation. If you run the script with any specific task flags (e.g., `--install-packages`), it will perform only that task and exit as before, preserving its modularity for testing and debugging.
+- **Enhanced `--dry-run`**: The dry run mode now simulates the entire reboot-and-resume process, showing you when a reboot would be triggered and how the resume service would be configured, all without making any changes.
 
 Here is the complete, final version of the Python application with the new automated resume functionality.
 
@@ -14,32 +15,34 @@ Here is the complete, final version of the Python application with the new autom
 The usage is now simpler for a full installation.
 
 1.  **Prerequisites**: Ensure `python3.13` and `git` are available.
+
     ```bash
     sudo dnf install -y python3 git
     ```
 
 2.  **Download**: Create a `fedora_installer` directory and save all the Python files listed below inside it.
 
-3.  **Run the Script**: From the directory *containing* the `fedora_installer` package, execute with `sudo`.
+3.  **Run the Script**: From the directory _containing_ the `fedora_installer` package, execute with `sudo`.
+    - **Fully Automated Installation (Recommended):**
+      This single command will start the process, automatically reboot, and continue until everything is finished.
 
-    *   **Fully Automated Installation (Recommended):**
-        This single command will start the process, automatically reboot, and continue until everything is finished.
-        ```bash
-        sudo python3.13 -m fedora_installer.install
-        ```
+      ```bash
+      sudo python3.13 -m fedora_installer.install
+      ```
 
-    *   **Verify with a Dry Run (Highly Recommended First Step):**
-        Simulate the entire automated process, including the reboot and resume steps.
-        ```bash
-        sudo python3.13 -m fedora_installer.install --dry-run
-        ```
+    - **Verify with a Dry Run (Highly Recommended First Step):**
+      Simulate the entire automated process, including the reboot and resume steps.
 
-    *   **Running Specific Tasks (Manual Mode):**
-        All flags still work independently for manual control without automatic reboots.
-        ```bash
-        # Example: Harden the system and then clean up packages
-        sudo python3.13 -m fedora_installer.install --harden-system --cleanup
-        ```
+      ```bash
+      sudo python3.13 -m fedora_installer.install --dry-run
+      ```
+
+    - **Running Specific Tasks (Manual Mode):**
+      All flags still work independently for manual control without automatic reboots.
+      ```bash
+      # Example: Harden the system and then clean up packages
+      sudo python3.13 -m fedora_installer.install --harden-system --cleanup
+      ```
 
 ---
 
@@ -70,12 +73,14 @@ A new `resume_manager.py` file has been added to handle the reboot and resume lo
 ### The Python Application Files
 
 #### `fedora_installer/__init__.py`
+
 ```python
 # fedora_installer/__init__.py
 # This file intentionally left blank to mark the directory as a Python package.
 ```
 
 #### `fedora_installer/config.py`
+
 ```python
 # fedora_installer/config.py
 """
@@ -96,6 +101,7 @@ RPMFUSION_NONFREE_URL = "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-
 ```
 
 #### `fedora_installer/ui.py`
+
 ```python
 # fedora_installer/ui.py
 """
@@ -142,6 +148,7 @@ def print_dry_run(message: str) -> None:
 ```
 
 #### `fedora_installer/utils.py`
+
 ```python
 # fedora_installer/utils.py
 """
@@ -225,6 +232,7 @@ def write_file_idempotent(path: Path, content: str, dry_run: bool = False) -> bo
 ```
 
 #### `fedora_installer/packages.py`
+
 ```python
 # fedora_installer/packages.py
 """
@@ -298,7 +306,7 @@ class PackageLists:
     @staticmethod
     def _get_cli_utilities() -> Set[str]:
         return {
-            "atuin", "bat", "brightnessctl", "btop", "cava", "ddcutil", "eza", "fastfetch",
+            "atuin", "brightnessctl", "btop", "cava", "ddcutil", "eza", "fastfetch",
             "fd-find", "fdupes", "file", "fish", "fzf", "jq", "less", "man-db", "man-pages",
             "procs", "ripgrep", "socat", "starship", "tealdeer", "the-fuck", "tmux", "trash-cli",
             "tree", "units", "unrar", "unzip", "wget", "xz", "zip", "zoxide", "zsh", "zstd"
@@ -369,6 +377,7 @@ class PackageLists:
 ```
 
 #### `fedora_installer/system_setup.py`
+
 ```python
 # fedora_installer/system_setup.py
 """
@@ -444,7 +453,8 @@ def cleanup_packages(dry_run: bool = False) -> bool:
 ```
 
 #### `fedora_installer/user_setup.py`
-```python
+
+````python
 # fedora_installer/user_setup.py
 """
 Handles all user-specific configurations.
@@ -590,9 +600,10 @@ def cleanup_build_files(dry_run: bool = False) -> bool:
         return True
     if TEMP_BUILD_DIR.exists(): shutil.rmtree(TEMP_BUILD_DIR)
     return True
-```
+````
 
 #### `fedora_installer/system_hardening.py`
+
 ```python
 # fedora_installer/system_hardening.py
 """
@@ -655,6 +666,7 @@ def configure_sshd(dry_run: bool = False) -> bool:
 ```
 
 #### `fedora_installer/service_creator.py`
+
 ```python
 # fedora_installer/service_creator.py
 """
@@ -734,6 +746,7 @@ def configure_all_user_services(dry_run: bool = False) -> bool:
 ```
 
 #### `fedora_installer/resume_manager.py`
+
 ```python
 # fedora_installer/resume_manager.py
 """
@@ -782,7 +795,8 @@ def cleanup_resume_service(dry_run: bool = False):
 ```
 
 #### `fedora_installer/engine.py`
-```python
+
+````python
 # fedora_installer/engine.py
 """
 The engine orchestrates the entire setup process.
@@ -1000,7 +1014,7 @@ Use specific task flags for manual control (this will disable automatic reboots)
         # Phase 1: Pre-Reboot
         if not all([manager.run_repo_setup(), manager.run_package_installation(), manager.run_hardware_configuration()]):
             print_error("Pre-reboot phase failed. Aborting.", fatal=True)
-        
+
         # Trigger reboot if this is the first run
         if not args.resume:
             resume_manager.schedule_reboot_and_resume(args.dry_run)
@@ -1014,7 +1028,7 @@ Use specific task flags for manual control (this will disable automatic reboots)
             manager.run_cleanup()
         ]):
             print_error("Post-reboot phase failed. Please check logs.", fatal=True)
-        
+
         # Final cleanup
         manager.clear_state()
         resume_manager.cleanup_resume_service(args.dry_run)
@@ -1026,11 +1040,11 @@ Use specific task flags for manual control (this will disable automatic reboots)
         print_warning(f"Process finished with {len(manager.failed_tasks)} error(s):")
         for failure in manager.failed_tasks: print(f"  - {failure}")
         print_warning(f"Please review the log file ('{LOG_FILE.name}') for details."); sys.exit(1)
-    
+
     if not manual_mode or args.configure_hardware:
         print_warning("A final reboot is recommended to ensure all changes are applied.")
     sys.exit(0)
 
 if __name__ == "__main__":
     main()
-```
+````
