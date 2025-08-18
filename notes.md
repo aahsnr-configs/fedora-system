@@ -14,6 +14,7 @@
 - installed packages from packages.sh
 - brew install yazi
 - kept a copy of bash history for later use
+- added home-configs
 - executed the following commands:
   sudo sh -c 'echo "%\_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
   sudo akmods --kernels $(uname -r) --rebuild
