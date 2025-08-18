@@ -1,5 +1,5 @@
 # ~/.config/home-manager/catppuccin/default.nix
-{...}: {
+{ ... }: {
   catppuccin = {
     bat = {
       enable = true;
