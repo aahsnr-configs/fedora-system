@@ -1,21 +1,27 @@
-{ ... }: {
+{...}: {
   home = {
     username = "ahsan";
     homeDirectory = "/home/ahsan";
-    stateVersion = "25.05";
-    extraOutputsToInstall = [ "doc" "info" "devdoc" ];
+    stateVersion = "25.11";
+    extraOutputsToInstall = ["doc" "info" "devdoc"];
 
-    #--- Setting Session Variables ---
-    # sessionVariables = {
-    #   EDITOR = "nvim";
-    #   BROWSER = "brave";
-    #   TERMINAL = "alacritty";
-    # };
+    # Set default editor and other environment variables
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "emacsclient -c -a 'emacs'";
+      TERMINAL = "kitty";
+    };
 
-    #--- Setting Session Path ---
+    # Consolidate PATH from export.zsh
     sessionPath = [
+      "$HOME/.cargo/bin"
+      "$HOME/go/bin"
+      "$HOME/.bun/bin"
       "$HOME/.local/bin"
-      # "/usr/libexec"
+      "$HOME/.local/bin/hypr"
+      "$HOME/.config/emacs/bin"
+      "$HOME/.npm-global/bin"
+      "$HOME/.local/share/flatpak/exports/bin"
     ];
   };
 
