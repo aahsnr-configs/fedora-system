@@ -1,10 +1,14 @@
 # ~/.config/home-manager/zsh/default.nix
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
     autocd = true;
     syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;
 
     # History settings
     history = {
@@ -32,12 +36,8 @@
         src = pkgs.zsh-history-substring-search;
       }
       {
-        name = "zsh-completions";
-        src = pkgs.zsh-completions;
-      }
-      {
         name = "fzf-tab";
-        src = pkgs.fzf-tab;
+        src = pkgs.zsh-fzf-tab;
       }
       {
         name = "zsh-autopair";
@@ -92,20 +92,20 @@
       emacstty = "emacsclient -tty";
     };
 
-    # Environment variables
-    initExtraBeforeCompInit = ''
-      export EDITOR="${config.home.sessionVariables.EDITOR}"
-      export VISUAL="${config.home.sessionVariables.VISUAL}"
-      export TERMINAL="${config.home.sessionVariables.TERMINAL}"
-      export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-      export PAGER="bat --paging=always --style=plain"
-      export LESS="-R --use-color -Dd+r -Du+b -DS+s -DE+g"
-      export LANG="en_US.UTF-8"
-      export COLORTERM=truecolor
-    '';
+    # # Environment variables
+    # initExtraBeforeCompInit = ''
+    #   export EDITOR="${config.home.sessionVariables.EDITOR}"
+    #   export VISUAL="${config.home.sessionVariables.VISUAL}"
+    #   export TERMINAL="${config.home.sessionVariables.TERMINAL}"
+    #   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    #   export PAGER="bat --paging=always --style=plain"
+    #   export LESS="-R --use-color -Dd+r -Du+b -DS+s -DE+g"
+    #   export LANG="en_US.UTF-8"
+    #   export COLORTERM=truecolor
+    # '';
 
     # Custom Zsh settings, functions, and configurations
-    initExtra = ''
+    initContent = ''
       # ===== Zsh Options =====
       setopt EXTENDED_HISTORY
       setopt HIST_VERIFY
@@ -207,4 +207,3 @@
     '';
   };
 }
-

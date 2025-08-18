@@ -1,15 +1,15 @@
 # ~/.config/home-manager/eza/default.nix
-{...}: {
+{ ... }: {
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
     icons = "always";
     git = true;
-    extraOptions = ["--group-directories-first" "--header"];
+    extraOptions = [ "--group-directories-first" "--header" ];
     # Catppuccin Mocha Theme for eza
     # Translated from your theme.yml into idiomatic Nix.
     # Color palette: https://github.com/catppuccin/catppuccin
-    colors = {
+    theme = {
       # UI elements
       ui = {
         size = {
