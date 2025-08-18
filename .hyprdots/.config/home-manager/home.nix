@@ -1,16 +1,9 @@
-{
-  inputs,
-  pkgs,
-  config,
-  lib,
-  nixgl,
-  ...
-}: {
+{ ... }: {
   home = {
     username = "ahsan";
     homeDirectory = "/home/ahsan";
     stateVersion = "25.05";
-    extraOutputsToInstall = ["doc" "info" "devdoc"];
+    extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
     #--- Setting Session Variables ---
     # sessionVariables = {
