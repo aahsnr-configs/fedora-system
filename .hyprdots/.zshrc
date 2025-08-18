@@ -26,13 +26,11 @@ setopt hist_verify
 setopt share_history
 setopt hist_reduce_blanks
 
-
 # ===== Directory Navigation =====
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
-
 
 # ===== ZSH Options =====
 setopt correct
@@ -45,7 +43,6 @@ setopt auto_param_slash
 setopt extended_glob
 setopt glob_dots
 
-
 # ===== Plugin Management =====
 ZSH_PLUGINS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
@@ -55,7 +52,7 @@ function _load_plugin() {
   local repo="$1"
   local plugin_name="${repo##*/}"
   local plugin_dir="$ZSH_PLUGINS_DIR/$plugin_name"
-  
+
   # Clone if doesn't exist
   if [[ ! -d "$plugin_dir" ]]; then
     echo "Installing plugin: $plugin_name..."
@@ -64,7 +61,7 @@ function _load_plugin() {
       return 1
     }
   fi
-  
+
   # Source the plugin
   local plugin_files=(
     "$plugin_dir/${plugin_name}.plugin.zsh"
@@ -73,14 +70,14 @@ function _load_plugin() {
     "$plugin_dir/${plugin_name#zsh-}.plugin.zsh"
     "$plugin_dir/init.zsh"
   )
-  
+
   for file in "${plugin_files[@]}"; do
     if [[ -f "$file" ]]; then
       source "$file"
       return 0
     fi
   done
-  
+
   return 1
 }
 
@@ -123,7 +120,6 @@ zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/zcompcache"
 zstyle ':completion:*' completer _extensions _complete _approximate
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %d --%f'
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' rehash true
@@ -168,18 +164,18 @@ function zvm_after_init() {
   # History substring search bindings
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
-  
+
   # Enhanced vi bindings
   bindkey -M vicmd 'H' beginning-of-line
   bindkey -M vicmd 'L' end-of-line
-  
+
   # Fix common keys in insert mode
   bindkey -M viins "^?" backward-delete-char
   bindkey -M viins "^W" backward-kill-word
   bindkey -M viins "^U" backward-kill-line
   bindkey -M viins "^A" beginning-of-line
   bindkey -M viins "^E" end-of-line
-  
+
   # Enable FZF bindings after zsh-vi-mode
   if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
     source /usr/share/fzf/shell/key-bindings.zsh
@@ -298,20 +294,20 @@ mkcd() {
 extract() {
   if [[ -f "$1" ]]; then
     case "$1" in
-      *.tar.bz2)   tar xjf "$1"     ;;
-      *.tar.gz)    tar xzf "$1"     ;;
-      *.bz2)       bunzip2 "$1"     ;;
-      *.rar)       unrar x "$1"     ;;
-      *.gz)        gunzip "$1"      ;;
-      *.tar)       tar xf "$1"      ;;
-      *.tbz2)      tar xjf "$1"     ;;
-      *.tgz)       tar xzf "$1"     ;;
-      *.zip)       unzip "$1"       ;;
-      *.Z)         uncompress "$1"  ;;
-      *.7z)        7z x "$1"        ;;
-      *.xz)        unxz "$1"        ;;
-      *.lzma)      unlzma "$1"      ;;
-      *)           echo "'$1' cannot be extracted" ;;
+    *.tar.bz2) tar xjf "$1" ;;
+    *.tar.gz) tar xzf "$1" ;;
+    *.bz2) bunzip2 "$1" ;;
+    *.rar) unrar x "$1" ;;
+    *.gz) gunzip "$1" ;;
+    *.tar) tar xf "$1" ;;
+    *.tbz2) tar xjf "$1" ;;
+    *.tgz) tar xzf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.Z) uncompress "$1" ;;
+    *.7z) 7z x "$1" ;;
+    *.xz) unxz "$1" ;;
+    *.lzma) unlzma "$1" ;;
+    *) echo "'$1' cannot be extracted" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -332,7 +328,7 @@ autoload -U compaudit compinit
 # ===== Emacs Integration
 source ~/.zshrc.vterm 2>/dev/null || true
 
-. "$HOME/.cargo/env" 
+. "$HOME/.cargo/env"
 
 # bun completions
 [ -s "/home/ahsan/.bun/_bun" ] && source "/home/ahsan/.bun/_bun"
