@@ -1,11 +1,11 @@
 # ~/.config/home-manager/eza/default.nix
-{ ... }: {
+{...}: {
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
     icons = "always";
     git = true;
-    extraOptions = [ "--group-directories-first" "--header" ];
+    extraOptions = ["--group-directories-first" "--header"];
     # Catppuccin Mocha Theme for eza
     # Translated from your theme.yml into idiomatic Nix.
     # Color palette: https://github.com/catppuccin/catppuccin
@@ -365,33 +365,23 @@
   programs.zsh.shellAliases = {
     # Override default eza aliases to add more options
     ls = "eza --color=always --icons=always --group-directories-first";
-    ll =
-      "eza -l --color=always --icons=always --group-directories-first --git --header";
-    la =
-      "eza -la --color=always --icons=always --group-directories-first --git --header";
-    lt =
-      "eza --tree --color=always --icons=always --group-directories-first --level=3";
+    ll = "eza -l --color=always --icons=always --group-directories-first --git --header";
+    la = "eza -la --color=always --icons=always --group-directories-first --git --header";
+    lt = "eza --tree --color=always --icons=always --group-directories-first --level=3";
 
     # Custom aliases from eza.zsh
     lr = "eza -R --color=always --icons=always --group-directories-first";
-    lg =
-      "eza -l --git --git-ignore --color=always --icons=always --group-directories-first --header";
-    lG =
-      "eza -l --git --git-ignore --git-repos --color=always --icons=always --group-directories-first --header";
-    lsize =
-      "eza -l --sort=size --reverse --color=always --icons=always --group-directories-first --git --header";
-    ltime =
-      "eza -l --sort=modified --reverse --color=always --icons=always --group-directories-first --git --header";
+    lg = "eza -l --git --git-ignore --color=always --icons=always --group-directories-first --header";
+    lG = "eza -l --git --git-ignore --git-repos --color=always --icons=always --group-directories-first --header";
+    lsize = "eza -l --sort=size --reverse --color=always --icons=always --group-directories-first --git --header";
+    ltime = "eza -l --sort=modified --reverse --color=always --icons=always --group-directories-first --git --header";
     lrpm = ''
       eza -la --color=always --icons=always *.rpm *.srpm 2>/dev/null || echo "No RPM files found"'';
     lspec = ''
       eza -la --color=always --icons=always *.spec 2>/dev/null || echo "No spec files found"'';
-    lz =
-      "eza -la --color=always --icons=always --group-directories-first --context";
-    lsystemd-system =
-      "eza -la --color=always --icons=always /etc/systemd/system/";
-    lsystemd-user =
-      "eza -la --color=always --icons=always ~/.config/systemd/user/";
+    lz = "eza -la --color=always --icons=always --group-directories-first --context";
+    lsystemd-system = "eza -la --color=always --icons=always /etc/systemd/system/";
+    lsystemd-user = "eza -la --color=always --icons=always ~/.config/systemd/user/";
   };
 
   programs.zsh.initContent = ''

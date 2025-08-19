@@ -1,12 +1,9 @@
 # ~/.config/home-manager/lazygit/default.nix
-{pkgs, ...}: {
-  home.packages = with pkgs; [delta];
+{...}: {
   programs.lazygit = {
     enable = true;
     settings = {
       gui = {
-        # NOTE: The theme is intentionally omitted as per instructions,
-        # to be handled by the catppuccin/nix flake.
         scrollHeight = 2;
         scrollPastBottom = true;
         mouseEvents = true;
