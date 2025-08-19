@@ -361,4 +361,55 @@
       };
     };
   };
+
+  programs.zsh.shellAliases = {
+    # Override default eza aliases to add more options
+    ls = "eza --color=always --icons=always --group-directories-first";
+    ll =
+      "eza -l --color=always --icons=always --group-directories-first --git --header";
+    la =
+      "eza -la --color=always --icons=always --group-directories-first --git --header";
+    lt =
+      "eza --tree --color=always --icons=always --group-directories-first --level=3";
+
+    # Custom aliases from eza.zsh
+    lr = "eza -R --color=always --icons=always --group-directories-first";
+    lg =
+      "eza -l --git --git-ignore --color=always --icons=always --group-directories-first --header";
+    lG =
+      "eza -l --git --git-ignore --git-repos --color=always --icons=always --group-directories-first --header";
+    lsize =
+      "eza -l --sort=size --reverse --color=always --icons=always --group-directories-first --git --header";
+    ltime =
+      "eza -l --sort=modified --reverse --color=always --icons=always --group-directories-first --git --header";
+    lrpm = ''
+      eza -la --color=always --icons=always *.rpm *.srpm 2>/dev/null || echo "No RPM files found"'';
+    lspec = ''
+      eza -la --color=always --icons=always *.spec 2>/dev/null || echo "No spec files found"'';
+    lz =
+      "eza -la --color=always --icons=always --group-directories-first --context";
+    lsystemd-system =
+      "eza -la --color=always --icons=always /etc/systemd/system/";
+    lsystemd-user =
+      "eza -la --color=always --icons=always ~/.config/systemd/user/";
+  };
+
+  programs.zsh.initContent = ''
+    # Eza helper functions
+    ezasize() {
+        eza -l --color=always --icons=always --group-directories-first --total-size --color-scale=size --sort=size --reverse "$@"
+    }
+    ezarecent() {
+        local days=''${1:-7}
+        eza -la --color=always --icons=always --sort=modified --reverse --color-scale=age "$@" | head -20
+    }
+    ezatree() {
+        local depth=''${1:-3}
+        shift
+        eza --tree --color=always --icons=always --group-directories-first --level="$depth" --ignore-glob=".git|node_modules|.cache" "$@"
+    }
+    ezaperm() {
+        eza -la --color=always --icons=always --group-directories-first --octal-permissions "$@"
+    }
+  '';
 }
