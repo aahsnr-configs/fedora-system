@@ -10,12 +10,10 @@
       enable = true;
       flavor = "macchiato";
     };
-
-    # btop = {
-    #   enable = true;
-    #   flavor = "macchiato";
-    # };
-
+    btop = {
+      enable = true;
+      flavor = "macchiato";
+    };
     delta = {
       enable = true;
       flavor = "macchiato";

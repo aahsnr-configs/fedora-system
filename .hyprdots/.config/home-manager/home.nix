@@ -1,9 +1,9 @@
-{ ... }: {
+{...}: {
   home = {
     username = "ahsan";
     homeDirectory = "/home/ahsan";
     stateVersion = "25.11";
-    extraOutputsToInstall = [ "doc" "info" "devdoc" ];
+    extraOutputsToInstall = ["doc" "info" "devdoc"];
 
     # Set default editor and other environment variables
     sessionVariables = {
@@ -45,10 +45,14 @@
   imports = [
     ./atuin
     ./bat
+    ./btop
     ./catppuccin
     ./dev
+    ./emoji
     ./eza
+    ./fastfetch
     ./fonts
+    ./git
     ./lazygit
     ./pay-respects
     ./pkgs
