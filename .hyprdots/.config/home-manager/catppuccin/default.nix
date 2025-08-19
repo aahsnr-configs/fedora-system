@@ -1,6 +1,11 @@
 # ~/.config/home-manager/catppuccin/default.nix
-{ ... }: {
+{...}: {
   catppuccin = {
+    atuin = {
+      enable = true;
+      flavor = "macchiato";
+      accent = "flamingo";
+    };
     bat = {
       enable = true;
       flavor = "macchiato";
@@ -51,10 +56,6 @@
     #   flavor = "macchiato";
     # };
     #
-    # starship = {
-    #   enable = true;
-    #   flavor = "macchiato";
-    # };
     #
     # tmux = {
     #   enable = true;

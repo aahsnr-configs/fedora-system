@@ -1,9 +1,13 @@
 # ~/.config/home-manager/bat/default.nix
-{...}: {
+{pkgs, ...}: {
   programs.bat = {
     enable = true;
+    extraPackages = with pkgs; [
+      bat-extras.batdiff
+      bat-extras.batman
+      bat-extras.prettybat
+    ];
     config = {
-      # The theme will be handled by the catppuccin-nix flake.
       style = "numbers,changes,header";
       "show-all" = true;
       "italic-text" = "always";

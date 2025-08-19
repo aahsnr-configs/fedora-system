@@ -1,9 +1,9 @@
-{...}: {
+{ ... }: {
   home = {
     username = "ahsan";
     homeDirectory = "/home/ahsan";
     stateVersion = "25.11";
-    extraOutputsToInstall = ["doc" "info" "devdoc"];
+    extraOutputsToInstall = [ "doc" "info" "devdoc" ];
 
     # Set default editor and other environment variables
     sessionVariables = {
@@ -11,6 +11,8 @@
       VISUAL = "emacsclient -c -a 'emacs'";
       TERMINAL = "kitty";
     };
+
+    shell.enableZshIntegration = true;
 
     # Consolidate PATH from export.zsh
     sessionPath = [
@@ -41,6 +43,7 @@
   };
 
   imports = [
+    ./atuin
     ./bat
     ./catppuccin
     ./dev
@@ -50,6 +53,7 @@
     ./pay-respects
     ./pkgs
     ./ripgrep
+    ./starship
     ./yazi
     ./zoxide
     ./zsh
