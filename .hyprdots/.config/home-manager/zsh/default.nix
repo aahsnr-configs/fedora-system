@@ -1,9 +1,7 @@
 # ~/.config/home-manager/zsh/default.nix
-{
-  config,
-  pkgs,
-  ...
-}: {
+{ config, pkgs, ... }: {
+  home.sessionVariables.STARSHIP_CACHE = "${config.xdg.cacheHome}/starship";
+
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -42,6 +40,10 @@
       {
         name = "zsh-autopair";
         src = pkgs.zsh-autopair;
+      }
+      {
+        name = "zsh-nix-shell";
+        src = pkgs.zsh-nix-shell;
       }
     ];
 

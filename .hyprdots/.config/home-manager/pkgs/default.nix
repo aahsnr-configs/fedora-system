@@ -1,5 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
+    delta
+    lua5_1
+    luarocks
     emacs-lsp-booster
     markdownlint-cli
     nix-prefetch-git
