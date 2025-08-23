@@ -8,7 +8,6 @@
 - [ ] Make sure --noconfirm is not enabled
 - [ ] Find out which services are needed by hyprland
 - [ ] Make sure custom user services are in the user services list
-- [ ] Integrate manpages into arch linux
 - [ ] Write a separate module in final_script.py for user systemd services
 - [x] Add /etc/issue and /etc/issue.net content setup to python script
 - [x] At the end of the python script it should run this as root with confirmation and user prompt: pacman -Qdtq | pacman -Rns - . Default prompt should be Y
