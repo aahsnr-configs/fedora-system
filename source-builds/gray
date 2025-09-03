@@ -1,9 +1,0 @@
-#!/bin/bash
-cd
-sudo dnf install vala libdbusmenu-gtk3-devel
-git clone https://github.com/Fabric-Development/gray.git
-cd gray
-meson --prefix=/usr build
-sudo ninja -C build install
-cd
-sudo rm -rf gray
